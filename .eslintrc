@@ -1,0 +1,13 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "prettier",
+  ],
+  "extends": [
+    "prettier",
+  ],
+  "rules": {
+    "no-unused-vars": "off",
+	"no-unexpected-multiline": "off",
+  }
+}
