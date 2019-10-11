@@ -2,32 +2,37 @@ import React, { useEffect, useState, useRef } from 'react';
 import Globe from 'worldwind-react-globe';
 import './App.css';
 
+import DefaultOverlay from './components/DefaultOverlay';
+import PinDropOverlay from './components/PinDropOverlay';
+
 const App = props => {
 	const globeRef = useRef(null);
-	const [initialized, setInitialized] = useState(false);
 
-	const onClickGlobe = item => {
-		console.log(item);
+	// toggle whether or not we are dropping a pin or viewing the default stats overlay
+	const [pinDropMode, setPinDropMode] = useState(false);
+
+	// check if the user is dragging the screen
+	// only  trigger pin drop mode if the screen is clicked, not dragged
+	const [isMoving, setIsMoving] = useState(false);
+
+	// to be implemented
+	const onClickGlobe = item => console.log('got here', item);
+
+	const triggerPinDropMode = () => {
+		if (isMoving) return;
+		setPinDropMode(true);
 	};
-
-	const onUpdate = data => {
-		console.log(data);
-	};
-
-	useEffect(() => {
-		console.log(globeRef.current);
-		globeRef.current.armClickDrop(onClickGlobe);
-	}, [globeRef]);
 
 	return (
-		<div className='page'>
-			<Globe ref={globeRef} onUpdate={onUpdate} />
+		<div
+			className='page'
+			onMouseDown={() => !pinDropMode && setIsMoving(false)}
+			onMouseUp={() => triggerPinDropMode()}
+			onMouseMove={() => !pinDropMode && setIsMoving(true)}
+		>
+			<Globe ref={globeRef} />
 			<div className='fullscreen-item'>
-				<div className='bigstats'>
-					<h1>20,123 visitors</h1>
-					<h3>3 countries</h3>
-					<h3>23 numbers</h3>
-				</div>
+				{!pinDropMode ? <DefaultOverlay /> : <PinDropOverlay />}
 			</div>
 		</div>
 	);
