@@ -8,10 +8,12 @@ import React from 'react';
 const DefaultOverlay = ({ numVisitors, numCountries }) => (
 	<div className='default-overlay'>
 		<div className='bigstats'>
-			<h1>{numVisitors} visitors</h1>
-			<h3>{numCountries} countries</h3>
+			<h1 className='header-visitors'>{numVisitors} visitors</h1>
+			<h3 className='visitor-substats'>{numCountries} countries</h3>
 		</div>
 		<h1 className='drop-pin-cta'>Touch anywhere to start pin drop</h1>
+
+		<button className='button button-donate'>Donate</button>
 	</div>
 );
 
