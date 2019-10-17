@@ -1,0 +1,33 @@
+.pin-help-modal {
+	background: black;
+	position: absolute;
+	bottom: 5rem;
+	color: white;
+	right: 1rem;
+	padding: 1rem;
+	width: 25%;
+	pointer-events: initial;
+}
+
+.pin-info-popup {
+	position: absolute;
+	right: 1rem;
+	padding: 0;
+	width: 50%;
+	background: white;
+	border-radius: 1rem;
+	top: 2rem;
+
+	z-index: 99999;
+
+	pointer-events: initial;
+}
+
+.pin-info-img {
+	width: 100%;
+	object-fit: cover;
+}
+
+.pin-info-content {
+	padding: 1rem;
+}
