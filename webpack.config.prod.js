@@ -1,10 +1,15 @@
 const webpack = require('webpack');
+const TerserJSPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const port = process.env.PORT || 3000;
 
 module.exports = {
+	optimization: {
+		minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+	},
 	mode: 'production',
 	entry: './src/index.js',
 	output: {
@@ -24,35 +29,17 @@ module.exports = {
 			// Second Rule
 			{
 				test: /\.css$/,
-				use: [
-					{
-						loader: 'style-loader',
-					},
-					{
-						loader: 'css-loader',
-						options: {
-							modules: true,
-							// Allows to configure how many loaders
-							// before css-loader should be applied
-							// to @import(ed) resources
-							importLoaders: 1,
-							localsConvention: 'camelCase',
-							// Create source maps for CSS files
-							sourceMap: true,
-						},
-					},
-					{
-						// PostCSS will run before css-loader and will
-						// minify and autoprefix our CSS rules.
-						loader: 'postcss-loader',
-					},
-				],
+				use: [MiniCssExtractPlugin.loader, 'css-loader'],
 			},
 		],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: 'public/index.html',
+		}),
+		new MiniCssExtractPlugin({
+			filename: '[name].css',
+			chunkFilename: '[id].css',
 		}),
 	],
 };
