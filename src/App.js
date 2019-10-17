@@ -20,6 +20,14 @@ const layers = [
 		layer: 'eox-openstreetmap',
 		options: { category: 'overlay', enabled: false, opacity: 0.8 },
 	},
+	{
+		layer: 'bing-roads',
+		options: { category: 'overlay', enabled: true, opacity: 1 },
+	},
+	{
+		layer: 'stars',
+		options: { category: 'overlay', enabled: true, opacity: 0.8 },
+	},
 ];
 
 const App = props => {
@@ -40,8 +48,13 @@ const App = props => {
 	const [oldPinsLoaded, setOldPinsLoaded] = useState(false);
 	const [mouseMode, setMouseMode] = useState(APP_MODE.MOUSE_NONE);
 
+	const [focusedPosition, setFocusedPosition] = useState({
+		latitude: 0,
+		longitude: 0,
+	});
+
 	// to be implemented
-	const dropPin = position => {
+	const drawPin = position => {
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -60,7 +73,8 @@ const App = props => {
 		attributes.labelAttributes.color = WorldWind.Color.YELLOW;
 		attributes.drawLeaderLine = true;
 		attributes.leaderLineAttributes.outlineColor = WorldWind.Color.RED;
-		attributes.imageSource = 'https://i.imgur.com/sYGkotG.png';
+		attributes.imageSource = 'https://i.imgur.com/Qur0t5s.png';
+		// attributes.imageSource = '/pin.png';
 
 		let placemark = new WorldWind.Placemark(
 			position,
@@ -89,6 +103,11 @@ const App = props => {
 		}
 	};
 
+	const dropNewPin = position => {
+		drawPin(position);
+		setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
+	};
+
 	useEffect(() => {
 		console.log('loading previously dropped pins');
 		console.log('loading number of visitors');
@@ -97,7 +116,7 @@ const App = props => {
 
 	useEffect(() => {
 		if (globeRef && !oldPinsLoaded) {
-			pinPositions.map(position => dropPin(position));
+			pinPositions.map(position => drawPin(position));
 			setOldPinsLoaded(true);
 		}
 	}, [globeRef, oldPinsLoaded, pinPositions]);
@@ -120,7 +139,16 @@ const App = props => {
 			if (pinDropMode === APP_MODE.DEFAULT_SCREEN)
 				setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
-				globeRef.current.armClickDrop(dropPin);
+				globeRef.current.armClickDrop(position => {
+					drawPin(position);
+					// TODO: add loading state while pin is drawing
+					// offset focused position so that we have room to display popup for confirmation
+					setFocusedPosition({
+						longitude: position.longitude + 1,
+						latitude: position.latitude,
+					});
+					setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
+				});
 		}
 	}, [mouseMode, isMoving, pinDropMode]);
 
@@ -128,7 +156,6 @@ const App = props => {
 		setMouseMode(APP_MODE.MOUSE_NONE);
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
 	};
-
 	return (
 		<div className='page'>
 			<div
@@ -139,7 +166,8 @@ const App = props => {
 				<Globe
 					ref={globeRef}
 					layers={layers}
-					backgroundColor='#7b7b7b'
+					{...focusedPosition}
+					backgroundColor='#2d2d2d'
 				/>
 			</div>
 			<div className='fullscreen-item'>
@@ -154,6 +182,12 @@ const App = props => {
 					<PinDrop
 						onClickCancel={() =>
 							setPinDropMode(APP_MODE.DEFAULT_SCREEN)
+						}
+						isConfirmPopupShowing={
+							pinDropMode === APP_MODE.PIN_DROP_CONFIRM
+						}
+						toggleConfirmPopupShowing={() =>
+							setPinDropMode(APP_MODE.PIN_DROP_BEGIN)
 						}
 					/>
 				)}
