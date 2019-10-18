@@ -11,9 +11,9 @@
 
 .pin-info-popup {
 	position: absolute;
-	right: 1rem;
+	right: 10%;
 	padding: 0;
-	width: 50%;
+	width: 25%;
 	background: white;
 	border-radius: 1rem;
 	top: 2rem;
@@ -26,8 +26,17 @@
 .pin-info-img {
 	width: 100%;
 	object-fit: cover;
+	border-top-left-radius: 1rem;
+	border-top-right-radius: 1rem;
 }
 
 .pin-info-content {
 	padding: 1rem;
+}
+
+.confirmation-button-container {
+	display: flex;
+	width: 100%;
+	justify-content: space-evenly;
+	margin: 1rem 0;
 }
