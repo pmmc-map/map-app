@@ -3,7 +3,13 @@
 		"browser": true,
 		"es6": true
 	},
-	"extends": ["eslint:recommended", "prettier"],
+	"settings": {
+		"react": {
+			"pragma": "React",
+			"version": "detect"
+		}
+	},
+	"extends": ["eslint:recommended", "prettier", "plugin:react/recommended"],
 	"globals": {
 		"Atomics": "readonly",
 		"SharedArrayBuffer": "readonly"
@@ -23,6 +29,13 @@
 		"no-unused-vars": "off",
 		"no-undef": "off",
 		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn"
+		"react-hooks/exhaustive-deps": "warn",
+		"react/boolean-prop-naming": "error",
+		"react/no-unused-state": 1,
+		"react/prefer-read-only-props": 1,
+		"react/require-default-props": 1,
+		"react/void-dom-elements-no-children": 1,
+		"react/jsx-indent-props": ["error", "tab"],
+		"react/no-render-return-value": 0
 	}
 }

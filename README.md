@@ -20,3 +20,10 @@ yarn start
 # create production build
 yarn build
 ```
+
+## contributing
+
+-   use `eslint` for linting
+    -   check `.eslintrc.json` for rules
+-   use `prettier` for pretty formatting
+    -   check `.prettierrc` for rules
