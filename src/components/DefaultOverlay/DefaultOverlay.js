@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /*
  * this is the default overlay that shows when we're not dropping a pin
@@ -16,5 +17,10 @@ const DefaultOverlay = ({ numVisitors, numCountries }) => (
 		<button className='button button-donate'>Donate</button>
 	</div>
 );
+
+DefaultOverlay.propTypes = {
+	numVisitors: PropTypes.number.isRequired,
+	numCountries: PropTypes.number.isRequired,
+};
 
 export default DefaultOverlay;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import HelpModal from './PinDropHelp';
 import InfoPopup from './InfoPopup';
 
-const PinDrop = ({
+const PinDropOverlay = ({
 	onClickCancel,
 	isConfirmPopupShowing,
 	toggleConfirmPopupShowing,
@@ -45,10 +45,10 @@ const PinDrop = ({
 	);
 };
 
-PinDrop.propTypes = {
+PinDropOverlay.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	isConfirmPopupShowing: PropTypes.bool.isRequired,
 	toggleConfirmPopupShowing: PropTypes.func.isRequired,
 };
 
-export default PinDrop;
+export default PinDropOverlay;
