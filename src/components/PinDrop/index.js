@@ -1,2 +1,2 @@
-import PinDrop from './PinDrop';
-export default PinDrop;
+import PinDropOverlay from './PinDrop';
+export default PinDropOverlay;

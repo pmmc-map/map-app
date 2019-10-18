@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.css';
 
 /**
@@ -16,6 +17,10 @@ const PinDropInstructions = ({ onClick }) => {
 			<h1>drop a pin instructions</h1>
 		</div>
 	);
+};
+
+PinDropInstructions.propTypes = {
+	onClick: PropTypes.func.isRequired,
 };
 
 export default PinDropInstructions;
