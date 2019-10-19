@@ -14,13 +14,24 @@
 	right: 10%;
 	padding: 0;
 	width: 25%;
+    height: auto;
 	background: white;
 	border-radius: 1rem;
 	top: 2rem;
 
 	z-index: 99999;
-
+    animation-duration: 1s;
+    animation-name: pin-info-enter;
 	pointer-events: initial;
+}
+
+@keyframes pin-info-enter {
+    from{
+        transform: scale(0,0);
+    }
+    to{
+        transform: scale(1,1);
+    }
 }
 
 .pin-info-img {
