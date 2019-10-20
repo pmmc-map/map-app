@@ -4,7 +4,12 @@ import './style.css';
 
 const DonatePopup = ({onReturnClick})=>{
 	return (
-		<div className={"donate-background"}>
+		<div
+			className={"donate-background"}
+			onClick={e => {
+				e.stopPropagation();
+			}}
+		>
 			<div className={"donate-container"}>
 				<div className={"popup-title-container"}>
 					<h1>Donate to PMMC</h1>

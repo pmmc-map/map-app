@@ -5,6 +5,8 @@
     top:0;
     left: 0;
     background-color: rgba(100,100,100,.6);
+    z-index: 9999;
+    pointer-events: initial;
 }
 
 h1, p{
