@@ -6,7 +6,7 @@ import InfoPopup from './InfoPopup';
 const PinDropOverlay = ({
 	onClickCancel,
 	isConfirmPopupShowing,
-	toggleConfirmPopupShowing,
+	onClickCancelPinDrop,
 }) => {
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
 	return (
@@ -22,14 +22,11 @@ const PinDropOverlay = ({
 			) : null}
 			{isConfirmPopupShowing ? (
 				<InfoPopup
-					onClickCancel={toggleConfirmPopupShowing}
+					onClickCancel={onClickCancelPinDrop}
 					onClickConfirm={() => console.log('hi')}
 				/>
 			) : null}
-			<button
-				className='button button-cancel'
-				onClick={() => onClickCancel()}
-			>
+			<button className='button button-cancel' onClick={onClickCancel}>
 				Cancel
 			</button>
 			<button
@@ -48,7 +45,7 @@ const PinDropOverlay = ({
 PinDropOverlay.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	isConfirmPopupShowing: PropTypes.bool.isRequired,
-	toggleConfirmPopupShowing: PropTypes.func.isRequired,
+	onClickCancelPinDrop: PropTypes.func.isRequired,
 };
 
 export default PinDropOverlay;
