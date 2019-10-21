@@ -13,27 +13,18 @@ export const MOUSE_MODE = {
 	NONE: 8,
 };
 
+// find out why adding bing layers doesn't work!
 export const GLOBE_LAYERS = [
-	{
-		layer: 'renderables',
-		options: {
-			category: 'data',
-			enabled: true,
-			displayName: 'VisitorPins',
-		},
-	},
-	{
-		layer: 'eox-openstreetmap',
-		options: { category: 'overlay', enabled: false, opacity: 0.8 },
-	},
-	{
-		layer: 'bing-roads',
-		options: { category: 'overlay', enabled: true, opacity: 1 },
-	},
-	{
-		layer: 'stars',
-		options: { category: 'overlay', enabled: true, opacity: 0.8 },
-	},
+	'renderables',
+	'blue-marble',
+	'atmosphere-day-night',
+	'stars',
 ];
 
 export const GLOBE_BACKGROUND_COLOR = '#2d2d2d';
+
+export const PMMC_POSITION = {
+	latitude: 33.5733,
+	longitude: -117.7628,
+	altitude: 1972.1101500654263,
+};
