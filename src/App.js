@@ -6,6 +6,7 @@ import {
 	MOUSE_MODE,
 	GLOBE_LAYERS,
 	GLOBE_BACKGROUND_COLOR,
+	PMMC_POSITION,
 } from './constants';
 
 import DefaultOverlay from './components/DefaultOverlay';
@@ -24,6 +25,7 @@ const App = props => {
 
 	// toggle whether or not we are dropping a pin or viewing the default stats overlay
 	const [pinDropMode, setPinDropMode] = useState(APP_MODE.DEFAULT_SCREEN);
+	const [lastDroppedPlacemark, setLastDroppedPlacemark] = useState(null);
 
 	// check if the user is dragging the screen
 	// only  trigger pin drop mode if the screen is clicked, not dragged
@@ -39,9 +41,7 @@ const App = props => {
 	useEffect(() => {
 		// fetch all the initial data from the database
 		console.log('loading previously dropped pins');
-		setPinPositions([
-			{ latitude: 34.908255084901285, longitude: -119.08632418989669 },
-		]);
+		setPinPositions([]);
 		console.log('loading number of visitors');
 		setNumVisitors(12345);
 		console.log('loading number of countries');
@@ -70,7 +70,6 @@ const App = props => {
 		attributes.leaderLineAttributes.outlineColor = WorldWind.Color.RED;
 		attributes.imageSource = 'https://i.imgur.com/Qur0t5s.png';
 		// attributes.imageSource = '/pin.png';
-		console.log(position);
 
 		let placemark = new WorldWind.Placemark(
 			position,
@@ -88,7 +87,7 @@ const App = props => {
 
 		// Add the placemark to the layer and to the Markers component
 		const globe = globeRef.current;
-		const layer = globe.getLayer('VisitorPins');
+		const layer = globe.getLayer('Renderables');
 		if (layer) {
 			// Add the placemark to the globe
 			layer.addRenderable(placemark);
@@ -97,6 +96,7 @@ const App = props => {
 				'Renderable layer for markers not found: ' + 'VisitorPins'
 			);
 		}
+		return placemark;
 	};
 
 	const dropNewPin = position => {
@@ -108,6 +108,7 @@ const App = props => {
 	useEffect(() => {
 		if (globeRef && !oldPinsLoaded) {
 			pinPositions.map(position => drawPin(position));
+			drawPin(PMMC_POSITION);
 			setOldPinsLoaded(true);
 		}
 	}, [globeRef, oldPinsLoaded, pinPositions]);
@@ -132,7 +133,7 @@ const App = props => {
 				setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
 				globeRef.current.armClickDrop(position => {
-					drawPin(position);
+					const placemark = drawPin(position);
 					// TODO: add loading state while pin is drawing
 					// offset focused position so that we have room to display popup for confirmation
 					setGlobeFocusedPosition({
@@ -140,12 +141,24 @@ const App = props => {
 						latitude: position.latitude,
 					});
 					setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
+					setLastDroppedPlacemark(placemark);
 				});
 		}
 	}, [mouseMode, isMouseMoving, pinDropMode]);
 
 	const onClickInstructions = () => {
 		setMouseMode(MOUSE_MODE.NONE);
+		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
+	};
+
+	const deleteDroppedPin = () => {
+		const layer = globeRef.current.getLayer('Renderables');
+		layer.removeRenderable(lastDroppedPlacemark);
+		layer.refresh();
+	};
+
+	const onClickCancelPinDrop = () => {
+		deleteDroppedPin();
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
 	};
 
@@ -173,15 +186,14 @@ const App = props => {
 					<PinDropInstructions onClick={onClickInstructions} />
 				) : (
 					<PinDropOverlay
-						onClickCancel={() =>
-							setPinDropMode(APP_MODE.DEFAULT_SCREEN)
-						}
+						onClickCancel={() => {
+							deleteDroppedPin();
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+						}}
 						isConfirmPopupShowing={
 							pinDropMode === APP_MODE.PIN_DROP_CONFIRM
 						}
-						toggleConfirmPopupShowing={() =>
-							setPinDropMode(APP_MODE.PIN_DROP_BEGIN)
-						}
+						onClickCancelPinDrop={onClickCancelPinDrop}
 					/>
 				)}
 			</div>
