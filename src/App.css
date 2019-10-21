@@ -15,6 +15,11 @@
 	height: 100%;
 }
 
+.globe-container {
+	cursor: pointer;
+	pointer-events: initial;
+}
+
 .fullscreen-item {
 	position: absolute;
 	top: 0;

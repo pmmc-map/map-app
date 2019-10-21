@@ -165,9 +165,13 @@ const App = props => {
 	return (
 		<div className='page'>
 			<div
+				className='globe-container'
 				onMouseDown={() => setMouseMode(MOUSE_MODE.DOWN)}
 				onMouseUp={() => setMouseMode(MOUSE_MODE.UP)}
 				onMouseMove={() => setMouseMode(MOUSE_MODE.MOVE)}
+				onTouchStart={() => setMouseMode(MOUSE_MODE.DOWN)}
+				onTouchEnd={() => setMouseMode(MOUSE_MODE.UP)}
+				onTouchMove={() => setMouseMode(MOUSE_MODE.MOVE)}
 			>
 				<Globe
 					ref={globeRef}
