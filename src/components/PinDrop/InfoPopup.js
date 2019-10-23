@@ -4,16 +4,27 @@ import './style.css';
 
 const InfoPopup = ({
 	imgSrc,
-	cityState,
+	city,
+	state,
 	country,
 	onClickCancel,
 	onClickConfirm,
+	loading,
 }) => {
+	console.log('loading', loading);
+	if (loading)
+		return (
+			<div className='popup-loading'>
+				<h1 className='popup-loading-message'>loading</h1>
+			</div>
+		);
 	return (
 		<div className='pin-info-popup'>
 			<img className='pin-info-img' src={imgSrc} alt='test' />
 			<div className='pin-info-content'>
-				<h1 className='city-state-header'>{cityState}</h1>
+				<h1 className='city-state-header'>{`${
+					city ? city + ', ' : ''
+				}${state}`}</h1>
 				<h2 className='country-header'>{country}</h2>
 				<div className='pin-info-text'>
 					Lorem Ipsum is simply dummy text of the printing and
@@ -44,16 +55,18 @@ const InfoPopup = ({
 
 InfoPopup.propTypes = {
 	imgSrc: PropTypes.string,
-	cityState: PropTypes.string,
-	country: PropTypes.string,
+	city: PropTypes.string,
+	state: PropTypes.string,
+	country: PropTypes.string.isRequired,
 	onClickCancel: PropTypes.func.isRequired,
 	onClickConfirm: PropTypes.func.isRequired,
+	loading: PropTypes.bool.isRequired,
 };
 
 InfoPopup.defaultProps = {
 	imgSrc: 'https://i.imgur.com/zMSSREb.jpg',
-	cityState: 'Los Angeles, California',
-	country: 'United States',
+	city: '',
+	state: '',
 };
 
 export default InfoPopup;
