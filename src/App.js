@@ -158,7 +158,7 @@ const App = props => {
 	};
 
 	const onClickCancelPinDrop = () => {
-		deleteDroppedPin();
+		globeRef.current.armClickDrop(null);
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
 	};
 
