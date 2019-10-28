@@ -26,7 +26,10 @@ const PinDropOverlay = ({
 					onClickConfirm={() => console.log('hi')}
 				/>
 			) : null}
-			<button className='button button-cancel' onClick={onClickCancel}>
+			<button
+				className='button button-cancel button-pin-drop-cancel'
+				onClick={onClickCancel}
+			>
 				Cancel
 			</button>
 			<button
