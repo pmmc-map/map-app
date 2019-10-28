@@ -7,7 +7,14 @@ const HelpModal = ({ onClick }) => (
 		className='pin-help-modal'
 		onClick={e => e.stopPropagation() && onClick()}
 	>
-		sjdfh dsjf h sdjfh sdfjh sdkjfhkjsdhfskdjf sjdfh skd sjdfh
+		<ul className='pin-help-list'>
+			<li className='pin-help-instr'>
+				Zoom in on the globe with two fingers
+			</li>
+			<li className='pin-help-instr'>
+				Drop an pin by tapping on an area on the map
+			</li>
+		</ul>
 	</div>
 );
 

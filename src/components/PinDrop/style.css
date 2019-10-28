@@ -9,6 +9,13 @@
 	pointer-events: initial;
 }
 
+.pin-help-list {
+	padding-left: 1rem;
+}
+
+.pin-help-instr {
+}
+
 .pin-info-popup {
 	position: absolute;
 	right: 10%;
@@ -59,4 +66,8 @@
 
 .country-header {
 	margin-top: 0;
+}
+
+.button-help:disabled {
+	background: #7b7b7b;
 }
