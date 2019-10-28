@@ -11,3 +11,16 @@
 	z-index: 9999;
 	pointer-events: initial;
 }
+
+.pin-drop-cta {
+	font-size: 2.7rem;
+	text-align: center;
+	position: absolute;
+	bottom: 15%;
+}
+
+li.instr {
+	font-size: 1.7rem;
+	font-weight: 300;
+	text-align: center;
+}
