@@ -60,6 +60,10 @@
 	margin: 1rem 0;
 }
 
+.button-confirm {
+	background: #1da61d;
+}
+
 .city-state-header {
 	word-wrap: break-word;
 }

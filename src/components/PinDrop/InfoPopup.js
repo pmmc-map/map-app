@@ -24,10 +24,16 @@ const InfoPopup = ({
 					five centuries,
 				</div>
 				<div className='confirmation-button-container'>
-					<button onClick={onClickConfirm} className='button'>
+					<button
+						onClick={onClickConfirm}
+						className='button button-confirm'
+					>
 						Confirm
 					</button>
-					<button onClick={onClickCancel} className='button'>
+					<button
+						onClick={onClickCancel}
+						className='button button-cancel'
+					>
 						Cancel
 					</button>
 				</div>
