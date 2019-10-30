@@ -34,3 +34,33 @@ export const getCityImg = async city => {
 
 	return await response.json();
 };
+
+export const recordVisitorLocation = async position => {
+	const response = await fetch(BASE_API_URL + 'api/locations', {
+		method: 'POST',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+		},
+		body: JSON.stringify({
+			lat: position.latitude,
+			long: position.longitude,
+		}),
+		withCredentials: true,
+	});
+	return await response.json();
+};
+
+export const getAllLocationData = async () => {
+	const response = await fetch(BASE_API_URL + 'api/locations', {
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+		},
+		withCredentials: true,
+	});
+	return await response.json();
+};

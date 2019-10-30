@@ -26,7 +26,15 @@ const App = props => {
 
 	// toggle whether or not we are dropping a pin or viewing the default stats overlay
 	const [pinDropMode, setPinDropMode] = useState(APP_MODE.DEFAULT_SCREEN);
-	const [lastDroppedPlacemark, setLastDroppedPlacemark] = useState({});
+	const [lastDroppedPlacemark, setLastDroppedPlacemark] = useState({
+		placemark: {
+			position: {
+				longitude: 0,
+				latitude: 0,
+			},
+		},
+	});
+	const [lastDroppedStats, setLastDroppedStats] = useState({});
 
 	// check if the user is dragging the screen
 	// only  trigger pin drop mode if the screen is clicked, not dragged
@@ -134,25 +142,13 @@ const App = props => {
 				setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
 				globeRef.current.armClickDrop(position => {
-					setPinDropMode(APP_MODE.PIN_DROP_LOADING);
-					console.log(position);
 					const placemark = drawPin(position);
-					// TODO: add loading state while pin is drawing
 					// offset focused position so that we have room to display popup for confirmation
-					const fetchPinInfo = async () => {
-						const pinDropResponse = await API.getPinInfo(position);
-						const locationData = await pinDropResponse;
-						if (pinDropResponse.success) {
-							setLastDroppedPlacemark({
-								locationData: locationData,
-								placemark: placemark,
-							});
-							setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
-						}
-					};
+					setLastDroppedPlacemark({
+						placemark: placemark,
+					});
+					setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
 
-					fetchPinInfo();
-					// setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
 					setGlobeFocusedPosition({
 						longitude: position.longitude + 1,
 						latitude: position.latitude,
@@ -176,6 +172,8 @@ const App = props => {
 		globeRef.current.armClickDrop(null);
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
 	};
+
+	const onClickConfirmPinDrop = () => {};
 
 	return (
 		<div className='page'>
@@ -212,11 +210,9 @@ const App = props => {
 						isConfirmPopupShowing={
 							pinDropMode !== APP_MODE.PIN_DROP_BEGIN
 						}
-						isConfirmPinLoading={
-							pinDropMode === APP_MODE.PIN_DROP_LOADING
-						}
 						onClickCancelPinDrop={onClickCancelPinDrop}
-						locationData={lastDroppedPlacemark.locationData}
+						onClickConfirmPinDrop={onClickConfirmPinDrop}
+						pinPosition={lastDroppedPlacemark.placemark.position}
 					/>
 				)}
 			</div>

@@ -16,6 +16,12 @@
 .pin-help-instr {
 }
 
+.pin-info-image {
+	height: 20rem;
+	object-fit: cover;
+	border-radius: 1rem 1rem 0 0;
+}
+
 .pin-info-popup {
 	position: absolute;
 	right: 10%;

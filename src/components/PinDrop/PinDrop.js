@@ -6,9 +6,9 @@ import InfoPopup from './InfoPopup';
 const PinDropOverlay = ({
 	onClickCancel,
 	isConfirmPopupShowing,
-	isConfirmPinLoading,
 	onClickCancelPinDrop,
-	locationData,
+	onClickConfirmPinDrop,
+	pinPosition,
 }) => {
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
 	return (
@@ -24,10 +24,9 @@ const PinDropOverlay = ({
 			) : null}
 			{isConfirmPopupShowing ? (
 				<InfoPopup
-					loading={isConfirmPinLoading}
-					{...locationData}
 					onClickCancel={onClickCancelPinDrop}
-					onClickConfirm={() => console.log('hi')}
+					onClickConfirm={onClickConfirmPinDrop}
+					pinPosition={pinPosition}
 				/>
 			) : null}
 			<button
@@ -52,17 +51,15 @@ const PinDropOverlay = ({
 PinDropOverlay.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	isConfirmPopupShowing: PropTypes.bool.isRequired,
-	isConfirmPinLoading: PropTypes.bool.isRequired,
-
 	onClickCancelPinDrop: PropTypes.func.isRequired,
-	locationData: PropTypes.object,
+	onClickConfirmPinDrop: PropTypes.func.isRequired,
+	pinPosition: PropTypes.object,
 };
 
 PinDropOverlay.defaultProps = {
-	locationData: {
-		city: '',
-		country: '',
-		state: '',
+	pinPosition: {
+		longitude: 0,
+		latitude: 0,
 	},
 };
 
