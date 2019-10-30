@@ -33,10 +33,13 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 
 			const fetchLocationImg = async () => {
 				const city = await pinLocationData.city;
-				console.log(city);
-				const locationImgResp = await API.getCityImg(city);
-				const cityImg = await locationImgResp.city;
-				setCityImgSrc(cityImg);
+				try {
+					const locationImgResp = await API.getCityImg(city);
+					const cityImg = await locationImgResp.city;
+					setCityImgSrc(cityImg);
+				} catch (error) {
+					setCityImgSrc('../../../public/defaultcity.jpg');
+				}
 			};
 
 			fetchLocationImg();
