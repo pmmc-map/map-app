@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
+import { getCityImg } from '../../api';
 
 const InfoPopup = ({
-	imgSrc,
 	city,
 	state,
 	country,
@@ -11,13 +11,27 @@ const InfoPopup = ({
 	onClickConfirm,
 	loading,
 }) => {
-	console.log('loading', loading);
+	// TODO: create placeholder image while image is loading
+	const [imgSrc, setImgSrc] = useState('');
+
+	useEffect(() => {
+		if (!loading) {
+			const fetchLocationImg = async () => {
+				const locationImgResp = await getCityImg(city);
+				const cityImg = await locationImgResp.city;
+				setImgSrc(cityImg);
+			};
+			fetchLocationImg();
+		}
+	}, [loading, city]);
+
 	if (loading)
 		return (
 			<div className='popup-loading'>
 				<h1 className='popup-loading-message'>loading</h1>
 			</div>
 		);
+
 	return (
 		<div className='pin-info-popup'>
 			<img className='pin-info-img' src={imgSrc} alt='test' />
@@ -54,7 +68,6 @@ const InfoPopup = ({
 };
 
 InfoPopup.propTypes = {
-	imgSrc: PropTypes.string,
 	city: PropTypes.string,
 	state: PropTypes.string,
 	country: PropTypes.string.isRequired,
@@ -64,7 +77,7 @@ InfoPopup.propTypes = {
 };
 
 InfoPopup.defaultProps = {
-	imgSrc: 'https://i.imgur.com/zMSSREb.jpg',
+	// imgSrc: 'https://i.imgur.com/zMSSREb.jpg',
 	city: '',
 	state: '',
 };
