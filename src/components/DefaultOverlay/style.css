@@ -11,12 +11,13 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .donate-container {
 	background: white;
 	border-radius: 1rem;
 	animation-duration: 0.5s;
 	animation-name: donate-enter;
-	max-width: 70%;
+	max-width: 40%;
 }
 
 .popup-title-container {
@@ -41,7 +42,8 @@
 }
 
 .popup-body > p {
-	margin: 0;
+	margin-top: 0;
+	font-size: 1rem;
 }
 
 @keyframes donate-enter {

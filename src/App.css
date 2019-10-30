@@ -56,12 +56,23 @@
 	pointer-events: initial;
 	font-size: 1.5rem;
 	transition: 0.1s ease-in all;
+
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .button:hover:enabled {
 	background-color: #2d2d2d;
 	transition: 0.15s ease-in all;
 }
+
+.button-next {
+	background: dodgerblue;
+}
+
+.button-next:hover:enabled {
+	background: #0e64b7;
+}
+
 .button-cancel {
 	background-color: #8e8e8e;
 }
