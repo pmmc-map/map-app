@@ -12,14 +12,14 @@ const InfoPopup = ({
 	loading,
 }) => {
 	// TODO: create placeholder image while image is loading
-	const [imgSrc, setImgSrc] = useState('');
+	const [cityImgSrc, setCityImgSrc] = useState('');
 
 	useEffect(() => {
 		if (!loading) {
 			const fetchLocationImg = async () => {
 				const locationImgResp = await getCityImg(city);
 				const cityImg = await locationImgResp.city;
-				setImgSrc(cityImg);
+				setCityImgSrc(cityImg);
 			};
 			fetchLocationImg();
 		}
@@ -34,7 +34,13 @@ const InfoPopup = ({
 
 	return (
 		<div className='pin-info-popup'>
-			<img className='pin-info-img' src={imgSrc} alt='test' />
+			<div
+				style={{
+					height: '20rem',
+					objectFit: 'cover',
+					backgroundImage: `url("${cityImgSrc}")`,
+				}}
+			/>
 			<div className='pin-info-content'>
 				<h1 className='city-state-header'>{`${
 					city ? city + ', ' : ''
