@@ -49,7 +49,7 @@ const App = props => {
 	}, []);
 
 	// to be implemented
-	const drawPin = position => {
+	const drawPin = (position, pinImg = '../public/pin.png') => {
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -68,9 +68,7 @@ const App = props => {
 		attributes.labelAttributes.color = WorldWind.Color.YELLOW;
 		attributes.drawLeaderLine = true;
 		attributes.leaderLineAttributes.outlineColor = WorldWind.Color.RED;
-		attributes.imageSource = 'https://i.imgur.com/Qur0t5s.png';
-		// attributes.imageSource = '/pin.png';
-		console.log(position);
+		attributes.imageSource = pinImg;
 
 		let placemark = new WorldWind.Placemark(
 			position,
@@ -109,7 +107,7 @@ const App = props => {
 	useEffect(() => {
 		if (globeRef && !oldPinsLoaded) {
 			pinPositions.map(position => drawPin(position));
-			drawPin(PMMC_POSITION);
+			drawPin(PMMC_POSITION, '../public/star.png');
 			setOldPinsLoaded(true);
 		}
 	}, [globeRef, oldPinsLoaded, pinPositions]);
