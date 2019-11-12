@@ -1,0 +1,79 @@
+.survey-background {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 9999;
+	pointer-events: initial;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.question-card {
+	background: white;
+	border-radius: 1rem;
+	animation-duration: 0.5s;
+	animation-name: donate-enter;
+	width: 40%;
+}
+
+.title-container {
+	background-color: dodgerblue;
+	width: 100%;
+	color: white;
+	text-align: center;
+	border-top-left-radius: 1rem;
+	border-top-right-radius: 1rem;
+	padding: 0.75rem 0;
+}
+
+.title-container > h1 {
+	margin: 0;
+}
+
+.question-body {
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.question-body > p {
+	margin-top: 0;
+	font-size: 1rem;
+}
+
+@keyframes donate-enter {
+	from {
+		transform: scale(0, 0);
+	}
+	to {
+		transform: scale(1, 1);
+	}
+}
+
+.drop-pin-cta {
+	color: white;
+	text-align: center;
+	position: absolute;
+	bottom: 1rem;
+	left: 25%;
+	right: 25%;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+}
+
+.header-visitors {
+	margin: 0;
+	padding-top: 1rem;
+	font-size: 2.5rem;
+	text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.visitor-substats {
+	margin: 0;
+	font-size: 2rem;
+	font-weight: 400;
+}
