@@ -27,10 +27,17 @@ Question list format
 const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuestion, questionList }) => {
 
 	useEffect(()=>{
-		document.getElementById('question-options').reset();
+		let temp = document.getElementsByTagName('input');
+		for(let i = 0; i < temp.length; i++){
+			// just in case other radio buttons are added to the application
+			// we dont want to reset those by accident
+			if(temp[i].name === 'surveyQuestion'+currentQuestion){
+				temp[i].checked = false;
+			}
+		}
 	}, [currentQuestion]);
 
-	//todo {bug}: inputs for form visually resets but does not seem to actually reset
+	const ready = questionList === null || questionList.length === 0;
 	return (
 		<div
 			className='question-card'
@@ -50,10 +57,10 @@ const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuesti
 			<div className='question-body'>
 				<form id='question-options'>
 					{
-						questionList === null || questionList.length === 0 ? null:
+						ready ? null:
 							questionList[currentQuestion].options.map((option)=>
 								[
-									(<input type="radio" name={option.qid} value={JSON.stringify(option)} onChange={onSelect}/>),
+									(<input type="radio" name={'surveyQuestion'+currentQuestion} value={JSON.stringify(option)} onChange={onSelect}/>),
 									option.text,
 									(<br/>)
 								]
@@ -61,7 +68,7 @@ const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuesti
 					}
 				</form>
 				{
-					questionList === null || questionList.length === 0 ? null :
+					ready ? null :
 						(<button onClick={()=>onNext(questionList[currentQuestion].qid)}>
 							{currentQuestion === questionList.length-1 ? 'Submit' : 'Next'}
 						</button>)
