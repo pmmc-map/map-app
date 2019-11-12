@@ -7,7 +7,7 @@ const SurveyBackground = ({ onReturnClick, children }) => {
 		<div
 			className={'survey-background'}
 			onClick={e => {
-				//onReturnClick();
+				onReturnClick();
 				e.stopPropagation();
 			}}
 		>

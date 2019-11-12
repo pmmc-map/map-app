@@ -32,7 +32,12 @@ const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuesti
 
 	//todo {bug}: inputs for form visually resets but does not seem to actually reset
 	return (
-		<div className='question-card'>
+		<div
+			className='question-card'
+			onClick={(e)=>{
+				e.stopPropagation();
+			}}
+		>
 			<div className='title-container'>
 				<h1>
 					{
