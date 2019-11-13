@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
 const DonatePopup = ({ onReturnClick }) => {
-	useEffect(() => {
-		console.log('test');
-
-		return () => console.log('goodbye');
-	}, []);
 	return (
 		<div
 			className={'donate-background'}
@@ -31,8 +26,8 @@ const DonatePopup = ({ onReturnClick }) => {
 					</div>
 
 					<p>
-						Your donation will help to xxx, xxxxxx, and xxxxxxxxx
-						xxxx xxxxxxx.
+						Your donation will provide life saving medication and
+						fish for our patients.
 					</p>
 
 					<button onClick={onReturnClick} className='button'>
