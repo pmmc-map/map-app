@@ -31,15 +31,20 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 				return;
 			}
 
+			console.log('why');
 			const fetchLocationImg = async () => {
+				console.log('ssssfhoh');
 				const city = await pinLocationData.city;
-				try {
-					const locationImgResp = await API.getCityImg(city);
-					const cityImg = await locationImgResp.city;
-					setCityImgSrc(cityImg);
-				} catch (error) {
-					setCityImgSrc('../../../public/defaultcity.jpg');
-				}
+				// try {
+				// console.log('hey');
+				// const locationImgResp = await API.getCityImg(city);
+				// const cityImg = await locationImgResp.body;
+				// console.log(cityImg);
+				// setCityImgSrc(cityImg);
+				// } catch (error) {
+				// console.log(error);
+				setCityImgSrc('../../../public/defaultcity.jpg');
+				// }
 			};
 
 			fetchLocationImg();
@@ -107,18 +112,29 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 					) : null}
 				</div>
 				<div className='confirmation-button-container'>
-					<button
-						onClick={() => setIsConfirmClicked(true)}
-						className='button button-confirm'
-					>
-						Confirm
-					</button>
-					<button
-						onClick={onClickCancel}
-						className='button button-cancel'
-					>
-						Cancel
-					</button>
+					{isConfirmClicked ? (
+						<button
+							onClick={onClickCancel}
+							className='button button-cancel'
+						>
+							Dismiss
+						</button>
+					) : (
+						<>
+							<button
+								onClick={() => setIsConfirmClicked(true)}
+								className='button button-confirm'
+							>
+								Confirm
+							</button>
+							<button
+								onClick={onClickCancel}
+								className='button button-cancel'
+							>
+								Cancel
+							</button>
+						</>
+					)}
 				</div>
 			</div>
 		</div>
