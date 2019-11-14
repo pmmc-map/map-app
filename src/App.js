@@ -71,7 +71,6 @@ const App = props => {
 
 	// to be implemented
 	const drawPin = (position, pinImg = '../public/pin.png') => {
-		console.log(position);
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -137,7 +136,6 @@ const App = props => {
 					latitude: latitude,
 					altitude: 263.3237286340391,
 				};
-				console.log(animal);
 				if (animal['animal type'].indexOf('Seal') >= 0) {
 					drawPin(position, '../public/seal.png');
 				} else {

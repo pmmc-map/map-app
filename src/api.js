@@ -19,20 +19,19 @@ export const getPinInfo = async position => {
 };
 
 export const getCityImg = async city => {
-	const response = await fetch(BASE_API_URL + 'api/images/city', {
-		method: 'POST',
-		mode: 'cors',
-		headers: {
-			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin': BASE_API_URL,
-		},
-		body: JSON.stringify({
-			city: city,
-		}),
-		withCredentials: true,
-	});
+	const response = await fetch(
+		BASE_API_URL + `api/images/city?city=${city}`,
+		{
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'Access-Control-Allow-Origin': BASE_API_URL,
+			},
+			withCredentials: true,
+		}
+	);
 
-	return await response.json();
+	return await response;
 };
 
 export const recordVisitorLocation = async position => {
