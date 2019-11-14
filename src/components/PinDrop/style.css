@@ -16,6 +16,13 @@
 .pin-help-instr {
 }
 
+.pin-info-image {
+	height: 20rem;
+	object-fit: cover;
+	border-radius: 1rem 1rem 0 0;
+	background-position: bottom;
+}
+
 .pin-info-popup {
 	position: absolute;
 	right: 10%;
@@ -42,13 +49,6 @@
 	to {
 		transform: scale(1, 1);
 	}
-}
-
-.pin-info-img {
-	width: 100%;
-	object-fit: cover;
-	border-top-left-radius: 1rem;
-	border-top-right-radius: 1rem;
 }
 
 .pin-info-content {

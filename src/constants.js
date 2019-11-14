@@ -3,7 +3,8 @@ export const APP_MODE = {
 	PIN_DROP_INSTRUCTIONS: 1,
 	PIN_DROP_BEGIN: 2,
 	PIN_DROP_CONFIRM: 3,
-	PIN_DROP_DONE: 4,
+	PIN_DROP_LOADING: 4,
+	PIN_DROP_DONE: 5,
 };
 
 export const MOUSE_MODE = {
@@ -16,6 +17,7 @@ export const MOUSE_MODE = {
 // find out why adding bing layers doesn't work!
 export const GLOBE_LAYERS = [
 	'renderables',
+	// 'eox-openstreetmap',
 	'blue-marble',
 	'atmosphere-day-night',
 	'stars',

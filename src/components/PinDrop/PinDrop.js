@@ -7,6 +7,8 @@ const PinDropOverlay = ({
 	onClickCancel,
 	isConfirmPopupShowing,
 	onClickCancelPinDrop,
+	onClickConfirmPinDrop,
+	pinPosition,
 }) => {
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
 	return (
@@ -23,7 +25,8 @@ const PinDropOverlay = ({
 			{isConfirmPopupShowing ? (
 				<InfoPopup
 					onClickCancel={onClickCancelPinDrop}
-					onClickConfirm={() => console.log('hi')}
+					onClickConfirm={onClickConfirmPinDrop}
+					pinPosition={pinPosition}
 				/>
 			) : null}
 			<button
@@ -49,6 +52,15 @@ PinDropOverlay.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	isConfirmPopupShowing: PropTypes.bool.isRequired,
 	onClickCancelPinDrop: PropTypes.func.isRequired,
+	onClickConfirmPinDrop: PropTypes.func.isRequired,
+	pinPosition: PropTypes.object,
+};
+
+PinDropOverlay.defaultProps = {
+	pinPosition: {
+		longitude: 0,
+		latitude: 0,
+	},
 };
 
 export default PinDropOverlay;
