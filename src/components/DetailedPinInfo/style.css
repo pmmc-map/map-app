@@ -1,0 +1,59 @@
+.modal-big-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-big {
+	background: white;
+	border-radius: 1rem;
+	width: 70%;
+	height: 80%;
+}
+
+.modal-big-header {
+	width: 100%;
+	height: 15%;
+	background: lavender;
+	border-top-right-radius: 1rem;
+	border-top-left-radius: 1rem;
+}
+
+.modal-big-body {
+	padding: 1rem 2rem;
+	height: 100%;
+}
+
+.modal-big-body .city-state-header {
+	color: #1c99f7;
+	font-weight: 900;
+}
+
+.modal-big-body .country-header {
+	color: #88caff;
+	font-weight: 900;
+}
+
+.distance-info {
+	font-size: 1.5rem;
+	line-height: 1rem;
+	width: 50%;
+}
+
+.distance-info .distance {
+	font-weight: 600;
+	color: #1c99f7;
+}
+
+.distance-info .pmmc {
+	font-weight: 600;
+	color: #1c99f7;
+}

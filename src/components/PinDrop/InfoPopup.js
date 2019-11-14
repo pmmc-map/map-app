@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 import LoadingScreen from '../LoadingScreen';
+import DetailedPinInfo from '../DetailedPinInfo';
 import * as API from '../../api';
 
 const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
@@ -83,6 +84,15 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 
 	if (isPinLocationDataLoading) return <LoadingScreen />;
 
+	if (isConfirmClicked && !isLocationStatsLoading)
+		return (
+			<DetailedPinInfo
+				{...locationData}
+				{...locationStats}
+				onClickDismiss={() => console.log('haha')}
+			/>
+		);
+
 	return (
 		<div className='pin-info-popup'>
 			<div
@@ -96,45 +106,22 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 					locationData.city ? locationData.city + ', ' : ''
 				}${locationData.state}`}</h1>
 				<h2 className='country-header'>{locationData.country}</h2>
-				<div className='pin-info-text'>
-					{isConfirmClicked ? (
-						<p>
-							country visits:{' '}
-							{isLocationStatsLoading
-								? '...'
-								: locationStats.country_count}
-							<br />
-							state visits:{' '}
-							{isLocationStatsLoading
-								? '...'
-								: locationStats.state_count}
-						</p>
-					) : null}
-				</div>
+				<div className='pin-info-text'></div>
 				<div className='confirmation-button-container'>
-					{isConfirmClicked ? (
+					<>
+						<button
+							onClick={() => setIsConfirmClicked(true)}
+							className='button button-confirm'
+						>
+							Confirm
+						</button>
 						<button
 							onClick={onClickCancel}
 							className='button button-cancel'
 						>
-							Dismiss
+							Cancel
 						</button>
-					) : (
-						<>
-							<button
-								onClick={() => setIsConfirmClicked(true)}
-								className='button button-confirm'
-							>
-								Confirm
-							</button>
-							<button
-								onClick={onClickCancel}
-								className='button button-cancel'
-							>
-								Cancel
-							</button>
-						</>
-					)}
+					</>
 				</div>
 			</div>
 		</div>
