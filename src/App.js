@@ -24,6 +24,9 @@ const App = props => {
 	const [pinPositions, setPinPositions] = useState([]);
 	const [oldPinsLoaded, setOldPinsLoaded] = useState(false);
 
+	const [animalsLoaded, setAllAnimalsLoaded] = useState(false);
+	const [allAnimalInfo, setAllAnimalInfo] = useState([]);
+
 	// toggle whether or not we are dropping a pin or viewing the default stats overlay
 	const [pinDropMode, setPinDropMode] = useState(APP_MODE.DEFAULT_SCREEN);
 	const [lastDroppedPlacemark, setLastDroppedPlacemark] = useState({
@@ -48,6 +51,15 @@ const App = props => {
 	});
 
 	useEffect(() => {
+		// fetch all the initial animal info!!
+		const initAnimalInfo = async () => {
+			const animalsResponse = await API.getAllAnimalData();
+			var x = animalsResponse;
+			const animalLocations = await animalsResponse['animal locations'];
+			setAllAnimalInfo(animalLocations);
+			setAllAnimalsLoaded(true);
+		};
+		initAnimalInfo();
 		// fetch all the initial data from the database
 		console.log('loading previously dropped pins');
 		setPinPositions([]);
@@ -59,6 +71,7 @@ const App = props => {
 
 	// to be implemented
 	const drawPin = (position, pinImg = '../public/pin.png') => {
+		console.log(position);
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -114,12 +127,27 @@ const App = props => {
 	};
 
 	useEffect(() => {
-		if (globeRef && !oldPinsLoaded) {
+		if (globeRef && !oldPinsLoaded && animalsLoaded) {
 			pinPositions.map(position => drawPin(position));
 			drawPin(PMMC_POSITION, '../public/star.png');
+			allAnimalInfo.map(animal => {
+				const { longitude, latitude } = animal.coordinates;
+				const position = {
+					longitude: longitude,
+					latitude: latitude,
+					altitude: 263.3237286340391,
+				};
+				console.log(animal);
+				if (animal['animal type'].indexOf('Seal') >= 0) {
+					drawPin(position, '../public/seal.png');
+				} else {
+					drawPin(position, '../public/sealion.png');
+				}
+			});
 			setOldPinsLoaded(true);
+			setAllAnimalsLoaded(false);
 		}
-	}, [globeRef, oldPinsLoaded, pinPositions]);
+	}, [globeRef, oldPinsLoaded, pinPositions, allAnimalInfo, animalsLoaded]);
 
 	useEffect(() => {
 		if (pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS) {

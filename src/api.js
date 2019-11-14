@@ -64,3 +64,16 @@ export const getAllLocationData = async () => {
 	});
 	return await response.json();
 };
+
+export const getAllAnimalData = async () => {
+	const response = await fetch(BASE_API_URL + 'api/animal_locations', {
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+		},
+		withCredentials: true,
+	});
+	return await response.json();
+};
