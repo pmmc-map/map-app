@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DonatePopup from './DonatePopup';
+import Survey from '../Survey/Survey'
 
 /*
  * this is the default overlay that shows when we're not dropping a pin
@@ -30,7 +31,7 @@ const DefaultOverlay = ({ numVisitors, numCountries }) => {
 				Donate
 			</button>
 			{displayDonatePopup ? (
-				<DonatePopup
+				<Survey
 					onReturnClick={() => {
 						setDisplayDonatePopup(false);
 					}}

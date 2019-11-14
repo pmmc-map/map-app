@@ -1,0 +1,85 @@
+.survey-background {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 9999;
+	pointer-events: initial;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.question-card {
+	background: white;
+	border-radius: 1rem;
+	animation-duration: 0.5s;
+	animation-name: question-enter;
+    display: flex;
+    flex-direction: column;
+	width: 90%;
+    height: 90%;
+}
+
+.title-container {
+	background-color: dodgerblue;
+	width: 100%;
+	color: white;
+    flex: 1;
+	text-align: center;
+	border-top-left-radius: 1rem;
+	border-top-right-radius: 1rem;
+	padding: 0.75rem 0;
+}
+
+.title-container > h1 {
+	margin: 0;
+}
+
+.question-body {
+    flex: 9;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    padding: 2rem;
+}
+
+.question-body > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+}
+
+
+.question-options{
+    transform:scale(2);/*might need to change later because it wont be responsive*/
+    width: 50%;
+    padding: 2rem;
+}
+
+.question-options > div:nth-child(odd){
+    background-color: #eee;
+}
+
+.question-options > div{
+    align-items: center;
+    border-radius: 5px;
+}
+
+.progress-bar-container{
+    width: 100%;
+}
+
+@keyframes question-enter {
+	from {
+		transform: scale(0, 0);
+	}
+	to {
+		transform: scale(1, 1);
+	}
+}
