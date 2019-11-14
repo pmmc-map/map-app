@@ -17,7 +17,7 @@ const PinDropInstructions = ({ onClick }) => {
 			<ul>
 				<li className='instr'>Zoom in on the globe with two fingers</li>
 				<li className='instr'>
-					Drop an pin by tapping on an area on the map
+					Drop a pin by tapping on an area on the map
 				</li>
 			</ul>
 			<h1 className='pin-drop-cta'>
