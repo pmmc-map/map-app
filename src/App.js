@@ -24,7 +24,7 @@ const App = props => {
 	const [pinPositions, setPinPositions] = useState([]);
 	const [oldPinsLoaded, setOldPinsLoaded] = useState(false);
 
-	const [animalsLoaded, setAllAnimalsLoaded] = useState(false);
+	const [animalsLoaded, setAnimalsLoaded] = useState(false);
 	const [allAnimalInfo, setAllAnimalInfo] = useState([]);
 
 	// toggle whether or not we are dropping a pin or viewing the default stats overlay
@@ -55,9 +55,9 @@ const App = props => {
 		const initAnimalInfo = async () => {
 			const animalsResponse = await API.getAllAnimalData();
 			var x = animalsResponse;
-			const animalLocations = await animalsResponse['animal locations'];
+			const animalLocations = await animalsResponse.animal_locations;
 			setAllAnimalInfo(animalLocations);
-			setAllAnimalsLoaded(true);
+			setAnimalsLoaded(true);
 		};
 		initAnimalInfo();
 		// fetch all the initial data from the database
@@ -136,14 +136,14 @@ const App = props => {
 					latitude: latitude,
 					altitude: 263.3237286340391,
 				};
-				if (animal['animal type'].indexOf('Seal') >= 0) {
+				if (animal.animal_type.indexOf('Seal') >= 0) {
 					drawPin(position, '../public/seal.png');
 				} else {
 					drawPin(position, '../public/sealion.png');
 				}
 			});
 			setOldPinsLoaded(true);
-			setAllAnimalsLoaded(false);
+			setAnimalsLoaded(false);
 		}
 	}, [globeRef, oldPinsLoaded, pinPositions, allAnimalInfo, animalsLoaded]);
 
