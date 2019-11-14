@@ -16,14 +16,18 @@
 	background: white;
 	border-radius: 1rem;
 	animation-duration: 0.5s;
-	animation-name: donate-enter;
-	width: 40%;
+	animation-name: question-enter;
+    display: flex;
+    flex-direction: column;
+	width: 90%;
+    height: 90%;
 }
 
 .title-container {
 	background-color: dodgerblue;
 	width: 100%;
 	color: white;
+    flex: 1;
 	text-align: center;
 	border-top-left-radius: 1rem;
 	border-top-right-radius: 1rem;
@@ -35,45 +39,47 @@
 }
 
 .question-body {
-	padding: 2rem;
+    flex: 9;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+    padding: 2rem;
 }
 
-.question-body > p {
-	margin-top: 0;
-	font-size: 1rem;
+.question-body > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
 }
 
-@keyframes donate-enter {
+
+.question-options{
+    transform:scale(2);/*might need to change later because it wont be responsive*/
+    width: 50%;
+    padding: 2rem;
+}
+
+.question-options > div:nth-child(odd){
+    background-color: #eee;
+}
+
+.question-options > div{
+    align-items: center;
+    border-radius: 5px;
+}
+
+.progress-bar-container{
+    width: 100%;
+}
+
+@keyframes question-enter {
 	from {
 		transform: scale(0, 0);
 	}
 	to {
 		transform: scale(1, 1);
 	}
-}
-
-.drop-pin-cta {
-	color: white;
-	text-align: center;
-	position: absolute;
-	bottom: 1rem;
-	left: 25%;
-	right: 25%;
-	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
-}
-
-.header-visitors {
-	margin: 0;
-	padding-top: 1rem;
-	font-size: 2.5rem;
-	text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-}
-
-.visitor-substats {
-	margin: 0;
-	font-size: 2rem;
-	font-weight: 400;
 }

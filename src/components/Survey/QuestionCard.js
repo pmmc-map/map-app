@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-	getQuestionOptions
-} from '../../api';
+import {Button, Form, ProgressBar} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import './style.css';
 
@@ -46,6 +45,10 @@ const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuesti
 			}}
 		>
 			<div className='title-container'>
+				<h1>PMMC Survey</h1>
+			</div>
+
+			<div className='question-body'>
 				<h1>
 					{
 						questionList === null ? ('Loading ...') :
@@ -53,25 +56,38 @@ const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuesti
 								(questionList[currentQuestion].text)
 					}
 				</h1>
-			</div>
-			<div className='question-body'>
-				<form id='question-options'>
-					{
-						ready ? null:
-							questionList[currentQuestion].options.map((option)=>
-								[
-									(<input type="radio" name={'surveyQuestion'+currentQuestion} value={JSON.stringify(option)} onChange={onSelect}/>),
-									option.text,
-									(<br/>)
-								]
-							)
-					}
-				</form>
+				
 				{
-					ready ? null :
-						(<button onClick={()=>onNext(questionList[currentQuestion].qid)}>
-							{currentQuestion === questionList.length-1 ? 'Submit' : 'Next'}
-						</button>)
+					ready ? null:(
+						<div>
+							<Form.Group className='question-options'>
+								{
+									questionList[currentQuestion].options.map((option)=>
+										(
+											<Form.Check
+												custom
+												type='radio'
+												id={option.oid}
+												name={'surveyQuestion'+currentQuestion}
+												value={JSON.stringify(option)} onChange={onSelect}
+												label={option.text}
+											/>
+										)
+									)
+								}
+							</Form.Group>
+							<Button variant={currentQuestion === questionList.length-1 ? 'success' : 'primary'} size='lg' onClick={()=>onNext(questionList[currentQuestion].qid)}>
+								{currentQuestion === questionList.length-1 ? 'Submit' : 'Next'}
+							</Button>
+							<br/>
+							<div className='progress-bar-container'>
+								<ProgressBar
+									now={Math.floor((currentQuestion/questionList.length)*100)}
+									label={Math.floor((currentQuestion/questionList.length)*100)+'%'}
+								/>
+							</div>
+						</div>
+					)
 				}
 			</div>
 		</div>
@@ -85,7 +101,7 @@ QuestionCard.defaultProps = {
 	onCancel: ()=>{},
 	currentQuestion: 0,
 	questionList: [],
-}
+};
 
 QuestionCard.propTypes = {
 	onReturnClick: PropTypes.func,
