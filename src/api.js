@@ -67,12 +67,12 @@ export const getAllLocationData = async () => {
 
 // id is optional
 export const getQuestions = async (id = '')=>{
-	/*let response = await fetch(BASE_API_URL + 'api/questions/' + id, {
+	let response = await fetch(BASE_API_URL + 'api/questions', {
 		method: 'GET',
 		mode: 'cors',
 		headers: {
 			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*'
 		},
 		withCredentials: true
 	});
@@ -82,13 +82,12 @@ export const getQuestions = async (id = '')=>{
 	// Get options of each question while already getting questions
 	for(let i = 0; i < questions.length; i++){
 		response = await getQuestionOptions(questions[i].qid);
-		response = await response.json();
 		questions[i].options = response.options;
 	}
 
-	return questions;*/
+	return questions;
 	// dummy data check if survey works, remove after testing
-	return [
+	/*return [
 		{
 			qid: '1',
 			text: 'How did you hear about us?',
@@ -184,11 +183,11 @@ export const getQuestions = async (id = '')=>{
 				}
 			]
 		}
-	];
+	];*/
 };
 
 export const getQuestionOptions = async (qid)=>{
-	const response = await fetch(BASE_API_URL + '/api/options/' + qid, {
+	const response = await fetch(BASE_API_URL + 'api/options/qid/' + qid, {
 		method: 'GET',
 		mode: 'cors',
 		headers: {
@@ -201,8 +200,7 @@ export const getQuestionOptions = async (qid)=>{
 };
 
 export const submitResponse = async (oid)=>{
-	console.log('oid: ', oid);
-	/*const response = await fetch(BASE_API_URL + '/api/visitor_response', {
+	const response = await fetch(BASE_API_URL + 'api/visitor_response', {
 		method: 'POST',
 		mode: 'cors',
 		body:JSON.stringify({
@@ -214,5 +212,5 @@ export const submitResponse = async (oid)=>{
 		},
 		withCredentials: true
 	});
-	return await response.json();*/
+	return await response.json();
 };

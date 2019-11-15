@@ -76,6 +76,7 @@ const QuestionCard = ({ onReturnClick, onSelect, onNext, onCancel, currentQuesti
 									)
 								}
 							</Form.Group>
+							{/*Might want to disable submit button after being pressed once just so answers are not submitted multiple times*/}
 							<Button variant={currentQuestion === questionList.length-1 ? 'success' : 'primary'} size='lg' onClick={()=>onNext(questionList[currentQuestion].qid)}>
 								{currentQuestion === questionList.length-1 ? 'Submit' : 'Next'}
 							</Button>

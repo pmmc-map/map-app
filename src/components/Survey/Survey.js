@@ -39,17 +39,14 @@ const Survey = ({onReturnClick}) => {
 	let onNext = async (qid)=>{
 		if(!(qid in responses)){
 			// no response was selected
-			console.log('qid is not in response');
 			return;
 		}
 
 		if(currentQuestion < questions.length-1){
-			console.log('incrementing');
 			setCurrentQuestion(currentQuestion+1);
 		}
 		else{
 			// last question was just submitted so submit all responses
-			console.log('submitting');
 			let keys = Object.keys(responses);
 			for(let i = 0; i < keys.length; i++){
 				await submitResponse(responses[keys[i]].oid);
@@ -61,7 +58,6 @@ const Survey = ({onReturnClick}) => {
 	// selection is an option object
 	let onSelect = (e)=>{
 		let selection = JSON.parse(e.target.value);
-		console.log(selection);
 		let temp = responses;
 		temp[selection.qid] = selection;
 		setResponses(temp);
