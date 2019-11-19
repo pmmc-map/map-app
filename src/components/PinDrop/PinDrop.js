@@ -8,6 +8,7 @@ const PinDropOverlay = ({
 	isConfirmPopupShowing,
 	onClickCancelPinDrop,
 	onClickConfirmPinDrop,
+	onClickDismissPinDrop,
 	pinPosition,
 }) => {
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
@@ -26,6 +27,7 @@ const PinDropOverlay = ({
 				<InfoPopup
 					onClickCancel={onClickCancelPinDrop}
 					onClickConfirm={onClickConfirmPinDrop}
+					onClickDismiss={onClickDismissPinDrop}
 					pinPosition={pinPosition}
 				/>
 			) : null}
@@ -37,7 +39,7 @@ const PinDropOverlay = ({
 			</button>
 			<button
 				disabled={isConfirmPopupShowing}
-				className='button button-help'
+				className='button button-help button-bottom-right'
 				onClick={() =>
 					setIsHelpShowing(isHelpShowing => !isHelpShowing)
 				}
@@ -53,6 +55,7 @@ PinDropOverlay.propTypes = {
 	isConfirmPopupShowing: PropTypes.bool.isRequired,
 	onClickCancelPinDrop: PropTypes.func.isRequired,
 	onClickConfirmPinDrop: PropTypes.func.isRequired,
+	onClickDismissPinDrop: PropTypes.func.isRequired,
 	pinPosition: PropTypes.object,
 };
 

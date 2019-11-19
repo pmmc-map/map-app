@@ -83,10 +83,13 @@
 	left: 1rem;
 }
 
-.button-help {
+.button-bottom-right {
 	position: absolute;
 	bottom: 1rem;
 	right: 1rem;
+}
+
+.button-help {
 	background-color: #134c80;
 }
 

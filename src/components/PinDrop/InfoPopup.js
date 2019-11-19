@@ -5,7 +5,12 @@ import LoadingScreen from '../LoadingScreen';
 import DetailedPinInfo from '../DetailedPinInfo';
 import * as API from '../../api';
 
-const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
+const InfoPopup = ({
+	onClickCancel,
+	onClickConfirm,
+	onClickDismiss,
+	pinPosition,
+}) => {
 	const [cityImgSrc, setCityImgSrc] = useState('');
 	const [isConfirmClicked, setIsConfirmClicked] = useState(false);
 	const [isPinLocationDataLoading, setIsPinLocationDataLoading] = useState(
@@ -32,18 +37,13 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 				return;
 			}
 
-			console.log('why');
 			const fetchLocationImg = async () => {
-				console.log('ssssfhoh');
 				const city = await pinLocationData.city;
 				// try {
-				// console.log('hey');
 				// const locationImgResp = await API.getCityImg(city);
 				// const cityImg = await locationImgResp.body;
-				// console.log(cityImg);
 				// setCityImgSrc(cityImg);
 				// } catch (error) {
-				// console.log(error);
 				setCityImgSrc('../../../public/defaultcity.jpg');
 				// }
 			};
@@ -89,7 +89,7 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 			<DetailedPinInfo
 				{...locationData}
 				{...locationStats}
-				onClickDismiss={() => console.log('haha')}
+				onClickDismiss={onClickDismiss}
 			/>
 		);
 
@@ -110,7 +110,10 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 				<div className='confirmation-button-container'>
 					<>
 						<button
-							onClick={() => setIsConfirmClicked(true)}
+							onClick={() => {
+								onClickConfirm();
+								setIsConfirmClicked(true);
+							}}
 							className='button button-confirm'
 						>
 							Confirm
@@ -131,6 +134,7 @@ const InfoPopup = ({ onClickCancel, onClickConfirm, pinPosition }) => {
 InfoPopup.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	onClickConfirm: PropTypes.func.isRequired,
+	onClickDismiss: PropTypes.func.isRequired,
 	pinPosition: PropTypes.object.isRequired,
 };
 

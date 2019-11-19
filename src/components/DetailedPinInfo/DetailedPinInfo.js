@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { pluralize, pluralizeIsAre } from '../../utils.js';
 import './style.css';
 
 const DetailedPinInfo = ({
@@ -21,6 +22,7 @@ const DetailedPinInfo = ({
 						{(city ? city + ', ' : '') + state}
 					</h1>
 					<h2 className='country-header'>{country}</h2>
+					{/*
 					<div className='distance-info'>
 						You have travelled{' '}
 						<span className='distance'>
@@ -31,12 +33,45 @@ const DetailedPinInfo = ({
 							Pacific Marine Mammal Center!
 						</span>
 					</div>
-					<button
-						onClick={onClickDismiss}
-						className='button button-cancel'
-					>
-						Dismiss
-					</button>
+					*/}
+					<div className='location-stats'>
+						<div className='left'>
+							<div className='stats-graph'>
+								<img src='../../../public/statsplaceholder.png' />
+							</div>
+						</div>
+						<div className='right'>
+							<div className='visitor-count'>
+								<h1 className='big-number visitors-country'>
+									{`${country_count} visitor${pluralize(
+										country_count
+									)}`}
+								</h1>
+								<span className='visitor-stats'>
+									{`${pluralizeIsAre(country_count)} `} from
+									your country
+								</span>
+
+								<h1 className='big-number visitors-city'>
+									{`${city_count} visitor${pluralize(
+										city_count
+									)}`}
+								</h1>
+								<span className='visitor-stats'>
+									{`${pluralizeIsAre(city_count)} `} from your
+									city
+								</span>
+							</div>
+						</div>
+					</div>
+					<div className='button-nav'>
+						<button
+							onClick={onClickDismiss}
+							className='button button-cancel'
+						>
+							Dismiss
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
