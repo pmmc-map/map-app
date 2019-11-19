@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DonatePopup from './DonatePopup';
-import Survey from '../Survey/Survey'
+import Survey from '../Survey/Survey';
 
 /*
  * this is the default overlay that shows when we're not dropping a pin
  * should be shown when nobody's interacting with the screen
  * TODO: add commas to numbers when digits > 3
  */
-const DefaultOverlay = ({ numVisitors, numCountries }) => {
+const DefaultOverlay = ({ numVisitors, numCountries, onStartPinDrop }) => {
 	const [displayDonatePopup, setDisplayDonatePopup] = useState(false);
 	const d = new Date();
 	return (
@@ -20,7 +20,7 @@ const DefaultOverlay = ({ numVisitors, numCountries }) => {
 				<h3 className='visitor-substats'>{numCountries} countries</h3>
 			</div>
 
-			<h1 className='drop-pin-cta'>Touch anywhere to start pin drop</h1>
+			{/*<h1 className='drop-pin-cta'>Touch anywhere to start pin drop</h1> */}
 
 			<button
 				className='button button-donate'
@@ -29,6 +29,12 @@ const DefaultOverlay = ({ numVisitors, numCountries }) => {
 				}}
 			>
 				Donate
+			</button>
+			<button
+				className='button button-bottom-right'
+				onClick={onStartPinDrop}
+			>
+				Start
 			</button>
 			{displayDonatePopup ? (
 				<Survey
@@ -44,6 +50,7 @@ const DefaultOverlay = ({ numVisitors, numCountries }) => {
 DefaultOverlay.propTypes = {
 	numVisitors: PropTypes.number.isRequired,
 	numCountries: PropTypes.number.isRequired,
+	onStartPinDrop: PropTypes.func.isRequired,
 };
 
 export default DefaultOverlay;
