@@ -1,4 +1,4 @@
-const BASE_API_URL = 'http://127.0.0.1:5000/';
+const BASE_API_URL = 'http://54.183.19.24/';
 
 export const getPinInfo = async position => {
 	const response = await fetch(BASE_API_URL + 'api/geocoder', {
