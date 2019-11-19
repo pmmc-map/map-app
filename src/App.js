@@ -7,6 +7,7 @@ import {
 	GLOBE_LAYERS,
 	GLOBE_BACKGROUND_COLOR,
 	PMMC_POSITION,
+	CLICK_MODE,
 } from './constants';
 import * as API from './api';
 
@@ -69,8 +70,7 @@ const App = props => {
 		setNumCountries(5);
 	}, []);
 
-	// to be implemented
-	const drawPin = (position, pinImg = '../public/pin.png') => {
+	const drawPin = (position, pinImg = '../public/pin.png', info = null) => {
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -103,6 +103,14 @@ const App = props => {
 			position.longitude.toPrecision(5).toString();
 		placemark.altitudeMode = WorldWind.CLAMP_TO_GROUND;
 		placemark.eyeDistanceScalingThreshold = 2500000;
+
+		// pin hover
+		const highlightAttributes = new WorldWind.PlacemarkAttributes(null);
+		highlightAttributes.imageScale = 1.2;
+		placemark.highlightAttributes = highlightAttributes;
+
+		placemark.info = info;
+
 		setPinPositions(pinPositions => pinPositions.concat([position]));
 
 		// Add the placemark to the layer and to the Markers component
@@ -125,8 +133,18 @@ const App = props => {
 		setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
 	};
 
+	const selectPin = selectedPins => {
+		if (selectedPins.length < 1) return;
+		const selected = selectedPins[0];
+
+		if (!selected.userObject || !selected.userObject.info) return;
+
+		console.log(selected.userObject.info);
+	};
+
 	useEffect(() => {
 		if (globeRef && !oldPinsLoaded && animalsLoaded) {
+			globeRef.current.clickMode = CLICK_MODE.DROP;
 			pinPositions.map(position => drawPin(position));
 			drawPin(PMMC_POSITION, '../public/star.png');
 			allAnimalInfo.map(animal => {
@@ -136,12 +154,15 @@ const App = props => {
 					latitude: latitude,
 					altitude: 263.3237286340391,
 				};
+
+				let icon = '../public/sealion.png';
 				if (animal.animal_type.indexOf('Seal') >= 0) {
-					drawPin(position, '../public/seal.png');
-				} else {
-					drawPin(position, '../public/sealion.png');
+					icon = '../public/seal.png';
 				}
+
+				drawPin(position, icon, animal);
 			});
+			globeRef.current.clickMode = CLICK_MODE.PICK;
 			setOldPinsLoaded(true);
 			setAnimalsLoaded(false);
 		}
@@ -163,24 +184,38 @@ const App = props => {
 
 		if (mouseMode === MOUSE_MODE.UP) {
 			if (isMouseMoving) return;
-			if (pinDropMode === APP_MODE.DEFAULT_SCREEN)
-				setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
+			if (pinDropMode === APP_MODE.DEFAULT_SCREEN) {
+				globeRef.current.armClickDrop(selectPin);
+				globeRef.current.clickMode = CLICK_MODE.PICK;
+				return;
+			}
+			if (pinDropMode === APP_MODE.PIN_DROP_CONFIRMED) {
+				globeRef.current.armClickDrop(null);
+				return;
+			}
+			// if (pinDropMode === APP_MODE.DEFAULT_SCREEN)
+			// setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
-				globeRef.current.armClickDrop(position => {
-					const placemark = drawPin(position);
-					// offset focused position so that we have room to display popup for confirmation
-					setLastDroppedPlacemark({
-						placemark: placemark,
-					});
-					setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
-
-					setGlobeFocusedPosition({
-						longitude: position.longitude + 1,
-						latitude: position.latitude,
-					});
+				globeRef.current.clickMode = CLICK_MODE.DROP;
+			globeRef.current.armClickDrop(position => {
+				const placemark = drawPin(position);
+				// offset focused position so that we have room to display popup for confirmation
+				setLastDroppedPlacemark({
+					placemark: placemark,
 				});
+				setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
+
+				setGlobeFocusedPosition({
+					longitude: position.longitude + 1,
+					latitude: position.latitude,
+				});
+			});
 		}
 	}, [mouseMode, isMouseMoving, pinDropMode]);
+
+	const onStartPinDrop = () => {
+		setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
+	};
 
 	const onClickInstructions = () => {
 		setMouseMode(MOUSE_MODE.NONE);
@@ -194,11 +229,23 @@ const App = props => {
 	};
 
 	const onClickCancelPinDrop = () => {
+		const layer = globeRef.current.getLayer('Renderables');
+		layer.removeRenderable(lastDroppedPlacemark.placemark);
+		layer.refresh();
+
 		globeRef.current.armClickDrop(null);
+		// setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
 	};
 
-	const onClickConfirmPinDrop = () => {};
+	const onClickDismissPinDrop = () => {
+		globeRef.current.armClickDrop(null);
+		setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+	};
+
+	const onClickConfirmPinDrop = () => {
+		setPinDropMode(APP_MODE.PIN_DROP_CONFIRMED);
+	};
 
 	return (
 		<div className='page'>
@@ -223,6 +270,7 @@ const App = props => {
 					<DefaultOverlay
 						numVisitors={numVisitors}
 						numCountries={numCountries}
+						onStartPinDrop={onStartPinDrop}
 					/>
 				) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
 					<PinDropInstructions onClick={onClickInstructions} />
@@ -237,6 +285,7 @@ const App = props => {
 						}
 						onClickCancelPinDrop={onClickCancelPinDrop}
 						onClickConfirmPinDrop={onClickConfirmPinDrop}
+						onClickDismissPinDrop={onClickDismissPinDrop}
 						pinPosition={lastDroppedPlacemark.placemark.position}
 					/>
 				)}
