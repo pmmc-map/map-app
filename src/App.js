@@ -263,6 +263,7 @@ const App = props => {
 	};
 
 	const onClickConfirmPinDrop = () => {
+		setNumVisitors(numVisitors => numVisitors + 1);
 		setPinDropMode(APP_MODE.PIN_DROP_CONFIRMED);
 	};
 

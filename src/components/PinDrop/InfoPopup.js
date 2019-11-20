@@ -5,6 +5,8 @@ import LoadingScreen from '../LoadingScreen';
 import DetailedPinInfo from '../DetailedPinInfo';
 import * as API from '../../api';
 
+import streamToBlob from 'stream-to-blob';
+
 const InfoPopup = ({
 	onClickCancel,
 	onClickConfirm,
@@ -41,15 +43,14 @@ const InfoPopup = ({
 				const city = await pinLocationData.city;
 				try {
 					const locationImgResp = await API.getCityImg(city);
-					const cityImg = await locationImgResp.body;
 					console.log(locationImgResp);
-					setCityImgSrc(cityImg);
-					// console.log(cityImg.getReader().read());
-					const lol = await cityImg.getReader();
-					const lol2 = await lol.read();
-					console.log(lol2);
-					setCityImgSrc(lol2);
+					const cityImg = await locationImgResp;
+					console.log(cityImg);
+					const blob = await cityImg.image;
+					console.log(blob);
+					setCityImgSrc(`data:image; base64, ${blob}`);
 				} catch (error) {
+					console.log(error);
 					setCityImgSrc('../../../public/defaultcity.jpg');
 				}
 			};
@@ -95,6 +96,7 @@ const InfoPopup = ({
 			<DetailedPinInfo
 				{...locationData}
 				{...locationStats}
+				cityImg={cityImgSrc}
 				onClickDismiss={onClickDismiss}
 			/>
 		);
@@ -107,7 +109,6 @@ const InfoPopup = ({
 				}}
 				className='pin-info-image'
 			/>
-			<img src={cityImgSrc} />
 			<div className='pin-info-content'>
 				<h1 className='city-state-header'>{`${
 					locationData.city ? locationData.city + ', ' : ''

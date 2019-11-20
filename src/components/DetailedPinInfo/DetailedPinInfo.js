@@ -6,6 +6,7 @@ import './style.css';
 
 const DetailedPinInfo = ({
 	city,
+	cityImg,
 	state,
 	country,
 	city_count,
@@ -16,7 +17,12 @@ const DetailedPinInfo = ({
 	return (
 		<div className='modal-big-background'>
 			<div className='modal-big'>
-				<div className='modal-big-header'></div>
+				<div
+					className='modal-big-header pin-info-image'
+					style={{
+						background: cityImg ? `url("${cityImg}")` : '#cacaca',
+					}}
+				></div>
 				<div className='modal-big-body'>
 					<h1 className='header-1'>
 						{(city ? city + ', ' : '') + state}
@@ -80,6 +86,7 @@ const DetailedPinInfo = ({
 
 DetailedPinInfo.propTypes = {
 	city: PropTypes.string.isRequired,
+	cityImg: PropTypes.string.isRequired,
 	state: PropTypes.string.isRequired,
 	country: PropTypes.string.isRequired,
 	city_count: PropTypes.number.isRequired,

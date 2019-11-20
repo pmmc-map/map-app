@@ -26,14 +26,15 @@ export const getCityImg = async city => {
 			method: 'GET',
 			mode: 'cors',
 			headers: {
-				'Content-Type': 'image/jpeg',
+				// 'Content-Type': 'application/json',
+				// data:;base64 image
 				'Access-Control-Allow-Origin': BASE_API_URL,
 			},
 			withCredentials: true,
 		}
 	);
 
-	return await response;
+	return await response.json();
 };
 
 export const recordVisitorLocation = async position => {
