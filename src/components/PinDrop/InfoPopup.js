@@ -5,8 +5,6 @@ import LoadingScreen from '../LoadingScreen';
 import DetailedPinInfo from '../DetailedPinInfo';
 import * as API from '../../api';
 
-import streamToBlob from 'stream-to-blob';
-
 const InfoPopup = ({
 	onClickCancel,
 	onClickConfirm,

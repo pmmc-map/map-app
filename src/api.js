@@ -1,5 +1,5 @@
-// const BASE_API_URL = 'http://54.183.19.24/';
-const BASE_API_URL = 'http://localhost:5000/';
+const BASE_API_URL = 'http://54.183.19.24/';
+// const BASE_API_URL = 'http://localhost:5000/';
 
 export const getPinInfo = async position => {
 	const response = await fetch(BASE_API_URL + 'api/geocoder', {
@@ -27,7 +27,6 @@ export const getCityImg = async city => {
 			mode: 'cors',
 			headers: {
 				// 'Content-Type': 'application/json',
-				// data:;base64 image
 				'Access-Control-Allow-Origin': BASE_API_URL,
 			},
 			withCredentials: true,
