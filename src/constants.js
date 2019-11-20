@@ -6,6 +6,7 @@ export const APP_MODE = {
 	PIN_DROP_LOADING: 4,
 	PIN_DROP_CONFIRMED: 5,
 	PIN_DROP_DONE: 6,
+	ANIMAL_CLICKED: 7,
 };
 
 export const MOUSE_MODE = {

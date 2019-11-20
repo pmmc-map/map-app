@@ -39,13 +39,19 @@ const InfoPopup = ({
 
 			const fetchLocationImg = async () => {
 				const city = await pinLocationData.city;
-				// try {
-				// const locationImgResp = await API.getCityImg(city);
-				// const cityImg = await locationImgResp.body;
-				// setCityImgSrc(cityImg);
-				// } catch (error) {
-				setCityImgSrc('../../../public/defaultcity.jpg');
-				// }
+				try {
+					const locationImgResp = await API.getCityImg(city);
+					const cityImg = await locationImgResp.body;
+					console.log(locationImgResp);
+					setCityImgSrc(cityImg);
+					// console.log(cityImg.getReader().read());
+					const lol = await cityImg.getReader();
+					const lol2 = await lol.read();
+					console.log(lol2);
+					setCityImgSrc(lol2);
+				} catch (error) {
+					setCityImgSrc('../../../public/defaultcity.jpg');
+				}
 			};
 
 			fetchLocationImg();
@@ -101,6 +107,7 @@ const InfoPopup = ({
 				}}
 				className='pin-info-image'
 			/>
+			<img src={cityImgSrc} />
 			<div className='pin-info-content'>
 				<h1 className='city-state-header'>{`${
 					locationData.city ? locationData.city + ', ' : ''

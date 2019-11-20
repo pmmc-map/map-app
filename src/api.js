@@ -1,4 +1,5 @@
-const BASE_API_URL = 'http://54.183.19.24/';
+// const BASE_API_URL = 'http://54.183.19.24/';
+const BASE_API_URL = 'http://localhost:5000/';
 
 export const getPinInfo = async position => {
 	const response = await fetch(BASE_API_URL + 'api/geocoder', {
@@ -25,6 +26,7 @@ export const getCityImg = async city => {
 			method: 'GET',
 			mode: 'cors',
 			headers: {
+				'Content-Type': 'image/jpeg',
 				'Access-Control-Allow-Origin': BASE_API_URL,
 			},
 			withCredentials: true,
@@ -53,6 +55,19 @@ export const recordVisitorLocation = async position => {
 
 export const getAllLocationData = async () => {
 	const response = await fetch(BASE_API_URL + 'api/locations', {
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+		},
+		withCredentials: true,
+	});
+	return await response.json();
+};
+
+export const getLocationCounts = async () => {
+	const response = await fetch(BASE_API_URL + 'api/locations/counts', {
 		method: 'GET',
 		mode: 'cors',
 		headers: {

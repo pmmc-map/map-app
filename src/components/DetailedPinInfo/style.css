@@ -31,16 +31,6 @@
 	padding: 1rem 2rem;
 }
 
-.modal-big-body .city-state-header {
-	color: #1c99f7;
-	font-weight: 900;
-}
-
-.modal-big-body .country-header {
-	color: #88caff;
-	font-weight: 900;
-}
-
 .distance-info {
 	font-size: 1.5rem;
 	width: 50%;
@@ -77,6 +67,7 @@
 	justify-content: center;
 	align-content: center;
 }
+
 .big-number {
 	font-weight: 900;
 	margin-bottom: 0;
@@ -94,6 +85,7 @@
 .big-number.visitors-city {
 	color: #88caff;
 }
+
 .visitor-stats {
 	font-weight: 200;
 }

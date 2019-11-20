@@ -118,3 +118,18 @@
 .button-donate:hover {
 	background-color: #0c8c0c;
 }
+
+/* type */
+.header-1 {
+	color: #1c99f7;
+	font-weight: 900;
+}
+
+.header-2 {
+	color: #88caff;
+	font-weight: 900;
+}
+
+.header-2.dark {
+	color: #1c99f7;
+}

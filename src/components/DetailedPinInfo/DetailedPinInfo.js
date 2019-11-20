@@ -18,10 +18,10 @@ const DetailedPinInfo = ({
 			<div className='modal-big'>
 				<div className='modal-big-header'></div>
 				<div className='modal-big-body'>
-					<h1 className='city-state-header'>
+					<h1 className='header-1'>
 						{(city ? city + ', ' : '') + state}
 					</h1>
-					<h2 className='country-header'>{country}</h2>
+					<h2 className='header-2'>{country}</h2>
 					{/*
 					<div className='distance-info'>
 						You have travelled{' '}

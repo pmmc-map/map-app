@@ -14,6 +14,7 @@ import * as API from './api';
 import DefaultOverlay from './components/DefaultOverlay';
 import PinDropInstructions from './components/PinDropInstructions';
 import PinDropOverlay from './components/PinDrop';
+import AnimalInfo from './components/AnimalInfo';
 
 const App = props => {
 	const globeRef = useRef(null);
@@ -21,12 +22,14 @@ const App = props => {
 	// values will be fetched from backend and loaded into state
 	const [numVisitors, setNumVisitors] = useState(0);
 	const [numCountries, setNumCountries] = useState(0);
+	const [numStates, setNumStates] = useState(0);
 	// set of pins to display on globe
 	const [pinPositions, setPinPositions] = useState([]);
 	const [oldPinsLoaded, setOldPinsLoaded] = useState(false);
 
 	const [animalsLoaded, setAnimalsLoaded] = useState(false);
 	const [allAnimalInfo, setAllAnimalInfo] = useState([]);
+	const [selectedAnimal, setSelectedAnimal] = useState({});
 
 	// toggle whether or not we are dropping a pin or viewing the default stats overlay
 	const [pinDropMode, setPinDropMode] = useState(APP_MODE.DEFAULT_SCREEN);
@@ -55,19 +58,31 @@ const App = props => {
 		// fetch all the initial animal info!!
 		const initAnimalInfo = async () => {
 			const animalsResponse = await API.getAllAnimalData();
-			var x = animalsResponse;
 			const animalLocations = await animalsResponse.animal_locations;
 			setAllAnimalInfo(animalLocations);
 			setAnimalsLoaded(true);
 		};
 		initAnimalInfo();
 		// fetch all the initial data from the database
+		const initLocationCounts = async () => {
+			const countsResponse = await API.getLocationCounts();
+			const {
+				total_visitors,
+				unique_states,
+				unique_countries,
+			} = await countsResponse.body;
+			setNumVisitors(total_visitors);
+			setNumCountries(unique_countries);
+			setNumStates(unique_states);
+		};
+		initLocationCounts();
+
 		console.log('loading previously dropped pins');
 		setPinPositions([]);
-		console.log('loading number of visitors');
-		setNumVisitors(12345);
-		console.log('loading number of countries');
-		setNumCountries(5);
+		// console.log('loading number of visitors');
+		// setNumVisitors(12345);
+		// console.log('loading number of countries');
+		// setNumCountries(5);
 	}, []);
 
 	const drawPin = (position, pinImg = '../public/pin.png', info = null) => {
@@ -139,7 +154,8 @@ const App = props => {
 
 		if (!selected.userObject || !selected.userObject.info) return;
 
-		console.log(selected.userObject.info);
+		setSelectedAnimal(selected.userObject.info);
+		setPinDropMode(APP_MODE.ANIMAL_CLICKED);
 	};
 
 	useEffect(() => {
@@ -184,7 +200,10 @@ const App = props => {
 
 		if (mouseMode === MOUSE_MODE.UP) {
 			if (isMouseMoving) return;
-			if (pinDropMode === APP_MODE.DEFAULT_SCREEN) {
+			if (
+				pinDropMode === APP_MODE.DEFAULT_SCREEN ||
+				pinDropMode === APP_MODE.ANIMAL_CLICKED
+			) {
 				globeRef.current.armClickDrop(selectPin);
 				globeRef.current.clickMode = CLICK_MODE.PICK;
 				return;
@@ -270,11 +289,12 @@ const App = props => {
 					<DefaultOverlay
 						numVisitors={numVisitors}
 						numCountries={numCountries}
+						numStates={numStates}
 						onStartPinDrop={onStartPinDrop}
 					/>
 				) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
 					<PinDropInstructions onClick={onClickInstructions} />
-				) : (
+				) : pinDropMode !== APP_MODE.ANIMAL_CLICKED ? (
 					<PinDropOverlay
 						onClickCancel={() => {
 							deleteDroppedPin();
@@ -287,6 +307,14 @@ const App = props => {
 						onClickConfirmPinDrop={onClickConfirmPinDrop}
 						onClickDismissPinDrop={onClickDismissPinDrop}
 						pinPosition={lastDroppedPlacemark.placemark.position}
+					/>
+				) : (
+					<AnimalInfo
+						{...selectedAnimal}
+						onClickDismiss={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							setMouseMode(MOUSE_MODE.NONE);
+						}}
 					/>
 				)}
 			</div>
