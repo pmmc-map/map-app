@@ -16,7 +16,7 @@
 	background: white;
 	border-radius: 1rem;
 	width: 70%;
-	height: 80%;
+	height: 70%;
 }
 
 .modal-big-header {
@@ -29,11 +29,21 @@
 
 .modal-big-body {
 	padding: 1rem 2rem;
+	height: inherit;
+}
+
+.button-nav {
+	background: white;
+	border-bottom-right-radius: 1rem;
+	border-bottom-left-radius: 1rem;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	padding: 1rem 0 2rem;
 }
 
 .distance-info {
 	font-size: 1.5rem;
-	width: 50%;
 }
 
 .distance-info .distance {
@@ -41,13 +51,36 @@
 	color: #1c99f7;
 }
 
+.distance {
+	display: flex;
+	flex-direction: row;
+}
+
+.distance > .right {
+	flex: 1 1 70%;
+}
+
 .distance-info .pmmc {
 	font-weight: 600;
 	color: #1c99f7;
 }
 
+.distance-info > p {
+	margin: 0;
+	font-weight: 200;
+}
+
+img.distance-preview {
+	width: 60%;
+}
+
 .location-stats {
 	display: flex;
+	padding: 1rem 0;
+}
+
+.left {
+	margin-right: 2rem;
 }
 
 .left,
@@ -87,5 +120,35 @@
 }
 
 .visitor-stats {
+	font-size: 1.5rem;
 	font-weight: 200;
+}
+
+@keyframes fadeinlol {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeoutlol {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.info-page-enter {
+	animation-name: fadeinlol;
+	animation-duration: 0.5s;
+}
+
+.info-page-exit {
+	animation-name: fadeoutlol;
+
+	animation-duration: 0.5s;
 }
