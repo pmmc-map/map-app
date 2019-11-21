@@ -123,11 +123,15 @@
 .header-1 {
 	color: #1c99f7;
 	font-weight: 900;
+	margin: 0;
+	font-size: 2.5rem;
 }
 
 .header-2 {
 	color: #88caff;
 	font-weight: 900;
+	margin: 0;
+	font-size: 2rem;
 }
 
 .header-2.dark {

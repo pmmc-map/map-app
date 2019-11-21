@@ -11,7 +11,7 @@ const InfoPopup = ({
 	onClickDismiss,
 	pinPosition,
 }) => {
-	const [cityImgSrc, setCityImgSrc] = useState('');
+	const [cityImgSrc, setCityImgSrc] = useState(null);
 	const [isConfirmClicked, setIsConfirmClicked] = useState(false);
 	const [isPinLocationDataLoading, setIsPinLocationDataLoading] = useState(
 		true
@@ -37,23 +37,23 @@ const InfoPopup = ({
 				return;
 			}
 
-			const fetchLocationImg = async () => {
-				const city = await pinLocationData.city;
-				try {
-					const locationImgResp = await API.getCityImg(city);
-					console.log(locationImgResp);
-					const cityImg = await locationImgResp;
-					console.log(cityImg);
-					const blob = await cityImg.image;
-					console.log(blob);
-					setCityImgSrc(`data:image; base64, ${blob}`);
-				} catch (error) {
-					console.log(error);
-					setCityImgSrc('../../../public/defaultcity.jpg');
-				}
-			};
+			// const fetchLocationImg = async () => {
+			// const city = await pinLocationData.city;
+			// try {
+			// const locationImgResp = await API.getCityImg(city);
+			// console.log(locationImgResp);
+			// const cityImg = await locationImgResp;
+			// console.log(cityImg);
+			// const blob = await cityImg.image;
+			// console.log(blob);
+			// setCityImgSrc(`data:image; base64, ${blob}`);
+			// } catch (error) {
+			// console.log(error);
+			setCityImgSrc('../../../public/defaultcity.jpg');
+			// }
+			// };
 
-			fetchLocationImg();
+			// fetchLocationImg();
 			setIsPinLocationDataLoading(false);
 		};
 		fetchPinInfo();
@@ -101,19 +101,20 @@ const InfoPopup = ({
 
 	return (
 		<div className='pin-info-popup'>
-			<div
-				style={{
-					background: cityImgSrc ? `url("${cityImgSrc}")` : '#cacaca',
-				}}
-				className='pin-info-image'
-			/>
+			<div className='pin-info-image'>
+				<img src={cityImgSrc || '../../../public/defaultcity.jpg'} />
+			</div>
 			<div className='pin-info-content'>
-				<h1 className='city-state-header'>{`${
+				<h1 className='header-1 city-state-header'>{`${
 					locationData.city ? locationData.city + ', ' : ''
 				}${locationData.state}`}</h1>
-				<h2 className='country-header'>{locationData.country}</h2>
-				<div className='pin-info-text'></div>
-				<div className='confirmation-button-container'>
+				<h2 className='header-2 country-header'>
+					{locationData.country}
+				</h2>
+				<div className='pin-info-text'>
+					Would you like to drop your pin here?
+				</div>
+				<div className='centered-button-container'>
 					<>
 						<button
 							onClick={() => {
