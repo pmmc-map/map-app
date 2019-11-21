@@ -1,0 +1,154 @@
+.modal-big-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-big {
+	background: white;
+	border-radius: 1rem;
+	width: 70%;
+	height: 70%;
+}
+
+.modal-big-header {
+	width: 100%;
+	height: 15%;
+	background: lavender;
+	border-top-right-radius: 1rem;
+	border-top-left-radius: 1rem;
+}
+
+.modal-big-body {
+	padding: 1rem 2rem;
+	height: inherit;
+}
+
+.button-nav {
+	background: white;
+	border-bottom-right-radius: 1rem;
+	border-bottom-left-radius: 1rem;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	padding: 1rem 0 2rem;
+}
+
+.distance-info {
+	font-size: 1.5rem;
+}
+
+.distance-info .distance {
+	font-weight: 600;
+	color: #1c99f7;
+}
+
+.distance {
+	display: flex;
+	flex-direction: row;
+}
+
+.distance > .right {
+	flex: 1 1 70%;
+}
+
+.distance-info .pmmc {
+	font-weight: 600;
+	color: #1c99f7;
+}
+
+.distance-info > p {
+	margin: 0;
+	font-weight: 200;
+}
+
+img.distance-preview {
+	width: 60%;
+}
+
+.location-stats {
+	display: flex;
+	padding: 1rem 0;
+}
+
+.left {
+	margin-right: 2rem;
+}
+
+.left,
+.right {
+	flex: 1 1 50%;
+}
+
+/* this is a placeholder while the graphs haven't been implemented yet */
+.stats-graph > img {
+	width: 100%;
+}
+
+.visitor-count {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
+	align-content: center;
+}
+
+.big-number {
+	font-weight: 900;
+	margin-bottom: 0;
+	margin-top: 0.5rem;
+}
+
+.big-number:first-of-type {
+	margin-top: 0;
+}
+
+.big-number.visitors-country {
+	color: #1c99f7;
+}
+
+.big-number.visitors-city {
+	color: #88caff;
+}
+
+.visitor-stats {
+	font-size: 1.5rem;
+	font-weight: 200;
+}
+
+@keyframes fadeinlol {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeoutlol {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.info-page-enter {
+	animation-name: fadeinlol;
+	animation-duration: 0.5s;
+}
+
+.info-page-exit {
+	animation-name: fadeoutlol;
+
+	animation-duration: 0.5s;
+}

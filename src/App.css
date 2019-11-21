@@ -83,10 +83,13 @@
 	left: 1rem;
 }
 
-.button-help {
+.button-bottom-right {
 	position: absolute;
 	bottom: 1rem;
 	right: 1rem;
+}
+
+.button-help {
 	background-color: #134c80;
 }
 
@@ -114,4 +117,23 @@
 
 .button-donate:hover {
 	background-color: #0c8c0c;
+}
+
+/* type */
+.header-1 {
+	color: #1c99f7;
+	font-weight: 900;
+	margin: 0;
+	font-size: 2.5rem;
+}
+
+.header-2 {
+	color: #88caff;
+	font-weight: 900;
+	margin: 0;
+	font-size: 2rem;
+}
+
+.header-2.dark {
+	color: #1c99f7;
 }
