@@ -4,12 +4,12 @@ import PieChart from '../../DataVisualization/Piechart';
 
 import { pluralize, pluralizeIsAre } from '../../../utils';
 
-const VisitorData = ({ country_count, city_count }) => (
+const VisitorData = ({ country_count, city_count, city, state, country, graphData }) => (
 	<>
 		<div className='location-stats'>
 			<div className='left'>
 				<div className='stats-graph'>
-					<PieChart data={[]} />
+					<PieChart data={graphData} city={city} state={state} country={country}/>
 				</div>
 			</div>
 			<div className='right'>
@@ -35,5 +35,9 @@ const VisitorData = ({ country_count, city_count }) => (
 VisitorData.propTypes = {
 	city_count: PropTypes.number.isRequired,
 	country_count: PropTypes.number.isRequired,
+	city: PropTypes.string.isRequired,
+	state: PropTypes.string.isRequired,
+	country: PropTypes.string.isRequired,
+	graphData: PropTypes.object.isRequired
 };
 export default VisitorData;
