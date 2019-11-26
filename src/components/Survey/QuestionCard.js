@@ -42,7 +42,7 @@ const QuestionCard = ({
 	const ready = questionList === null || questionList.length === 0;
 	return (
 		<div
-			className='question-card'
+			className='card'
 			onClick={e => {
 				e.stopPropagation();
 			}}
@@ -51,7 +51,7 @@ const QuestionCard = ({
 				<h1>PMMC Survey</h1>
 			</div>
 
-			<div className='question-body'>
+			<div className='card-body'>
 				<h1>
 					{questionList === null
 						? 'Loading ...'
