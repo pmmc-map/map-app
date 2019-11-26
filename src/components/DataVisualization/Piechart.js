@@ -96,7 +96,7 @@ const PieChart = ({data, city, state, country})=>{
 	);
 
 	useEffect(()=>{
-		return {
+		setSpec({
 			'$schema': 'https://vega.github.io/schema/vega/v5.json',
 			'width': 400,
 			'height': 200,
@@ -176,7 +176,7 @@ const PieChart = ({data, city, state, country})=>{
 					}
 				}
 			]
-		};
+		});
 	}, [data, city, state]);
 
 	return (
