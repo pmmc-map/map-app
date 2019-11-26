@@ -66,8 +66,10 @@ export const getAllLocationData = async () => {
 	return await response.json();
 };
 
-export const getLocationCounts = async () => {
-	const response = await fetch(BASE_API_URL + 'api/locations/counts', {
+export const getLocationCounts = async (country = '', state = '') => {
+	const query = country === '' || state === '' ? '' : '?country=' + country + '&state=' + state
+
+	const response = await fetch(BASE_API_URL + 'api/locations/counts' + query, {
 		method: 'GET',
 		mode: 'cors',
 		headers: {

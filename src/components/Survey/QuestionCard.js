@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import {Button, Form, ProgressBar} from 'react-bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import './style.css';
 
@@ -62,32 +60,31 @@ const QuestionCard = ({
 							: questionList[currentQuestion].text}
 				</h1>
 
-				{/*ready ? null : (
+				{ready ? null : (
 					<div>
-						<Form.Group className='question-options'>
-							{questionList[currentQuestion].options.map(
-								option => (
-									<Form.Check
-										custom
-										type='radio'
-										id={option.oid}
-										name={
-											'surveyQuestion' + currentQuestion
-										}
-										value={JSON.stringify(option)}
-										onChange={onSelect}
-										label={option.text}
-									/>
-								)
-							)}
-						</Form.Group>
-						<Button
-							variant={
-								currentQuestion === questionList.length - 1
-									? 'success'
-									: 'primary'
-							}
-							size='lg'
+						<div className='option-container'>
+							<form className='question-options'>
+								{questionList[currentQuestion].options.map(
+									option => (
+										<div>
+											<input
+												type='radio'
+												id={option.oid}
+												name={
+													'surveyQuestion' + currentQuestion
+												}
+												value={JSON.stringify(option)}
+												onChange={onSelect}
+											/>
+											{option.text}
+											<br/>
+										</div>
+									)
+								)}
+							</form>
+						</div>
+						<button
+							className={'button ' + (currentQuestion === questionList.length - 1?'button-confirm':'button-next')}
 							onClick={() =>
 								onNext(questionList[currentQuestion].qid)
 							}
@@ -95,25 +92,17 @@ const QuestionCard = ({
 							{currentQuestion === questionList.length - 1
 								? 'Submit'
 								: 'Next'}
-						</Button>
+						</button>
 						<br />
 						<div className='progress-bar-container'>
-							<ProgressBar
-								now={Math.floor(
-									(currentQuestion / questionList.length) *
-										100
-								)}
-								label={
-									Math.floor(
-										(currentQuestion /
-											questionList.length) *
-											100
-									) + '%'
-								}
+							<progress
+								className='progressBar'
+								max={questionList.length}
+								value={currentQuestion}
 							/>
 						</div>
 					</div>
-				)*/}
+				)}
 			</div>
 		</div>
 	);
