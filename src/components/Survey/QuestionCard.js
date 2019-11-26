@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import {Button, Form, ProgressBar} from 'react-bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import './style.css';
 
@@ -44,7 +42,7 @@ const QuestionCard = ({
 	const ready = questionList === null || questionList.length === 0;
 	return (
 		<div
-			className='question-card'
+			className='card'
 			onClick={e => {
 				e.stopPropagation();
 			}}
@@ -53,41 +51,40 @@ const QuestionCard = ({
 				<h1>PMMC Survey</h1>
 			</div>
 
-			<div className='question-body'>
+			<div className='card-body'>
 				<h1>
 					{questionList === null
 						? 'Loading ...'
 						: questionList.length === 0
-						? 'Error Loading Questions'
-						: questionList[currentQuestion].text}
+							? 'Error Loading Questions'
+							: questionList[currentQuestion].text}
 				</h1>
 
 				{ready ? null : (
 					<div>
-						<Form.Group className='question-options'>
-							{questionList[currentQuestion].options.map(
-								option => (
-									<Form.Check
-										custom
-										type='radio'
-										id={option.oid}
-										name={
-											'surveyQuestion' + currentQuestion
-										}
-										value={JSON.stringify(option)}
-										onChange={onSelect}
-										label={option.text}
-									/>
-								)
-							)}
-						</Form.Group>
-						<Button
-							variant={
-								currentQuestion === questionList.length - 1
-									? 'success'
-									: 'primary'
-							}
-							size='lg'
+						<div className='option-container'>
+							<form className='question-options'>
+								{questionList[currentQuestion].options.map(
+									option => (
+										<div>
+											<input
+												type='radio'
+												id={option.oid}
+												name={
+													'surveyQuestion' + currentQuestion
+												}
+												value={JSON.stringify(option)}
+												onChange={onSelect}
+											/>
+											{option.text}
+											<br/>
+										</div>
+									)
+								)}
+							</form>
+						</div>
+						<button
+							className={'button ' + (currentQuestion === questionList.length - 1?'button-confirm':'button-next')}
 							onClick={() =>
 								onNext(questionList[currentQuestion].qid)
 							}
@@ -95,21 +92,13 @@ const QuestionCard = ({
 							{currentQuestion === questionList.length - 1
 								? 'Submit'
 								: 'Next'}
-						</Button>
+						</button>
 						<br />
 						<div className='progress-bar-container'>
-							<ProgressBar
-								now={Math.floor(
-									(currentQuestion / questionList.length) *
-										100
-								)}
-								label={
-									Math.floor(
-										(currentQuestion /
-											questionList.length) *
-											100
-									) + '%'
-								}
+							<progress
+								className='progressBar'
+								max={questionList.length}
+								value={currentQuestion}
 							/>
 						</div>
 					</div>

@@ -1,5 +1,5 @@
-const BASE_API_URL = 'http://54.183.19.24/';
-// const BASE_API_URL = 'http://localhost:5000/';
+//const BASE_API_URL = 'http://54.183.19.24/';
+const BASE_API_URL = 'http://localhost:5000/';
 
 export const getPinInfo = async position => {
 	const response = await fetch(BASE_API_URL + 'api/geocoder', {
@@ -66,8 +66,10 @@ export const getAllLocationData = async () => {
 	return await response.json();
 };
 
-export const getLocationCounts = async () => {
-	const response = await fetch(BASE_API_URL + 'api/locations/counts', {
+export const getLocationCounts = async (country = '', state = '') => {
+	const query = country === '' || state === '' ? '' : '?country=' + country + '&state=' + state
+
+	const response = await fetch(BASE_API_URL + 'api/locations/counts' + query, {
 		method: 'GET',
 		mode: 'cors',
 		headers: {
@@ -93,17 +95,13 @@ export const getAllAnimalData = async () => {
 };
 // id is optional
 export const getQuestions = async (id = '') => {
-	/*let response = await fetch(BASE_API_URL + 'api/questions/' + id, {
+	let response = await fetch(BASE_API_URL + 'api/questions', {
 		method: 'GET',
 		mode: 'cors',
 		headers: {
 			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*'
 		},
-		withCredentials: true,
-	});
-	return await response.json();
-};
 		withCredentials: true
 	});
 	response = await response.json();
@@ -112,115 +110,14 @@ export const getQuestions = async (id = '') => {
 	// Get options of each question while already getting questions
 	for(let i = 0; i < questions.length; i++){
 		response = await getQuestionOptions(questions[i].qid);
-		response = await response.json();
 		questions[i].options = response.options;
 	}
 
-	return questions;*/
-	// dummy data check if survey works, remove after testing
-	return [
-		{
-			qid: '1',
-			text: 'How did you hear about us?',
-			options: [
-				{
-					oid: '1',
-					qid: '1',
-					text: 'Internet/social media',
-				},
-				{
-					oid: '2',
-					qid: '1',
-					text: 'Hotel concierge',
-				},
-				{
-					oid: '3',
-					qid: '1',
-					text: 'Word of mouth',
-				},
-			],
-		},
-		{
-			qid: '2',
-			text: 'Primary reason for visiting Laguna Beach',
-			options: [
-				{
-					oid: '5',
-					qid: '2',
-					text: 'Vacationing in Laguna Beach',
-				},
-				{
-					oid: '6',
-					qid: '2',
-					text: 'To visit Pacific Marine Mammal Center',
-				},
-				{
-					oid: '7',
-					qid: '2',
-					text: 'Other',
-				},
-			],
-		},
-		{
-			qid: '3',
-			text: 'Was your experience in our visitor yard enjoyable?',
-			options: [
-				{
-					oid: '9',
-					qid: '3',
-					text: 'yes, excellent!',
-				},
-				{
-					oid: '10',
-					qid: '3',
-					text: ' it was okay',
-				},
-				{
-					oid: '11',
-					qid: '3',
-					text: 'no, not really',
-				},
-			],
-		},
-		{
-			qid: '4',
-			text:
-				'Did your visit to PMMC make you more likely to adopt more earth friendly practices?',
-			options: [
-				{
-					oid: '12',
-					qid: '4',
-					text: 'yes!',
-				},
-				{
-					oid: '13',
-					qid: '4',
-					text: 'no',
-				},
-			],
-		},
-		{
-			qid: '5',
-			text:
-				"Did your visit make you interested in donating and supporting PMMC's mission?",
-			options: [
-				{
-					oid: '15',
-					qid: '5',
-					text: 'yes',
-				},
-				{
-					oid: '17',
-					qid: '5',
-					text: 'no',
-				},
-			],
-		},
-	];
+	return questions;
 };
 
-export const getQuestionOptions = async qid => {
-	const response = await fetch(BASE_API_URL + '/api/options/' + qid, {
+export const getQuestionOptions = async (qid)=>{
+	const response = await fetch(BASE_API_URL + 'api/options/qid/' + qid, {
 		method: 'GET',
 		mode: 'cors',
 		headers: {
@@ -232,9 +129,8 @@ export const getQuestionOptions = async qid => {
 	return await response.json();
 };
 
-export const submitResponse = async oid => {
-	console.log('oid: ', oid);
-	/*const response = await fetch(BASE_API_URL + '/api/visitor_response', {
+export const submitResponse = async (oid)=>{
+	const response = await fetch(BASE_API_URL + 'api/visitor_response', {
 		method: 'POST',
 		mode: 'cors',
 		body:JSON.stringify({
@@ -246,5 +142,5 @@ export const submitResponse = async oid => {
 		},
 		withCredentials: true
 	});
-	return await response.json();*/
+	return await response.json();
 };

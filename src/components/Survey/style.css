@@ -12,7 +12,7 @@
 	align-items: center;
 }
 
-.question-card {
+.card {
 	background: white;
 	border-radius: 1rem;
 	animation-duration: 0.5s;
@@ -38,7 +38,7 @@
 	margin: 0;
 }
 
-.question-body {
+.card-body {
     flex: 9;
 	display: flex;
 	flex-direction: column;
@@ -46,7 +46,7 @@
     padding: 2rem;
 }
 
-.question-body > div{
+.card-body > div{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,9 +56,9 @@
 }
 
 
-.question-options{
+.option-container{
     transform:scale(2);/*might need to change later because it wont be responsive*/
-    width: 50%;
+    width: 25%;
     padding: 2rem;
 }
 

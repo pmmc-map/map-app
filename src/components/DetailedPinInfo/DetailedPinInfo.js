@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import {getLocationCounts} from '../../api'
 
 import { pluralize, pluralizeIsAre } from '../../utils.js';
 import './style.css';
@@ -19,6 +20,16 @@ const DetailedPinInfo = ({
 	onClickDismiss,
 }) => {
 	const [curPage, setCurPage] = useState(0);
+	const [graphData, setGraphData] = useState({
+		this_state_count: 0,
+		this_country_count: 0,
+	});
+
+	useEffect(()=>{
+		getLocationCounts(country, state).then((response)=>{
+			setGraphData(response);
+		});
+	}, [country, state]);
 
 	return (
 		<div className='modal-big-background'>
@@ -39,6 +50,10 @@ const DetailedPinInfo = ({
 						<VisitorData
 							country_count={country_count}
 							city_count={city_count}
+							city={city}
+							state={state}
+							country={country}
+							graphData={graphData}
 						/>
 					) : (
 						<SurveyPrompt />
