@@ -10,6 +10,7 @@ const PinDropOverlay = ({
 	onClickConfirmPinDrop,
 	onClickDismissPinDrop,
 	pinPosition,
+	showSurvey,
 }) => {
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
 	return (
@@ -29,6 +30,7 @@ const PinDropOverlay = ({
 					onClickConfirm={onClickConfirmPinDrop}
 					onClickDismiss={onClickDismissPinDrop}
 					pinPosition={pinPosition}
+					showSurvey={showSurvey}
 				/>
 			) : null}
 			<button
@@ -57,6 +59,7 @@ PinDropOverlay.propTypes = {
 	onClickConfirmPinDrop: PropTypes.func.isRequired,
 	onClickDismissPinDrop: PropTypes.func.isRequired,
 	pinPosition: PropTypes.object,
+	showSurvey: PropTypes.func.isRequired,
 };
 
 PinDropOverlay.defaultProps = {

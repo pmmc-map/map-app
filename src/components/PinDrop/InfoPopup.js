@@ -10,6 +10,7 @@ const InfoPopup = ({
 	onClickConfirm,
 	onClickDismiss,
 	pinPosition,
+	showSurvey,
 }) => {
 	const [cityImgSrc, setCityImgSrc] = useState(null);
 	const [isConfirmClicked, setIsConfirmClicked] = useState(false);
@@ -96,6 +97,7 @@ const InfoPopup = ({
 				{...locationStats}
 				cityImg={cityImgSrc}
 				onClickDismiss={onClickDismiss}
+				showSurvey={showSurvey}
 			/>
 		);
 
@@ -143,6 +145,7 @@ InfoPopup.propTypes = {
 	onClickConfirm: PropTypes.func.isRequired,
 	onClickDismiss: PropTypes.func.isRequired,
 	pinPosition: PropTypes.object.isRequired,
+	showSurvey: PropTypes.func.isRequired,
 };
 
 export default InfoPopup;

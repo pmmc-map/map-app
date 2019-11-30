@@ -1,0 +1,29 @@
+.survey-prompt {
+	text-align: center;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+.survey-prompt-container {
+	margin: 0;
+	padding: 0;
+}
+
+.survey-prompt .button {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.survey-prompt .button-cancel {
+	background: red;
+}
+
+.survey-prompt .button-cancel:hover,
+.survey-prompt .button-cancel:active {
+	background: maroon;
+}

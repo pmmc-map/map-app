@@ -16,6 +16,7 @@ import DefaultOverlay from './components/DefaultOverlay';
 import PinDropInstructions from './components/PinDropInstructions';
 import PinDropOverlay from './components/PinDrop';
 import AnimalInfo from './components/AnimalInfo';
+import Survey from './components/Survey/Survey';
 
 const App = props => {
 	const globeRef = useRef(null);
@@ -286,6 +287,10 @@ const App = props => {
 		setPinDropMode(APP_MODE.PIN_DROP_CONFIRMED);
 	};
 
+	const showSurvey = () => {
+		setPinDropMode(APP_MODE.SHOW_SURVEY);
+	};
+
 	return (
 		<div className='page'>
 			<div
@@ -315,7 +320,21 @@ const App = props => {
 					/>
 				) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
 					<PinDropInstructions onClick={onClickInstructions} />
-				) : pinDropMode !== APP_MODE.ANIMAL_CLICKED ? (
+				) : pinDropMode === APP_MODE.ANIMAL_CLICKED ? (
+					<AnimalInfo
+						{...selectedAnimal}
+						onClickDismiss={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							setMouseMode(MOUSE_MODE.NONE);
+						}}
+					/>
+				) : pinDropMode === APP_MODE.SHOW_SURVEY ? (
+					<Survey
+						onReturnClick={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+						}}
+					/>
+				) : (
 					<PinDropOverlay
 						onClickCancel={() => {
 							deleteDroppedPin();
@@ -328,14 +347,7 @@ const App = props => {
 						onClickConfirmPinDrop={onClickConfirmPinDrop}
 						onClickDismissPinDrop={onClickDismissPinDrop}
 						pinPosition={lastDroppedPlacemark.placemark.position}
-					/>
-				) : (
-					<AnimalInfo
-						{...selectedAnimal}
-						onClickDismiss={() => {
-							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-							setMouseMode(MOUSE_MODE.NONE);
-						}}
+						showSurvey={showSurvey}
 					/>
 				)}
 			</div>

@@ -18,6 +18,7 @@ const DetailedPinInfo = ({
 	country_count,
 	distance,
 	onClickDismiss,
+	showSurvey,
 }) => {
 	const [curPage, setCurPage] = useState(0);
 	const [graphData, setGraphData] = useState({
@@ -56,26 +57,28 @@ const DetailedPinInfo = ({
 							graphData={graphData}
 						/>
 					) : (
-						<SurveyPrompt />
+						<SurveyPrompt showSurvey={showSurvey} />
 					)}
 				</div>
-				<div className='button-nav'>
-					<button
-						onClick={onClickDismiss}
-						className='button button-cancel'
-					>
-						Close
-					</button>
-					<button
-						onClick={() => {
-							setCurPage(curPage => curPage + 1);
-						}}
-						disabled={curPage > 1}
-						className='button button-confirm'
-					>
-						Next
-					</button>
-				</div>
+				{curPage < 2 ? (
+					<div className='button-nav'>
+						<button
+							onClick={onClickDismiss}
+							className='button button-cancel'
+						>
+							Close
+						</button>
+						<button
+							onClick={() => {
+								setCurPage(curPage => curPage + 1);
+							}}
+							disabled={curPage > 1}
+							className='button button-confirm'
+						>
+							Next
+						</button>
+					</div>
+				) : null}
 			</div>
 		</div>
 	);
@@ -90,6 +93,7 @@ DetailedPinInfo.propTypes = {
 	country_count: PropTypes.number.isRequired,
 	distance: PropTypes.number.isRequired,
 	onClickDismiss: PropTypes.func.isRequired,
+	showSurvey: PropTypes.func.isRequired,
 };
 
 export default DetailedPinInfo;
