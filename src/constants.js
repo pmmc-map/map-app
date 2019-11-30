@@ -19,6 +19,7 @@ export const MOUSE_MODE = {
 // find out why adding bing layers doesn't work!
 export const GLOBE_LAYERS = [
 	'renderables',
+	// 'bing-aerial-labels',
 	'eox-openstreetmap',
 	// 'blue-marble',
 	// 'atmosphere-day-night',
@@ -37,5 +38,4 @@ export const CLICK_MODE = {
 export const PMMC_POSITION = {
 	latitude: 33.5733,
 	longitude: -117.7628,
-	altitude: 1972.1101500654263,
 };
