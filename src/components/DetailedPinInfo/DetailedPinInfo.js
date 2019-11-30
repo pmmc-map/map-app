@@ -35,7 +35,7 @@ const DetailedPinInfo = ({
 		<div className='modal-big-background'>
 			<div className='modal-big'>
 				<div className='modal-big-header pin-info-image'>
-					<img src={cityImg || '../../../public/defaultcity.jpg'} />
+					<img src={cityImg || '../../../assets/defaultcity.jpg'} />
 				</div>
 				<div className='modal-big-body'>
 					<div className='location-name-container'>

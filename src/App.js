@@ -98,7 +98,7 @@ const App = props => {
 		initPreviousPins();
 	}, []);
 
-	const drawPin = (position, info = null, pinImg = '../public/pin.png') => {
+	const drawPin = (position, info = null, pinImg = '../assets/pin.png') => {
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -177,7 +177,7 @@ const App = props => {
 			pinPositions.map(position =>
 				drawPin(position.coordinates, position)
 			);
-			drawPin(PMMC_POSITION, { title: 'PMMC' }, '../public/star.png');
+			drawPin(PMMC_POSITION, { title: 'PMMC' }, '../assets/star.png');
 			allAnimalInfo.map(animal => {
 				const { longitude, latitude } = animal.coordinates;
 				const position = {
@@ -185,9 +185,9 @@ const App = props => {
 					latitude: latitude,
 				};
 
-				let icon = '../public/sealion.png';
+				let icon = '../assets/sealion.png';
 				if (animal.animal_type.indexOf('Seal') >= 0) {
-					icon = '../public/seal.png';
+					icon = '../assets/seal.png';
 				}
 
 				drawPin(position, animal, icon);

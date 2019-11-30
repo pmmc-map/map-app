@@ -13,7 +13,7 @@ const AnimalInfo = ({
 
 	useEffect(() => {
 		const getAnimalImg = async () => {
-			setAnimalImg('../../../public/animals/tiny.jpg');
+			setAnimalImg('../../../assets/animals/tiny.jpg');
 		};
 
 		getAnimalImg();

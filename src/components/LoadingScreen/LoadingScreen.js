@@ -5,7 +5,7 @@ const LoadingScreen = () => (
 	<div className='loader-page'>
 		<img
 			className='loader-circle'
-			src='../../../../public/circleloader.png'
+			src='../../../../assets/circleloader.png'
 		/>
 	</div>
 );

@@ -8,7 +8,7 @@ const DistanceTravelled = ({ distance }) => (
 			<div className='left'>
 				<img
 					className='distance-preview'
-					src='../../../../public/distance.png'
+					src='../../../../assets/distance.png'
 				/>
 			</div>
 			<div className='right'>

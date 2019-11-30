@@ -49,7 +49,7 @@ const InfoPopup = ({
 			// setCityImgSrc(`data:image; base64, ${blob}`);
 			// } catch (error) {
 			// console.log(error);
-			setCityImgSrc('../../../public/defaultcity.jpg');
+			setCityImgSrc('../../../assets/defaultcity.jpg');
 			// }
 			// };
 
@@ -102,7 +102,7 @@ const InfoPopup = ({
 	return (
 		<div className='pin-info-popup'>
 			<div className='pin-info-image'>
-				<img src={cityImgSrc || '../../../public/defaultcity.jpg'} />
+				<img src={cityImgSrc || '../../../assets/defaultcity.jpg'} />
 			</div>
 			<div className='pin-info-content'>
 				<h1 className='header-1 city-state-header'>{`${
