@@ -10,6 +10,7 @@ import {
 	CLICK_MODE,
 } from './constants';
 import * as API from './api';
+import { BING_API_KEY } from './keys';
 
 import DefaultOverlay from './components/DefaultOverlay';
 import PinDropInstructions from './components/PinDropInstructions';
@@ -20,7 +21,6 @@ const App = props => {
 	const globeRef = useRef(null);
 
 	// values will be fetched from backend and loaded into state
-	const [numVisitors, setNumVisitors] = useState(0);
 	const [numCountries, setNumCountries] = useState(0);
 	const [numStates, setNumStates] = useState(0);
 	// set of pins to display on globe
@@ -65,27 +65,40 @@ const App = props => {
 		initAnimalInfo();
 		// fetch all the initial data from the database
 		const initLocationCounts = async () => {
-			const countsResponse = await API.getLocationCounts();
-			const {
-				total_visitors,
-				unique_states,
-				unique_countries,
-			} = await countsResponse.body;
-			setNumVisitors(total_visitors);
-			setNumCountries(unique_countries);
-			setNumStates(unique_states);
+			try {
+				const countsResponse = await API.getLocationCounts();
+				const {
+					success,
+					total_visitors,
+					unique_states,
+					// unique_countries,
+					unqiue_countries,
+				} = await countsResponse;
+				if (!success) throw 'error';
+				// setNumCountries(unique_countries);
+				setNumCountries(unqiue_countries);
+				setNumStates(unique_states);
+			} catch (err) {
+				setNumCountries(0);
+				setNumStates(0);
+			}
 		};
 		initLocationCounts();
 
-		console.log('loading previously dropped pins');
-		setPinPositions([]);
-		// console.log('loading number of visitors');
-		// setNumVisitors(12345);
-		// console.log('loading number of countries');
-		// setNumCountries(5);
+		const initPreviousPins = async () => {
+			try {
+				const pinsResponse = await API.getAllLocationData();
+				const prevLocations = await pinsResponse.locations;
+				setPinPositions(prevLocations);
+			} catch (err) {
+				setPinPositions([]);
+			}
+			setOldPinsLoaded(true);
+		};
+		initPreviousPins();
 	}, []);
 
-	const drawPin = (position, pinImg = '../public/pin.png', info = null) => {
+	const drawPin = (position, info = null, pinImg = '../public/pin.png') => {
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -159,16 +172,17 @@ const App = props => {
 	};
 
 	useEffect(() => {
-		if (globeRef && !oldPinsLoaded && animalsLoaded) {
+		if (globeRef && oldPinsLoaded && animalsLoaded) {
 			globeRef.current.clickMode = CLICK_MODE.DROP;
-			pinPositions.map(position => drawPin(position));
-			drawPin(PMMC_POSITION, '../public/star.png');
+			pinPositions.map(position =>
+				drawPin(position.coordinates, position)
+			);
+			drawPin(PMMC_POSITION, { title: 'PMMC' }, '../public/star.png');
 			allAnimalInfo.map(animal => {
 				const { longitude, latitude } = animal.coordinates;
 				const position = {
 					longitude: longitude,
 					latitude: latitude,
-					altitude: 263.3237286340391,
 				};
 
 				let icon = '../public/sealion.png';
@@ -176,10 +190,11 @@ const App = props => {
 					icon = '../public/seal.png';
 				}
 
-				drawPin(position, icon, animal);
+				drawPin(position, animal, icon);
 			});
+
 			globeRef.current.clickMode = CLICK_MODE.PICK;
-			setOldPinsLoaded(true);
+			setOldPinsLoaded(false);
 			setAnimalsLoaded(false);
 		}
 	}, [globeRef, oldPinsLoaded, pinPositions, allAnimalInfo, animalsLoaded]);
@@ -253,7 +268,6 @@ const App = props => {
 		layer.refresh();
 
 		globeRef.current.armClickDrop(null);
-		// setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
 	};
 
@@ -262,8 +276,13 @@ const App = props => {
 		setPinDropMode(APP_MODE.DEFAULT_SCREEN);
 	};
 
-	const onClickConfirmPinDrop = () => {
-		setNumVisitors(numVisitors => numVisitors + 1);
+	const onClickConfirmPinDrop = locationData => {
+		setPinPositions(pinPositions => {
+			if (pinPositions.length < 1) return pinPositions;
+			const lastPin = pinPositions.pop();
+			lastPin.info = locationData;
+			return pinPositions.concat([lastPin]);
+		});
 		setPinDropMode(APP_MODE.PIN_DROP_CONFIRMED);
 	};
 
@@ -283,12 +302,13 @@ const App = props => {
 					layers={GLOBE_LAYERS}
 					{...globeFocusedPosition}
 					backgroundColor={GLOBE_BACKGROUND_COLOR}
+					bingMapsKey={BING_API_KEY}
 				/>
 			</div>
 			<div className='fullscreen-item'>
 				{pinDropMode === APP_MODE.DEFAULT_SCREEN ? (
 					<DefaultOverlay
-						numVisitors={numVisitors}
+						numVisitors={pinPositions.length}
 						numCountries={numCountries}
 						numStates={numStates}
 						onStartPinDrop={onStartPinDrop}
