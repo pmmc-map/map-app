@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-const SurveyIntro = ({onNext}) => {
+const SurveyIntro = ({ onNext }) => {
 	return (
 		<div
 			className='card'
@@ -10,16 +10,11 @@ const SurveyIntro = ({onNext}) => {
 				e.stopPropagation();
 			}}
 		>
-			<div className='title-container'>
-
-			</div>
+			<div className='title-container'></div>
 
 			<div className='card-body'>
 				<p>Welcome to the survey</p>
-				<button
-					className='button button-next'
-					onClick={onNext}
-				>
+				<button className='button button-next' onClick={onNext}>
 					Next
 				</button>
 			</div>
@@ -27,12 +22,8 @@ const SurveyIntro = ({onNext}) => {
 	);
 };
 
-SurveyIntro.defaultProps = {
+SurveyIntro.defaultProps = {};
 
-};
-
-SurveyIntro.propTypes = {
-
-};
+SurveyIntro.propTypes = {};
 
 export default SurveyIntro;

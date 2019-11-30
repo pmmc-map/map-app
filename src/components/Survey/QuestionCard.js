@@ -56,8 +56,8 @@ const QuestionCard = ({
 					{questionList === null
 						? 'Loading ...'
 						: questionList.length === 0
-							? 'Error Loading Questions'
-							: questionList[currentQuestion].text}
+						? 'Error Loading Questions'
+						: questionList[currentQuestion].text}
 				</h1>
 
 				{ready ? null : (
@@ -71,20 +71,26 @@ const QuestionCard = ({
 												type='radio'
 												id={option.oid}
 												name={
-													'surveyQuestion' + currentQuestion
+													'surveyQuestion' +
+													currentQuestion
 												}
 												value={JSON.stringify(option)}
 												onChange={onSelect}
 											/>
 											{option.text}
-											<br/>
+											<br />
 										</div>
 									)
 								)}
 							</form>
 						</div>
 						<button
-							className={'button ' + (currentQuestion === questionList.length - 1?'button-confirm':'button-next')}
+							className={
+								'button ' +
+								(currentQuestion === questionList.length - 1
+									? 'button-confirm'
+									: 'button-next')
+							}
 							onClick={() =>
 								onNext(questionList[currentQuestion].qid)
 							}

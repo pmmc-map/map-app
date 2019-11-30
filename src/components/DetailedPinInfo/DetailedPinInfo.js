@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {getLocationCounts} from '../../api'
+import { getLocationCounts } from '../../api';
 
 import { pluralize, pluralizeIsAre } from '../../utils.js';
 import './style.css';
@@ -25,8 +25,8 @@ const DetailedPinInfo = ({
 		this_country_count: 0,
 	});
 
-	useEffect(()=>{
-		getLocationCounts(country, state).then((response)=>{
+	useEffect(() => {
+		getLocationCounts(country, state).then(response => {
 			setGraphData(response);
 		});
 	}, [country, state]);

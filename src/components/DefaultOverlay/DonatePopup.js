@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-
-export const DonationCard = ({onReturnClick}) => {
+export const DonationCard = ({ onReturnClick }) => {
 	return (
 		<div className='donate-container'>
 			<div className='popup-title-container'>
@@ -11,17 +10,17 @@ export const DonationCard = ({onReturnClick}) => {
 			</div>
 			<div className='popup-body'>
 				<p>
-					Open the <strong>Camera app on your smartphone</strong>{' '}
-					and <strong>scan the QR code below</strong> to donate to
-					the Pacific Marine Mammal Center
+					Open the <strong>Camera app on your smartphone</strong> and{' '}
+					<strong>scan the QR code below</strong> to donate to the
+					Pacific Marine Mammal Center
 				</p>
 				<div>
 					<img src={'../../../public/donateQRcode.png'} />
 				</div>
 
 				<p>
-					Your donation will provide life saving medication and
-					fish for our patients.
+					Your donation will provide life saving medication and fish
+					for our patients.
 				</p>
 
 				<button onClick={onReturnClick} className='button'>
@@ -32,7 +31,6 @@ export const DonationCard = ({onReturnClick}) => {
 	);
 };
 
-
 const DonatePopup = ({ onReturnClick }) => {
 	return (
 		<div
@@ -42,7 +40,7 @@ const DonatePopup = ({ onReturnClick }) => {
 				e.stopPropagation();
 			}}
 		>
-			<DonationCard onReturnClick={onReturnClick}/>
+			<DonationCard onReturnClick={onReturnClick} />
 		</div>
 	);
 };
