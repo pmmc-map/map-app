@@ -17,6 +17,7 @@
 	border-radius: 1rem;
 	width: 70%;
 	height: 70%;
+	transform: translateY(-2rem); /* offset buttons at bottom of modal */
 }
 
 .modal-big-header {
@@ -29,7 +30,6 @@
 
 .modal-big-body {
 	padding: 1rem 2rem;
-	height: inherit;
 }
 
 .button-nav {
@@ -39,7 +39,7 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
-	padding: 1rem 0 2rem;
+	padding: 1rem 0;
 }
 
 .distance-info {
@@ -54,10 +54,12 @@
 .distance {
 	display: flex;
 	flex-direction: row;
+	height: 100%;
+	width: 100%;
 }
 
 .distance > .right {
-	flex: 1 1 70%;
+	flex: 1 1 90%;
 }
 
 .distance-info .pmmc {
@@ -71,21 +73,25 @@
 }
 
 img.distance-preview {
-	width: 60%;
+	max-width: 25vw;
 }
 
 .location-stats {
 	display: flex;
 	padding: 1rem 0;
+	height: 100%;
 }
 
+/*
 .left {
 	margin-right: 2rem;
 }
+*/
 
 .left,
 .right {
-	flex: 1 1 50%;
+	flex: 1 1 20%;
+	height: 100%;
 }
 
 /* this is a placeholder while the graphs haven't been implemented yet */

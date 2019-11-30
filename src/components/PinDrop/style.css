@@ -60,6 +60,10 @@
 	padding: 1rem;
 }
 
+.pin-info-text {
+	text-align: center;
+}
+
 .centered-button-container {
 	display: flex;
 	width: 100%;

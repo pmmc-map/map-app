@@ -118,7 +118,7 @@ const InfoPopup = ({
 					<>
 						<button
 							onClick={() => {
-								onClickConfirm();
+								onClickConfirm(locationData);
 								setIsConfirmClicked(true);
 							}}
 							className='button button-confirm'
