@@ -46,7 +46,7 @@ const InfoPopup = ({
 					const locationImgResp = await API.getCityImg(city);
 					const cityImg = await locationImgResp;
 					const blob = await cityImg.image;
-					setCityImgSrc(`data:image; base64, ${blob}`);
+					setCityImgSrc(`data:image;base64,${blob}`);
 				} catch (error) {
 					console.log(error);
 					setCityImgSrc('../../../assets/defaultcity.jpg');

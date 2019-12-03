@@ -100,6 +100,20 @@ export const getAllAnimalData = async () => {
 	});
 	return await response.json();
 };
+
+export const getRescueCounts = async () => {
+	const response = await fetch(BASE_API_URL + 'admin/count', {
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': BASE_API_URL + '*',
+		},
+		withCredentials: true,
+	});
+	return (jsonResp = await response.json());
+};
+
 // id is optional
 export const getQuestions = async (id = '') => {
 	let response = await fetch(BASE_API_URL + 'api/questions', {

@@ -24,6 +24,8 @@ const App = props => {
 	// values will be fetched from backend and loaded into state
 	const [numCountries, setNumCountries] = useState(0);
 	const [numStates, setNumStates] = useState(0);
+	const [numRescues, setNumRescues] = useState(0);
+
 	// set of pins to display on globe
 	const [pinPositions, setPinPositions] = useState([]);
 	const [oldPinsLoaded, setOldPinsLoaded] = useState(false);
@@ -64,6 +66,20 @@ const App = props => {
 			setAnimalsLoaded(true);
 		};
 		initAnimalInfo();
+
+		const initRescueCounts = async () => {
+			try {
+				const rescueCountsResponse = await API.getRescueCounts();
+				const rescueCounts = rescueCountsResponse.counts.filter(
+					count => count.name === 'num_rescues'
+				);
+				setNumRescues(rescueCounts.total);
+			} catch (err) {
+				setNumRescues(0);
+			}
+		};
+		initRescueCounts();
+
 		// fetch all the initial data from the database
 		const initLocationCounts = async () => {
 			try {
@@ -76,7 +92,6 @@ const App = props => {
 					unqiue_countries,
 				} = await countsResponse;
 				if (!success) throw 'error';
-				// setNumCountries(unique_countries);
 				setNumCountries(unqiue_countries);
 				setNumStates(unique_states);
 			} catch (err) {
@@ -340,6 +355,7 @@ const App = props => {
 						numVisitors={pinPositions.length}
 						numCountries={numCountries}
 						numStates={numStates}
+						numRescues={numRescues}
 						onStartPinDrop={onStartPinDrop}
 					/>
 				) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
