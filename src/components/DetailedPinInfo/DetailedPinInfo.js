@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getLocationCounts } from '../../api';
+import { CSSTransition } from 'react-transition-group';
 
+import { getLocationCounts } from '../../api';
 import { pluralize, pluralizeIsAre } from '../../utils.js';
 import './style.css';
+import './Pages/animations.css';
 
 import VisitorData from './Pages/VisitorData';
 import DistanceTravelled from './Pages/DistanceTravelled';
@@ -35,19 +37,30 @@ const DetailedPinInfo = ({
 	return (
 		<div className='modal-big-background'>
 			<div className='modal-big'>
-				<div className='modal-big-header pin-info-image'>
+				<div className='modal-big-header pin-info-image blur'>
 					<img src={cityImg || '../../../assets/defaultcity.jpg'} />
 				</div>
 				<div className='modal-big-body'>
-					<div className='location-name-container'>
+					<div className='title'>
 						<h1 className='header-1'>
 							{(city ? city + ', ' : '') + state}
 						</h1>
 						<h2 className='header-2'>{country}</h2>
 					</div>
-					{curPage === 0 ? (
+					<CSSTransition
+						in={curPage === 0}
+						timeout={300}
+						classNames='distance-animate'
+						unmountOnExit
+					>
 						<DistanceTravelled distance={distance} />
-					) : curPage === 1 ? (
+					</CSSTransition>
+					<CSSTransition
+						in={curPage === 1}
+						timeout={300}
+						classNames='survey-prompt-animate'
+						unmountOnExit
+					>
 						<VisitorData
 							country_count={country_count}
 							city_count={city_count}
@@ -56,9 +69,16 @@ const DetailedPinInfo = ({
 							country={country}
 							graphData={graphData}
 						/>
-					) : (
+					</CSSTransition>
+
+					<CSSTransition
+						in={curPage !== 1 && curPage !== 0}
+						timeout={300}
+						classNames='survey-prompt-animate'
+						unmountOnExit
+					>
 						<SurveyPrompt showSurvey={showSurvey} />
-					)}
+					</CSSTransition>
 					{curPage < 2 ? (
 						<div className='button-nav'>
 							<button
@@ -67,6 +87,16 @@ const DetailedPinInfo = ({
 							>
 								Close
 							</button>
+							{/*
+							<button
+								onClick={() =>
+									setCurPage(curPage => curPage - 1)
+								}
+								className='button button-cancel'
+							>
+								Back
+							</button>
+							*/}
 							<button
 								onClick={() => {
 									setCurPage(curPage => curPage + 1);
@@ -85,7 +115,7 @@ const DetailedPinInfo = ({
 };
 
 DetailedPinInfo.propTypes = {
-	city: PropTypes.string.isRequired,
+	city: PropTypes.string,
 	cityImg: PropTypes.string.isRequired,
 	state: PropTypes.string.isRequired,
 	country: PropTypes.string.isRequired,
@@ -94,6 +124,10 @@ DetailedPinInfo.propTypes = {
 	distance: PropTypes.number.isRequired,
 	onClickDismiss: PropTypes.func.isRequired,
 	showSurvey: PropTypes.func.isRequired,
+};
+
+DetailedPinInfo.defaultProps = {
+	city: '',
 };
 
 export default DetailedPinInfo;

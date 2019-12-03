@@ -195,11 +195,7 @@ const PieChart = ({ data, city, state, country }) => {
 		});
 	}, [data, city, state]);
 
-	return (
-		<div>
-			<DisplayData spec={spec} actions={false} />
-		</div>
-	);
+	return <DisplayData spec={spec} actions={false} />;
 };
 
 PieChart.propTypes = {

@@ -20,8 +20,8 @@ export const MOUSE_MODE = {
 // find out why adding bing layers doesn't work!
 export const GLOBE_LAYERS = [
 	'renderables',
-	'bing-aerial-labels',
-	// 'eox-sentinal2-labels',
+	// 'bing-aerial-labels',
+	'eox-sentinal2-labels',
 	// 'eox-openstreetmap',
 	// 'blue-marble',
 	'atmosphere-day-night',

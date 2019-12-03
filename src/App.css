@@ -64,6 +64,7 @@ h3 {
 	pointer-events: initial;
 	font-size: 2rem;
 	transition: 0.1s ease-in all;
+	min-width: 10rem;
 
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }

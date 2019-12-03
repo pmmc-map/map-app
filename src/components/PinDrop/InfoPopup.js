@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import './style.css';
 import LoadingScreen from '../LoadingScreen';
 import DetailedPinInfo from '../DetailedPinInfo';
@@ -9,6 +10,7 @@ const InfoPopup = ({
 	onClickCancel,
 	onClickConfirm,
 	onClickDismiss,
+	onInvalidPinDrop,
 	pinPosition,
 	showSurvey,
 }) => {
@@ -82,8 +84,10 @@ const InfoPopup = ({
 	}, [isConfirmClicked, pinPosition]);
 
 	// TODO: clean this up
-	if (isPinLocationDataLoading && !isResponseSuccessful)
-		return <div>error in getting response</div>;
+	if (isPinLocationDataLoading && !isResponseSuccessful) {
+		onClickCancel();
+		return null;
+	}
 
 	if (isPinLocationDataLoading) return <LoadingScreen />;
 
@@ -106,7 +110,7 @@ const InfoPopup = ({
 			<div className='pin-info-content'>
 				<h1 className='header-1 city-state-header'>{`${
 					locationData.city ? locationData.city + ', ' : ''
-				}${locationData.state}`}</h1>
+				}${locationData.state ? locationData.state : ''}`}</h1>
 				<h2 className='header-2 country-header'>
 					{locationData.country}
 				</h2>
@@ -141,6 +145,7 @@ InfoPopup.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	onClickConfirm: PropTypes.func.isRequired,
 	onClickDismiss: PropTypes.func.isRequired,
+	onInvalidPinDrop: PropTypes.func.isRequired,
 	pinPosition: PropTypes.object.isRequired,
 	showSurvey: PropTypes.func.isRequired,
 };

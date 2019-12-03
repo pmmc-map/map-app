@@ -15,7 +15,7 @@ const AnimalInfo = ({
 
 	useEffect(() => {
 		const getAnimalImg = async () => {
-			setAnimalImg('../../../assets/animals/tiny.jpg');
+			setAnimalImg('../../../assets/animals/default-brawler.jpg');
 		};
 
 		getAnimalImg();

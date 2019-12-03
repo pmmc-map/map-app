@@ -17,6 +17,7 @@
 		"prop-types": "^15.7.2",
 		"react": "^16.10.2",
 		"react-dom": "^16.10.2",
+		"react-transition-group": "^4.3.0",
 		"react-vega": "^7.1.0",
 		"regenerator-runtime": "^0.13.3",
 		"url-loader": "^2.2.0",

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
+
 import HelpModal from './PinDropHelp';
 import InfoPopup from './InfoPopup';
 
@@ -9,6 +11,7 @@ const PinDropOverlay = ({
 	onClickCancelPinDrop,
 	onClickConfirmPinDrop,
 	onClickDismissPinDrop,
+	onInvalidPinDrop,
 	pinPosition,
 	showSurvey,
 }) => {
@@ -20,10 +23,14 @@ const PinDropOverlay = ({
 					<h1 className='header-visitors'>Where are you from?</h1>
 				</div>
 			</div>
-
-			{isHelpShowing && !isConfirmPopupShowing ? (
+			<CSSTransition
+				in={isHelpShowing && !isConfirmPopupShowing}
+				timeout={300}
+				classNames='help'
+				unmountOnExit
+			>
 				<HelpModal onClick={() => setIsHelpShowing(false)} />
-			) : null}
+			</CSSTransition>
 			{isConfirmPopupShowing ? (
 				<InfoPopup
 					onClickCancel={onClickCancelPinDrop}
@@ -31,6 +38,7 @@ const PinDropOverlay = ({
 					onClickDismiss={onClickDismissPinDrop}
 					pinPosition={pinPosition}
 					showSurvey={showSurvey}
+					onInvalidPinDrop={onInvalidPinDrop}
 				/>
 			) : null}
 			<button
@@ -58,6 +66,7 @@ PinDropOverlay.propTypes = {
 	onClickCancelPinDrop: PropTypes.func.isRequired,
 	onClickConfirmPinDrop: PropTypes.func.isRequired,
 	onClickDismissPinDrop: PropTypes.func.isRequired,
+	onInvalidPinDrop: PropTypes.func.isRequired,
 	pinPosition: PropTypes.object,
 	showSurvey: PropTypes.func.isRequired,
 };

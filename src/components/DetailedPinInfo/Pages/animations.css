@@ -1,0 +1,35 @@
+.survey-prompt-animate-enter {
+	opacity: 0;
+	transform: scale(0.9);
+}
+.survey-prompt-animate-enter-active {
+	opacity: 1;
+	transform: translateX(0);
+	transition: opacity 300ms, transform 300ms;
+}
+.survey-prompt-animate-exit {
+	opacity: 1;
+}
+.survey-prompt-animate-exit-active {
+	opacity: 0;
+	transform: scale(0.9);
+	transition: opacity 300ms, transform 300ms;
+}
+
+.distance-animate-enter {
+	opacity: 0;
+	transform: scale(0.9);
+}
+.distance-animate-enter-active {
+	opacity: 1;
+	transform: translateX(0);
+	transition: opacity 300ms, transform 300ms;
+}
+.distance-animate-exit {
+	opacity: 1;
+}
+.distance-animate-exit-active {
+	opacity: 0;
+	transform: scale(0.9);
+	transition: opacity 300ms, transform 300ms;
+}

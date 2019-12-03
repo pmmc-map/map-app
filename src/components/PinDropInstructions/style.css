@@ -1,3 +1,12 @@
+@keyframes instr-fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 .pin-drop-instr-background {
 	background: rgba(0, 0, 0, 0.5);
 	width: 100%;
@@ -10,6 +19,9 @@
 	justify-content: center;
 	z-index: 9999;
 	pointer-events: initial;
+
+	animation-name: instr-fade-in;
+	animation-duration: 0.3s;
 }
 
 .pin-drop-cta {

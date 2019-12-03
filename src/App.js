@@ -125,11 +125,11 @@ const App = props => {
 			/*eyeDistanceScaling*/ true,
 			attributes
 		);
-		placemark.label =
-			'Lat ' +
-			position.latitude.toPrecision(4).toString() +
-			'\nLon ' +
-			position.longitude.toPrecision(5).toString();
+		// placemark.label =
+		// 'Lat ' +
+		// position.latitude.toPrecision(4).toString() +
+		// '\nLon ' +
+		// position.longitude.toPrecision(5).toString();
 		placemark.altitudeMode = WorldWind.CLAMP_TO_GROUND;
 		placemark.eyeDistanceScalingThreshold = 2500000;
 
@@ -163,10 +163,13 @@ const App = props => {
 	};
 
 	const selectPin = selectedPins => {
+		console.log('clicked');
 		if (selectedPins.length < 1) return;
 		const selected = selectedPins[0];
+		console.log('considering', selected);
 
 		if (!selected.userObject || !selected.userObject.info) return;
+		console.log('madeit');
 
 		setSelectedPin(selected.userObject.info);
 		setPinDropMode(APP_MODE.PIN_CLICKED);
@@ -235,7 +238,13 @@ const App = props => {
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
 				globeRef.current.clickMode = CLICK_MODE.DROP;
 			globeRef.current.armClickDrop(position => {
-				const placemark = drawPin(position);
+				console.log(position);
+				if (!position) return;
+				const placemark = drawPin(
+					position,
+					null,
+					'../assets/pin-pending.png'
+				);
 				setLastDroppedPlacemark({
 					placemark: placemark,
 				});
@@ -262,12 +271,14 @@ const App = props => {
 		const layer = globeRef.current.getLayer('Renderables');
 		layer.removeRenderable(lastDroppedPlacemark.placemark);
 		layer.refresh();
+		globeRef.current.wwd.redraw();
 	};
 
 	const onClickCancelPinDrop = () => {
 		const layer = globeRef.current.getLayer('Renderables');
 		layer.removeRenderable(lastDroppedPlacemark.placemark);
 		layer.refresh();
+		globeRef.current.wwd.redraw();
 
 		globeRef.current.armClickDrop(null);
 		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
@@ -278,11 +289,23 @@ const App = props => {
 		setPinDropMode(APP_MODE.DEFAULT_SCREEN);
 	};
 
+	const onInvalidPinDrop = () => {
+		globeRef.current.armClickDrop(null);
+		setPinDropMode(APP_MODE.PIN_DROP_BEGIN);
+	};
+
 	const onClickConfirmPinDrop = locationData => {
 		setPinPositions(pinPositions => {
 			if (pinPositions.length < 1) return pinPositions;
+
+			// need to redraw pin so we can add the pin meta info
+			// that way we can select it later :)
+			deleteDroppedPin();
 			const lastPin = pinPositions.pop();
 			lastPin.info = locationData;
+			lastPin.info.type = 'pin';
+			drawPin(lastDroppedPlacemark.placemark.position, lastPin.info);
+
 			return pinPositions.concat([lastPin]);
 		});
 		setPinDropMode(APP_MODE.PIN_DROP_CONFIRMED);
@@ -357,6 +380,7 @@ const App = props => {
 						onClickCancelPinDrop={onClickCancelPinDrop}
 						onClickConfirmPinDrop={onClickConfirmPinDrop}
 						onClickDismissPinDrop={onClickDismissPinDrop}
+						onInvalidPinDrop={onInvalidPinDrop}
 						pinPosition={lastDroppedPlacemark.placemark.position}
 						showSurvey={showSurvey}
 					/>

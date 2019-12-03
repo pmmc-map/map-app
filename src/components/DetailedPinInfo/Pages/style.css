@@ -4,7 +4,7 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
 	align-content: center;
 }
@@ -12,6 +12,7 @@
 .survey-prompt-container {
 	margin: 0;
 	padding: 0;
+	height: 100%;
 }
 
 .survey-prompt .button {

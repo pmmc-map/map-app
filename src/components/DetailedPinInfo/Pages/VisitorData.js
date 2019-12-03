@@ -14,31 +14,35 @@ const VisitorData = ({
 }) => (
 	<>
 		<div className='location-stats'>
-			<div className='left'>
-				<div className='stats-graph'>
-					<PieChart
-						data={graphData}
-						city={city}
-						state={state}
-						country={country}
-					/>
-				</div>
+			<div className='left data-graph'>
+				<PieChart
+					data={graphData}
+					city={city}
+					state={state}
+					country={country}
+				/>
 			</div>
 			<div className='right'>
 				<div className='visitor-count'>
-					<h1 className='big-number visitors-country'>
+					<h1 className='header-1 big-number visitors-country'>
 						{`${country_count} visitor${pluralize(country_count)}`}
 					</h1>
 					<span className='visitor-stats'>
 						{`${pluralizeIsAre(country_count)} `} from your country
 					</span>
-
-					<h1 className='big-number visitors-city'>
-						{`${city_count} visitor${pluralize(city_count)}`}
-					</h1>
-					<span className='visitor-stats'>
-						{`${pluralizeIsAre(city_count)} `} from your city
-					</span>
+					{city ? (
+						<>
+							<h1 className='header-1 big-number visitors-city'>
+								{`${city_count} visitor${pluralize(
+									city_count
+								)}`}
+							</h1>
+							<span className='visitor-stats'>
+								{`${pluralizeIsAre(city_count)} `} from your
+								city
+							</span>
+						</>
+					) : null}
 				</div>
 			</div>
 		</div>
