@@ -15,7 +15,7 @@ import { BING_API_KEY } from './keys';
 import DefaultOverlay from './components/DefaultOverlay';
 import PinDropInstructions from './components/PinDropInstructions';
 import PinDropOverlay from './components/PinDrop';
-import AnimalInfo from './components/AnimalInfo';
+import { AnimalInfo, VisitorInfo } from './components/SelctedPinInfo';
 import Survey from './components/Survey/Survey';
 
 const App = props => {
@@ -30,7 +30,7 @@ const App = props => {
 
 	const [animalsLoaded, setAnimalsLoaded] = useState(false);
 	const [allAnimalInfo, setAllAnimalInfo] = useState([]);
-	const [selectedAnimal, setSelectedAnimal] = useState({});
+	const [selectedPin, setSelectedPin] = useState({});
 
 	// toggle whether or not we are dropping a pin or viewing the default stats overlay
 	const [pinDropMode, setPinDropMode] = useState(APP_MODE.DEFAULT_SCREEN);
@@ -168,16 +168,17 @@ const App = props => {
 
 		if (!selected.userObject || !selected.userObject.info) return;
 
-		setSelectedAnimal(selected.userObject.info);
-		setPinDropMode(APP_MODE.ANIMAL_CLICKED);
+		setSelectedPin(selected.userObject.info);
+		setPinDropMode(APP_MODE.PIN_CLICKED);
 	};
 
 	useEffect(() => {
 		if (globeRef && oldPinsLoaded && animalsLoaded) {
 			globeRef.current.clickMode = CLICK_MODE.DROP;
-			pinPositions.map(position =>
-				drawPin(position.coordinates, position)
-			);
+			pinPositions.map(position => {
+				position.type = 'pin';
+				drawPin(position.coordinates, position);
+			});
 			drawPin(PMMC_POSITION, { title: 'PMMC' }, '../assets/star.png');
 			allAnimalInfo.map(animal => {
 				const { longitude, latitude } = animal.coordinates;
@@ -190,6 +191,7 @@ const App = props => {
 				if (animal.animal_type.indexOf('Seal') >= 0) {
 					icon = '../assets/seal.png';
 				}
+				animal.type = 'animal';
 
 				drawPin(position, animal, icon);
 			});
@@ -218,7 +220,7 @@ const App = props => {
 			if (isMouseMoving) return;
 			if (
 				pinDropMode === APP_MODE.DEFAULT_SCREEN ||
-				pinDropMode === APP_MODE.ANIMAL_CLICKED
+				pinDropMode === APP_MODE.PIN_CLICKED
 			) {
 				globeRef.current.armClickDrop(selectPin);
 				globeRef.current.clickMode = CLICK_MODE.PICK;
@@ -234,14 +236,13 @@ const App = props => {
 				globeRef.current.clickMode = CLICK_MODE.DROP;
 			globeRef.current.armClickDrop(position => {
 				const placemark = drawPin(position);
-				// offset focused position so that we have room to display popup for confirmation
 				setLastDroppedPlacemark({
 					placemark: placemark,
 				});
 				setPinDropMode(APP_MODE.PIN_DROP_CONFIRM);
 
 				setGlobeFocusedPosition({
-					longitude: position.longitude + 1,
+					longitude: position.longitude,
 					latitude: position.latitude,
 				});
 			});
@@ -320,9 +321,19 @@ const App = props => {
 					/>
 				) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
 					<PinDropInstructions onClick={onClickInstructions} />
-				) : pinDropMode === APP_MODE.ANIMAL_CLICKED ? (
+				) : pinDropMode === APP_MODE.PIN_CLICKED &&
+				  selectedPin.type === 'animal' ? (
 					<AnimalInfo
-						{...selectedAnimal}
+						{...selectedPin}
+						onClickDismiss={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							setMouseMode(MOUSE_MODE.NONE);
+						}}
+					/>
+				) : pinDropMode === APP_MODE.PIN_CLICKED &&
+				  selectedPin.type === 'pin' ? (
+					<VisitorInfo
+						{...selectedPin}
 						onClickDismiss={() => {
 							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
 							setMouseMode(MOUSE_MODE.NONE);

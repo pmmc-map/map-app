@@ -31,6 +31,10 @@ export const DonationCard = ({ onReturnClick }) => {
 	);
 };
 
+DonationCard.propTypes = {
+	onReturnClick: PropTypes.func.isRequired,
+};
+
 const DonatePopup = ({ onReturnClick }) => {
 	return (
 		<div

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import SelectedPinInfo from './SelectedPinInfo';
+
 const AnimalInfo = ({
 	animal_name,
 	animal_type,
@@ -20,22 +22,14 @@ const AnimalInfo = ({
 	}, []);
 
 	return (
-		<div className='pin-info-popup'>
-			<div className='pin-info-image'>
-				<img src={animalImg} />
-			</div>
-			<div className='pin-info-content'>
+		<SelectedPinInfo headerImg={animalImg} onClickDismiss={onClickDismiss}>
+			<>
 				<h1 className='header-1'>{animal_name}</h1>
 				<h2 className='header-2 dark'>{animal_type}</h2>
 				<h2 className='header-2'>{`${location_name}, ${placement_year}`}</h2>
 				<p>{animal_notes}</p>
-				<div className='centered-button-container'>
-					<button className='button' onClick={onClickDismiss}>
-						Close
-					</button>
-				</div>
-			</div>
-		</div>
+			</>
+		</SelectedPinInfo>
 	);
 };
 

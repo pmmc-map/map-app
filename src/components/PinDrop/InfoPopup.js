@@ -38,23 +38,20 @@ const InfoPopup = ({
 				return;
 			}
 
-			// const fetchLocationImg = async () => {
-			// const city = await pinLocationData.city;
-			// try {
-			// const locationImgResp = await API.getCityImg(city);
-			// console.log(locationImgResp);
-			// const cityImg = await locationImgResp;
-			// console.log(cityImg);
-			// const blob = await cityImg.image;
-			// console.log(blob);
-			// setCityImgSrc(`data:image; base64, ${blob}`);
-			// } catch (error) {
-			// console.log(error);
-			setCityImgSrc('../../../assets/defaultcity.jpg');
-			// }
-			// };
+			const fetchLocationImg = async () => {
+				const city = await pinLocationData.city;
+				try {
+					const locationImgResp = await API.getCityImg(city);
+					const cityImg = await locationImgResp;
+					const blob = await cityImg.image;
+					setCityImgSrc(`data:image; base64, ${blob}`);
+				} catch (error) {
+					console.log(error);
+					setCityImgSrc('../../../assets/defaultcity.jpg');
+				}
+			};
 
-			// fetchLocationImg();
+			fetchLocationImg();
 			setIsPinLocationDataLoading(false);
 		};
 		fetchPinInfo();

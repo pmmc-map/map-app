@@ -6,7 +6,7 @@ export const APP_MODE = {
 	PIN_DROP_LOADING: 4,
 	PIN_DROP_CONFIRMED: 5,
 	PIN_DROP_DONE: 6,
-	ANIMAL_CLICKED: 7,
+	PIN_CLICKED: 7,
 	START_SURVEY: 8,
 };
 
@@ -20,11 +20,12 @@ export const MOUSE_MODE = {
 // find out why adding bing layers doesn't work!
 export const GLOBE_LAYERS = [
 	'renderables',
-	// 'bing-aerial-labels',
-	'eox-openstreetmap',
+	'bing-aerial-labels',
+	// 'eox-sentinal2-labels',
+	// 'eox-openstreetmap',
 	// 'blue-marble',
-	// 'atmosphere-day-night',
-	// 'stars',
+	'atmosphere-day-night',
+	'stars',
 ];
 
 export const GLOBE_BACKGROUND_COLOR = '#2d2d2d';

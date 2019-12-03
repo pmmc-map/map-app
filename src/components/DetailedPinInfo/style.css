@@ -17,7 +17,6 @@
 	border-radius: 1rem;
 	width: 70%;
 	height: 70%;
-	transform: translateY(-2rem); /* offset buttons at bottom of modal */
 }
 
 .modal-big-header {
@@ -30,16 +29,17 @@
 
 .modal-big-body {
 	padding: 1rem 2rem;
+	height: 55%;
 }
 
 .button-nav {
-	background: white;
-	border-bottom-right-radius: 1rem;
-	border-bottom-left-radius: 1rem;
-	width: 100%;
+	width: 70%;
 	display: flex;
 	justify-content: space-around;
 	padding: 1rem 0;
+	position: absolute;
+	bottom: 15%;
+	left: 15%;
 }
 
 .distance-info {

@@ -59,26 +59,26 @@ const DetailedPinInfo = ({
 					) : (
 						<SurveyPrompt showSurvey={showSurvey} />
 					)}
+					{curPage < 2 ? (
+						<div className='button-nav'>
+							<button
+								onClick={onClickDismiss}
+								className='button button-cancel'
+							>
+								Close
+							</button>
+							<button
+								onClick={() => {
+									setCurPage(curPage => curPage + 1);
+								}}
+								disabled={curPage > 1}
+								className='button button-confirm'
+							>
+								Next
+							</button>
+						</div>
+					) : null}
 				</div>
-				{curPage < 2 ? (
-					<div className='button-nav'>
-						<button
-							onClick={onClickDismiss}
-							className='button button-cancel'
-						>
-							Close
-						</button>
-						<button
-							onClick={() => {
-								setCurPage(curPage => curPage + 1);
-							}}
-							disabled={curPage > 1}
-							className='button button-confirm'
-						>
-							Next
-						</button>
-					</div>
-				) : null}
 			</div>
 		</div>
 	);

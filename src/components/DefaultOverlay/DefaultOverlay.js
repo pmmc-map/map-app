@@ -21,17 +21,18 @@ const DefaultOverlay = ({
 	return (
 		<div className='default-overlay'>
 			<div className='bigstats'>
-				<h1 className='header-visitors'>{numVisitors} visitors </h1>
+				<h1 className='header-visitors'>{numVisitors} visitors</h1>
 				<h3 className='visitor-substats'>
 					{numCountries} countr{pluralize(numCountries, true)}
 				</h3>
 				<h3 className='visitor-substats'>
 					{numStates} state{pluralize(numStates)}
 				</h3>
-				<h1 className='header-visitors'>{d.getFullYear()}</h1>
+				<h3 className='visitor-substats'>
+					{numStates} animal{pluralize(numStates)} rescued
+				</h3>
+				<h1 className='header-visitors'>since {d.getFullYear()}</h1>
 			</div>
-
-			{/*<h1 className='drop-pin-cta'>Touch anywhere to start pin drop</h1> */}
 
 			<button
 				className='button button-donate'
@@ -42,16 +43,14 @@ const DefaultOverlay = ({
 				Donate
 			</button>
 			<button
-				className='button button-bottom-right'
+				className='button button-next button-bottom-right'
 				onClick={onStartPinDrop}
 			>
 				Start
 			</button>
 			{displayDonatePopup ? (
-				<Survey
-					onReturnClick={() => {
-						setDisplayDonatePopup(false);
-					}}
+				<DonatePopup
+					onReturnClick={() => setDisplayDonatePopup(false)}
 				/>
 			) : null}
 		</div>
