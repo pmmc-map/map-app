@@ -30,8 +30,10 @@
 .loader-circle {
 	/* temporary */
 	width: 75px;
+	/*
 	animation-name: rotate;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
+	*/
 }

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getCityImg } from './api';
 
 export const useCityImg = city => {
-	const [img, setImg] = useState('../assets/defaultcity.jpg');
+	const [img, setImg] = useState('../assets/loading.gif');
 
 	useEffect(() => {
 		const makeImageRequest = async () => {

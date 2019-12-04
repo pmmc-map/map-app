@@ -105,7 +105,7 @@ const InfoPopup = ({
 	return (
 		<div className='pin-info-popup'>
 			<div className='pin-info-image'>
-				<img src={cityImgSrc || '../../../assets/defaultcity.jpg'} />
+				<img src={cityImgSrc || '../../../assets/loading.gif'} />
 			</div>
 			<div className='pin-info-content'>
 				<h1 className='header-1 city-state-header'>{`${
