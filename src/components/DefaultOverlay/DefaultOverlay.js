@@ -14,6 +14,7 @@ const DefaultOverlay = ({
 	numVisitors,
 	numCountries,
 	numStates,
+	numRescues,
 	onStartPinDrop,
 }) => {
 	const [displayDonatePopup, setDisplayDonatePopup] = useState(false);
@@ -29,7 +30,7 @@ const DefaultOverlay = ({
 					{numStates} state{pluralize(numStates)}
 				</h3>
 				<h3 className='visitor-substats'>
-					{numStates} animal{pluralize(numStates)} rescued
+					{numRescues} animal{pluralize(numRescues)} rescued
 				</h3>
 				<h1 className='header-visitors'>since {d.getFullYear()}</h1>
 			</div>
@@ -61,6 +62,7 @@ DefaultOverlay.propTypes = {
 	numVisitors: PropTypes.number.isRequired,
 	numCountries: PropTypes.number.isRequired,
 	numStates: PropTypes.number.isRequired,
+	numRescues: PropTypes.number.isRequired,
 	onStartPinDrop: PropTypes.func.isRequired,
 };
 

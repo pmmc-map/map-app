@@ -111,7 +111,7 @@ export const getRescueCounts = async () => {
 		},
 		withCredentials: true,
 	});
-	return (jsonResp = await response.json());
+	return await response.json();
 };
 
 // id is optional

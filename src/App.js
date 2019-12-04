@@ -70,10 +70,11 @@ const App = props => {
 		const initRescueCounts = async () => {
 			try {
 				const rescueCountsResponse = await API.getRescueCounts();
-				const rescueCounts = rescueCountsResponse.counts.filter(
+				const counts = await rescueCountsResponse.counts;
+				const rescueCounts = counts.filter(
 					count => count.name === 'num_rescues'
 				);
-				setNumRescues(rescueCounts.total);
+				setNumRescues(rescueCounts[0].total);
 			} catch (err) {
 				setNumRescues(0);
 			}
@@ -178,13 +179,10 @@ const App = props => {
 	};
 
 	const selectPin = selectedPins => {
-		console.log('clicked');
 		if (selectedPins.length < 1) return;
 		const selected = selectedPins[0];
-		console.log('considering', selected);
 
 		if (!selected.userObject || !selected.userObject.info) return;
-		console.log('madeit');
 
 		setSelectedPin(selected.userObject.info);
 		setPinDropMode(APP_MODE.PIN_CLICKED);
@@ -253,7 +251,6 @@ const App = props => {
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
 				globeRef.current.clickMode = CLICK_MODE.DROP;
 			globeRef.current.armClickDrop(position => {
-				console.log(position);
 				if (!position) return;
 				const placemark = drawPin(
 					position,
