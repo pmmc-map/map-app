@@ -19,6 +19,11 @@
 	transition: opacity 300ms, transform 300ms;
 }
 
+.pin-help-desc {
+	font-weight: bolder;
+	margin-top: 0;
+}
+
 .pin-help-modal {
 	background: black;
 	position: absolute;
@@ -33,9 +38,7 @@
 
 .pin-help-list {
 	padding-left: 1rem;
-}
-
-.pin-help-instr {
+	margin-bottom: 0;
 }
 
 .pin-info-image {

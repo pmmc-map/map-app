@@ -120,6 +120,12 @@ const InfoPopup = ({
 				<div className='centered-button-container'>
 					<>
 						<button
+							onClick={onClickCancel}
+							className='button button-cancel'
+						>
+							Cancel
+						</button>
+						<button
 							onClick={() => {
 								onClickConfirm(locationData);
 								setIsConfirmClicked(true);
@@ -127,12 +133,6 @@ const InfoPopup = ({
 							className='button button-confirm'
 						>
 							Confirm
-						</button>
-						<button
-							onClick={onClickCancel}
-							className='button button-cancel'
-						>
-							Cancel
 						</button>
 					</>
 				</div>

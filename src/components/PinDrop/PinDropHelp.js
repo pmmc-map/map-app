@@ -7,12 +7,16 @@ const HelpModal = ({ onClick }) => (
 		className='pin-help-modal'
 		onClick={e => e.stopPropagation() && onClick()}
 	>
+		<p className='pin-help-desc'>
+			Show us where you&#39;re visiting from by placing a pin on our
+			virtual map.
+		</p>
 		<ul className='pin-help-list'>
 			<li className='pin-help-instr'>
 				Zoom in on the globe with two fingers
 			</li>
 			<li className='pin-help-instr'>
-				Drop an pin by tapping on an area on the map
+				Drop an pin by double tapping on an area on the map
 			</li>
 		</ul>
 	</div>

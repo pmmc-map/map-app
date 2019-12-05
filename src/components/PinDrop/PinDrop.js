@@ -18,11 +18,6 @@ const PinDropOverlay = ({
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
 	return (
 		<div className='pin-drop-overlay'>
-			<div className='default-overlay'>
-				<div className='bigstats'>
-					<h1 className='header-visitors'>Where are you from?</h1>
-				</div>
-			</div>
 			<CSSTransition
 				in={isHelpShowing && !isConfirmPopupShowing}
 				timeout={300}
@@ -41,6 +36,9 @@ const PinDropOverlay = ({
 					onInvalidPinDrop={onInvalidPinDrop}
 				/>
 			) : null}
+			<div className='bottom-cta'>
+				<h1 className='header-visitors'>Where are you from?</h1>
+			</div>
 			<button
 				className='button button-cancel button-pin-drop-cancel'
 				onClick={onClickCancel}
