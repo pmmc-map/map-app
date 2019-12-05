@@ -13,7 +13,7 @@ const VisitorData = ({
 	graphData,
 }) => (
 	<>
-		<div className='location-stats'>
+		<div className='location-stats visitor-data-page'>
 			<div className='left data-graph'>
 				<PieChart
 					data={graphData}

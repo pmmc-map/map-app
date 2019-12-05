@@ -61,6 +61,9 @@
 	justify-content: space-around;
 	width: 100%;
 	flex-basis: 10%;
+	position: absolute;
+	bottom: calc(15% + 1rem);
+	width: calc(60% - 4rem);
 	/* margin-top: auto; */
 	/* margin-bottom: 2rem; */
 }

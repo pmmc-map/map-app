@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { pluralize } from '../../../utils';
 
 const DistanceTravelled = ({ distance }) => (
-	<div className='location-stats'>
+	<div className='location-stats distance-travelled-page'>
 		<div className='left smaller'>
 			<img
 				className='distance-preview'

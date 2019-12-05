@@ -11,6 +11,32 @@ import VisitorData from './Pages/VisitorData';
 import DistanceTravelled from './Pages/DistanceTravelled';
 import SurveyPrompt from './Pages/SurveyPrompt';
 
+const InfoPageTransition = ({ isVisible, children, classNames }) => {
+	const [transitionIn, setTransitionIn] = useState(false);
+
+	useEffect(() => {
+		if (isVisible) setTimeout(() => setTransitionIn(true), 350);
+		else setTransitionIn(false);
+	}, [isVisible]);
+
+	return (
+		<CSSTransition
+			in={transitionIn}
+			timeout={300}
+			classNames={classNames}
+			unmountOnExit
+		>
+			{children}
+		</CSSTransition>
+	);
+};
+
+InfoPageTransition.propTypes = {
+	isVisible: PropTypes.bool.isRequired,
+	classNames: PropTypes.string.isRequired,
+	children: PropTypes.node.isRequired,
+};
+
 const DetailedPinInfo = ({
 	city,
 	cityImg,
@@ -47,19 +73,15 @@ const DetailedPinInfo = ({
 						</h1>
 						<h2 className='header-2'>{country}</h2>
 					</div>
-					<CSSTransition
-						in={curPage === 0}
-						timeout={300}
+					<InfoPageTransition
 						classNames='distance-animate'
-						unmountOnExit
+						isVisible={curPage === 0}
 					>
 						<DistanceTravelled distance={distance} />
-					</CSSTransition>
-					<CSSTransition
-						in={curPage === 1}
-						timeout={300}
+					</InfoPageTransition>
+					<InfoPageTransition
 						classNames='survey-prompt-animate'
-						unmountOnExit
+						isVisible={curPage === 1}
 					>
 						<VisitorData
 							country_count={country_count}
@@ -69,45 +91,66 @@ const DetailedPinInfo = ({
 							country={country}
 							graphData={graphData}
 						/>
-					</CSSTransition>
+					</InfoPageTransition>
 
-					<CSSTransition
-						in={curPage !== 1 && curPage !== 0}
-						timeout={300}
-						classNames='survey-prompt-animate'
-						unmountOnExit
+					<InfoPageTransition
+						classNames='distance-animate'
+						isVisible={curPage === 2}
 					>
-						<SurveyPrompt showSurvey={showSurvey} />
-					</CSSTransition>
-					{curPage < 2 ? (
-						<div className='button-nav'>
-							<button
-								onClick={onClickDismiss}
-								className='button button-cancel'
-							>
-								Close
-							</button>
-							{/*
-							<button
-								onClick={() =>
-									setCurPage(curPage => curPage - 1)
-								}
-								className='button button-cancel'
-							>
-								Back
-							</button>
-							*/}
-							<button
-								onClick={() => {
-									setCurPage(curPage => curPage + 1);
-								}}
-								disabled={curPage > 1}
-								className='button button-confirm'
-							>
-								Next
-							</button>
-						</div>
-					) : null}
+						<SurveyPrompt
+							onClickNo={() => setCurPage(curPage => curPage + 1)}
+							onClickYes={() =>
+								setCurPage(curPage => curPage + 1)
+							}
+						>
+							<h1 className='question'>
+								Did you enjoy your visit?
+							</h1>
+						</SurveyPrompt>
+					</InfoPageTransition>
+					<InfoPageTransition
+						classNames='survey-prompt-animate'
+						isVisible={curPage === 3}
+					>
+						<SurveyPrompt
+							onClickNo={onClickDismiss}
+							onClickYes={showSurvey}
+						>
+							<>
+								<h1 className='question'>
+									Would you like to share more about your
+									experience today?
+								</h1>
+
+								<p>
+									Your feedback is very important to us and
+									helps our organization grow!
+								</p>
+							</>
+						</SurveyPrompt>
+					</InfoPageTransition>
+					<div className='button-nav'>
+						<button
+							onClick={() =>
+								curPage === 2
+									? setCurPage(curPage => curPage + 1)
+									: onClickDismiss()
+							}
+							className='button button-cancel'
+						>
+							{curPage < 2 ? 'Close' : 'No'}
+						</button>
+						<button
+							onClick={() =>
+								curPage === 3
+									? showSurvey()
+									: setCurPage(curPage => curPage + 1)
+							}
+							className='button button-confirm'
+						>
+							{curPage < 2 ? 'Next' : 'Yes'}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
