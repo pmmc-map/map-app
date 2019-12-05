@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import SelectedPinInfo from './SelectedPinInfo';
@@ -10,27 +10,17 @@ const AnimalInfo = ({
 	location_name,
 	placement_year,
 	animal_notes,
+	animal_images,
 	onClickDismiss,
 }) => {
 	const [animalImg, setAnimalImg] = useState(null);
 
-	useEffect(() => {
-		const getAnimalImg = () => {
-			const imagesList = ANIMAL_PICTURES.filter(
-				obj => obj.animal_name === animal_name
-			);
-			if (imagesList.length < 1)
-				setAnimalImg('../../../assets/animals/unused/Raptor.PNG');
-			else
-				setAnimalImg('../../../assets/animals/' + imagesList[0].imgSrc);
-		};
-
-		getAnimalImg();
-	}, [animal_name]);
-
 	return (
 		<SelectedPinInfo
-			headerImg={animalImg || '../../../assets/loading.gif'}
+			headerImg={
+				`data:image;base64,${animal_images}` ||
+				'../../../assets/loading.gif'
+			}
 			onClickDismiss={onClickDismiss}
 		>
 			<>
@@ -46,6 +36,7 @@ const AnimalInfo = ({
 AnimalInfo.propTypes = {
 	animal_name: PropTypes.string.isRequired,
 	animal_type: PropTypes.string.isRequired,
+	animal_images: PropTypes.string.isRequired,
 	location_name: PropTypes.string.isRequired,
 	placement_year: PropTypes.number.isRequired,
 	animal_notes: PropTypes.string.isRequired,
