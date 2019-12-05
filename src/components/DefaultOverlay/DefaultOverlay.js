@@ -35,6 +35,12 @@ const DefaultOverlay = ({
 				<h1 className='header-visitors'>since {d.getFullYear()}</h1>
 			</div>
 
+			<div className='bottom-cta'>
+				<h1 className='header-visitors'>
+					Show us where you&#39;re from!
+				</h1>
+			</div>
+
 			<button
 				className='button button-donate'
 				onClick={() => {
