@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
+import { MapContext } from '../../MapContext';
 import { getLocationCounts } from '../../api';
 import { pluralize, pluralizeIsAre } from '../../utils.js';
 import './style.css';
@@ -45,9 +46,9 @@ const DetailedPinInfo = ({
 	city_count,
 	country_count,
 	distance,
-	onClickDismiss,
 	showSurvey,
 }) => {
+	const { returnToHomeScreen } = useContext(MapContext);
 	const [curPage, setCurPage] = useState(0);
 	const [graphData, setGraphData] = useState({
 		this_state_count: 0,
@@ -97,12 +98,7 @@ const DetailedPinInfo = ({
 						classNames='distance-animate'
 						isVisible={curPage === 2}
 					>
-						<SurveyPrompt
-							onClickNo={() => setCurPage(curPage => curPage + 1)}
-							onClickYes={() =>
-								setCurPage(curPage => curPage + 1)
-							}
-						>
+						<SurveyPrompt>
 							<h1 className='question'>
 								Did you enjoy your visit?
 							</h1>
@@ -112,10 +108,7 @@ const DetailedPinInfo = ({
 						classNames='survey-prompt-animate'
 						isVisible={curPage === 3}
 					>
-						<SurveyPrompt
-							onClickNo={onClickDismiss}
-							onClickYes={showSurvey}
-						>
+						<SurveyPrompt>
 							<>
 								<h1 className='question'>
 									Would you like to share more about your
@@ -134,7 +127,7 @@ const DetailedPinInfo = ({
 							onClick={() =>
 								curPage === 2
 									? setCurPage(curPage => curPage + 1)
-									: onClickDismiss()
+									: returnToHomeScreen()
 							}
 							className='button button-cancel'
 						>
@@ -165,7 +158,6 @@ DetailedPinInfo.propTypes = {
 	city_count: PropTypes.number.isRequired,
 	country_count: PropTypes.number.isRequired,
 	distance: PropTypes.number.isRequired,
-	onClickDismiss: PropTypes.func.isRequired,
 	showSurvey: PropTypes.func.isRequired,
 };
 

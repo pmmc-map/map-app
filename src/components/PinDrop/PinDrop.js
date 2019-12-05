@@ -8,11 +8,7 @@ import InfoPopup from './InfoPopup';
 const PinDropOverlay = ({
 	onClickCancel,
 	isConfirmPopupShowing,
-	onClickCancelPinDrop,
-	onClickConfirmPinDrop,
-	onClickDismissPinDrop,
 	onInvalidPinDrop,
-	pinPosition,
 	showSurvey,
 }) => {
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
@@ -26,16 +22,11 @@ const PinDropOverlay = ({
 			>
 				<HelpModal onClick={() => setIsHelpShowing(false)} />
 			</CSSTransition>
-			{isConfirmPopupShowing ? (
-				<InfoPopup
-					onClickCancel={onClickCancelPinDrop}
-					onClickConfirm={onClickConfirmPinDrop}
-					onClickDismiss={onClickDismissPinDrop}
-					pinPosition={pinPosition}
-					showSurvey={showSurvey}
-					onInvalidPinDrop={onInvalidPinDrop}
-				/>
-			) : null}
+			<InfoPopup
+				isShowing={isConfirmPopupShowing}
+				showSurvey={showSurvey}
+				onInvalidPinDrop={onInvalidPinDrop}
+			/>
 			<div className='bottom-cta'>
 				<h1 className='header-visitors'>Where are you from?</h1>
 			</div>
@@ -61,19 +52,8 @@ const PinDropOverlay = ({
 PinDropOverlay.propTypes = {
 	onClickCancel: PropTypes.func.isRequired,
 	isConfirmPopupShowing: PropTypes.bool.isRequired,
-	onClickCancelPinDrop: PropTypes.func.isRequired,
-	onClickConfirmPinDrop: PropTypes.func.isRequired,
-	onClickDismissPinDrop: PropTypes.func.isRequired,
 	onInvalidPinDrop: PropTypes.func.isRequired,
-	pinPosition: PropTypes.object,
 	showSurvey: PropTypes.func.isRequired,
-};
-
-PinDropOverlay.defaultProps = {
-	pinPosition: {
-		longitude: 0,
-		latitude: 0,
-	},
 };
 
 export default PinDropOverlay;

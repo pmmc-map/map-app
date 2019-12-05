@@ -65,8 +65,8 @@
 	top: 2rem;
 
 	z-index: 99999;
-	animation-duration: 0.5s;
-	animation-name: pin-info-enter;
+	/* animation-duration: 0.5s; */
+	/* animation-name: pin-info-enter; */
 	pointer-events: initial;
 
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -111,4 +111,22 @@
 
 .button-help:disabled {
 	background: #7b7b7b;
+}
+
+.confirmation-popup-animate-enter {
+	opacity: 0;
+	transform: scale(0, 0);
+}
+.confirmation-popup-animate-enter-active {
+	opacity: 1;
+	transform: scale(1, 1);
+	transition: opacity 300ms, transform 300ms;
+}
+.confirmation-popup-animate-exit {
+	opacity: 1;
+}
+.confirmation-popup-animate-exit-active {
+	opacity: 0;
+	transform: scale(0, 0);
+	transition: opacity 300ms, transform 300ms;
 }

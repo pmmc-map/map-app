@@ -4,13 +4,14 @@ import './App.css';
 import {
 	APP_MODE,
 	MOUSE_MODE,
-	GLOBE_LAYERS,
 	GLOBE_BACKGROUND_COLOR,
 	PMMC_POSITION,
 	CLICK_MODE,
+	REFETCH_DATA_INTERVAL,
 } from './constants';
 import * as API from './api';
 import { BING_API_KEY } from './keys';
+import { MapContext } from './MapContext';
 
 import DefaultOverlay from './components/DefaultOverlay';
 import PinDropInstructions from './components/PinDropInstructions';
@@ -20,7 +21,7 @@ import Survey from './components/Survey/Survey';
 
 const App = props => {
 	const globeRef = useRef(null);
-
+	const [isLayerMaps, setIsLayerMaps] = useState(false);
 	// values will be fetched from backend and loaded into state
 	const [numCountries, setNumCountries] = useState(0);
 	const [numStates, setNumStates] = useState(0);
@@ -56,6 +57,30 @@ const App = props => {
 		latitude: 0,
 		longitude: 0,
 	});
+
+	setTimeout(() => {
+		const initAnimalInfo = async () => {
+			const animalsResponse = await API.getAllAnimalData();
+			const animalLocations = await animalsResponse.animal_locations;
+			setAllAnimalInfo(animalLocations);
+		};
+
+		initAnimalInfo();
+
+		const initRescueCounts = async () => {
+			try {
+				const rescueCountsResponse = await API.getRescueCounts();
+				const counts = await rescueCountsResponse.counts;
+				const rescueCounts = counts.filter(
+					count => count.name === 'num_rescues'
+				);
+				setNumRescues(rescueCounts[0].total);
+			} catch (err) {
+				setNumRescues(0);
+			}
+		};
+		initRescueCounts();
+	}, REFETCH_DATA_INTERVAL);
 
 	useEffect(() => {
 		// fetch all the initial animal info!!
@@ -160,7 +185,7 @@ const App = props => {
 
 		// Add the placemark to the layer and to the Markers component
 		const globe = globeRef.current;
-		const layer = globe.getLayer('Renderables');
+		const layer = globe.getLayer('renderables');
 		if (layer) {
 			// Add the placemark to the globe
 			layer.addRenderable(placemark);
@@ -290,6 +315,10 @@ const App = props => {
 		const layer = globeRef.current.getLayer('Renderables');
 		layer.removeRenderable(lastDroppedPlacemark.placemark);
 		layer.refresh();
+		setPinPositions(pins => {
+			pins.pop();
+			return pins;
+		});
 		globeRef.current.wwd.redraw();
 
 		globeRef.current.armClickDrop(null);
@@ -340,65 +369,127 @@ const App = props => {
 			>
 				<Globe
 					ref={globeRef}
-					layers={GLOBE_LAYERS}
+					layers={[
+						{
+							layer: 'eox-sentinal2-labels',
+							options: {
+								category: 'base',
+								enabled: true,
+								displayName: 'Satellite',
+							},
+						},
+						{
+							layer: 'eox-openstreetmap',
+							options: {
+								category: 'overlay',
+								enabled: false,
+								opacity: 0.8,
+								displayName: 'Maps',
+							},
+						},
+						{
+							layer: 'renderables',
+							options: {
+								category: 'data',
+								enabled: true,
+								displayName: 'renderables',
+							},
+						},
+						{
+							layer: 'stars',
+							options: { category: 'setting', enabled: true },
+						},
+						{
+							layer: 'atmosphere-day-night',
+							options: { category: 'setting', enabled: true },
+						},
+					]}
 					{...globeFocusedPosition}
 					backgroundColor={GLOBE_BACKGROUND_COLOR}
 					bingMapsKey={BING_API_KEY}
 				/>
 			</div>
-			<div className='fullscreen-item'>
-				{pinDropMode === APP_MODE.DEFAULT_SCREEN ? (
-					<DefaultOverlay
-						numVisitors={pinPositions.length}
-						numCountries={numCountries}
-						numStates={numStates}
-						numRescues={numRescues}
-						onStartPinDrop={onStartPinDrop}
-					/>
-				) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
-					<PinDropInstructions onClick={onClickInstructions} />
-				) : pinDropMode === APP_MODE.PIN_CLICKED &&
-				  selectedPin.type === 'animal' ? (
-					<AnimalInfo
-						{...selectedPin}
-						onClickDismiss={() => {
-							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-							setMouseMode(MOUSE_MODE.NONE);
-						}}
-					/>
-				) : pinDropMode === APP_MODE.PIN_CLICKED &&
-				  selectedPin.type === 'pin' ? (
-					<VisitorInfo
-						{...selectedPin}
-						onClickDismiss={() => {
-							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-							setMouseMode(MOUSE_MODE.NONE);
-						}}
-					/>
-				) : pinDropMode === APP_MODE.SHOW_SURVEY ? (
-					<Survey
-						onReturnClick={() => {
-							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-						}}
-					/>
-				) : (
-					<PinDropOverlay
-						onClickCancel={() => {
-							deleteDroppedPin();
-							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-						}}
-						isConfirmPopupShowing={
-							pinDropMode !== APP_MODE.PIN_DROP_BEGIN
-						}
-						onClickCancelPinDrop={onClickCancelPinDrop}
-						onClickConfirmPinDrop={onClickConfirmPinDrop}
-						onClickDismissPinDrop={onClickDismissPinDrop}
-						onInvalidPinDrop={onInvalidPinDrop}
-						pinPosition={lastDroppedPlacemark.placemark.position}
-						showSurvey={showSurvey}
-					/>
-				)}
-			</div>
+			<MapContext.Provider
+				value={{
+					pinPosition: lastDroppedPlacemark.placemark.position,
+					confirmDroppedPin: onClickConfirmPinDrop,
+					cancelDroppedPin: onClickCancelPinDrop,
+					returnToHomeScreen: onClickDismissPinDrop,
+				}}
+			>
+				<div className='fullscreen-item'>
+					{pinDropMode === APP_MODE.DEFAULT_SCREEN ? (
+						<DefaultOverlay
+							numVisitors={
+								(pinPositions.length -
+									allAnimalInfo.length -
+									1) /
+								2
+							}
+							numCountries={numCountries}
+							numStates={numStates}
+							numRescues={numRescues}
+							onStartPinDrop={onStartPinDrop}
+							toggleMapLayers={() => {
+								const satLayer = globeRef.current.getLayer(
+									'Satellite'
+								);
+								satLayer.enabled = !satLayer.enabled;
+								const mapLayer = globeRef.current.getLayer(
+									'Maps'
+								);
+								mapLayer.enabled = !mapLayer.enabled;
+								globeRef.current.wwd.redraw();
+
+								setIsLayerMaps(isLayerMaps => !isLayerMaps);
+							}}
+							nextMapLayerName={
+								isLayerMaps ? 'Maps' : 'Satellite'
+							}
+						/>
+					) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
+						<PinDropInstructions onClick={onClickInstructions} />
+					) : pinDropMode === APP_MODE.PIN_CLICKED &&
+					  selectedPin.type === 'animal' ? (
+						<AnimalInfo
+							{...selectedPin}
+							onClickDismiss={() => {
+								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+								setMouseMode(MOUSE_MODE.NONE);
+							}}
+						/>
+					) : pinDropMode === APP_MODE.PIN_CLICKED &&
+					  selectedPin.type === 'pin' ? (
+						<VisitorInfo
+							{...selectedPin}
+							onClickDismiss={() => {
+								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+								setMouseMode(MOUSE_MODE.NONE);
+							}}
+						/>
+					) : pinDropMode === APP_MODE.SHOW_SURVEY ? (
+						<Survey
+							onReturnClick={() => {
+								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							}}
+						/>
+					) : (
+						<PinDropOverlay
+							onClickCancel={() => {
+								deleteDroppedPin();
+								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							}}
+							isConfirmPopupShowing={
+								pinDropMode !== APP_MODE.PIN_DROP_BEGIN
+							}
+							onClickCancelPinDrop={onClickCancelPinDrop}
+							onClickDismissPinDrop={onClickDismissPinDrop}
+							onInvalidPinDrop={onInvalidPinDrop}
+							showSurvey={showSurvey}
+						/>
+					)}
+				</div>
+			</MapContext.Provider>
 		</div>
 	);
 };

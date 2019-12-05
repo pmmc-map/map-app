@@ -24,3 +24,19 @@ export const useCityImg = city => {
 
 	return img;
 };
+
+export const useTransitionDelay = (
+	isVisible,
+	timeout = 300,
+	initVisible = true
+) => {
+	const [isAnimationEntering, setIsAnimationEntering] = useState(initVisible);
+
+	useEffect(() => {
+		if (!isVisible)
+			setTimeout(() => setIsAnimationEntering(false), timeout);
+		else setIsAnimationEntering(true);
+	}, [isVisible, timeout]);
+
+	return isAnimationEntering;
+};
