@@ -17,17 +17,6 @@ export const MOUSE_MODE = {
 	NONE: 8,
 };
 
-// find out why adding bing layers doesn't work!
-export const GLOBE_LAYERS = [
-	'renderables',
-	// 'bing-aerial-labels',
-	'eox-sentinal2-labels',
-	// 'eox-openstreetmap',
-	// 'blue-marble',
-	'atmosphere-day-night',
-	'stars',
-];
-
 export const GLOBE_BACKGROUND_COLOR = '#2d2d2d';
 
 // synced with our fork of react globe
@@ -42,53 +31,4 @@ export const PMMC_POSITION = {
 	longitude: -117.7628,
 };
 
-export const ANIMAL_PICTURES = [
-	{
-		animal_name: 'Avocado.JPG',
-		imgSrc: 'Avocado.JPG',
-	},
-	{
-		animal_name: 'Brawler & Niblet',
-		imgSrc: 'Brawler & Niblet.jpg',
-	},
-	{
-		animal_name: 'Lumiere',
-		imgSrc: 'Lumiere.jpg',
-	},
-	{
-		animal_name: 'Luna',
-		imgSrc: 'Luna.JPG',
-	},
-	{
-		animal_name: 'Nick',
-		imgSrc: 'Nick.jpg',
-	},
-	{
-		animal_name: 'Oogie & Tiny',
-		imgSrc: 'Oogie & Tiny.JPG',
-	},
-	{
-		animal_name: 'Pearl and Xander',
-		imgSrc: 'Pearl and Xander.JPG',
-	},
-	{
-		animal_name: 'Roux & Huey',
-		imgSrc: 'Roux & Huey.JPG',
-	},
-	{
-		animal_name: 'Sage',
-		imgSrc: 'Sage.jpg',
-	},
-	{
-		animal_name: 'Summer & Call',
-		imgSrc: 'Summer & Call.jpg',
-	},
-	{
-		animal_name: 'Toasty & Starburst',
-		imgSrc: 'Toasty & Starburst.JPG',
-	},
-	{
-		animal_name: 'Ziggy',
-		imgSrc: 'Ziggy.JPG',
-	},
-];
+export const REFETCH_DATA_INTERVAL = 7200000;

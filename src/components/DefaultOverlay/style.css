@@ -95,3 +95,10 @@
 .bottom-cta .header-visitors {
 	text-align: center;
 }
+
+.button-top-left {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	z-index: 999;
+}
