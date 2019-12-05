@@ -4,6 +4,7 @@ import './App.css';
 import {
 	APP_MODE,
 	MOUSE_MODE,
+	GLOBE_LAYERS,
 	GLOBE_BACKGROUND_COLOR,
 	PMMC_POSITION,
 	CLICK_MODE,
@@ -171,8 +172,6 @@ const App = props => {
 
 		placemark.info = info;
 
-		setPinPositions(pinPositions => pinPositions.concat([position]));
-
 		// Add the placemark to the layer and to the Markers component
 		const globe = globeRef.current;
 		const layer = globe.getLayer('renderables');
@@ -305,10 +304,6 @@ const App = props => {
 		const layer = globeRef.current.getLayer('renderables');
 		layer.removeRenderable(lastDroppedPlacemark.placemark);
 		layer.refresh();
-		setPinPositions(pins => {
-			pins.pop();
-			return pins;
-		});
 		globeRef.current.wwd.redraw();
 
 		globeRef.current.armClickDrop(null);
@@ -327,23 +322,17 @@ const App = props => {
 
 	const onClickConfirmPinDrop = locationData => {
 		setPinPositions(pinPositions => {
-			if (pinPositions.length < 1) return pinPositions;
-
 			// need to redraw pin so we can add the pin meta info
 			// that way we can select it later :)
 			deleteDroppedPin();
-			const lastPin = pinPositions.pop();
-			lastPin.info = locationData;
-			lastPin.info.type = 'pin';
-			drawPin(lastDroppedPlacemark.placemark.position, lastPin.info);
+			const pinInfo = locationData;
+			pinInfo.coordinates = lastDroppedPlacemark.placemark.position;
+			pinInfo.type = 'pin';
+			drawPin(pinInfo.coordinates, pinInfo);
 
-			return pinPositions.concat([lastPin]);
+			return pinPositions.concat([pinInfo]);
 		});
 		setPinDropMode(APP_MODE.PIN_DROP_CONFIRMED);
-	};
-
-	const showSurvey = () => {
-		setPinDropMode(APP_MODE.SHOW_SURVEY);
 	};
 
 	const toggleMapLayers = () => {
@@ -369,41 +358,7 @@ const App = props => {
 			>
 				<Globe
 					ref={globeRef}
-					layers={[
-						{
-							layer: 'eox-sentinal2-labels',
-							options: {
-								category: 'base',
-								enabled: true,
-								displayName: 'Satellite',
-							},
-						},
-						{
-							layer: 'eox-openstreetmap',
-							options: {
-								category: 'overlay',
-								enabled: false,
-								opacity: 0.8,
-								displayName: 'Maps',
-							},
-						},
-						{
-							layer: 'renderables',
-							options: {
-								category: 'data',
-								enabled: true,
-								displayName: 'renderables',
-							},
-						},
-						{
-							layer: 'stars',
-							options: { category: 'setting', enabled: true },
-						},
-						{
-							layer: 'atmosphere-day-night',
-							options: { category: 'setting', enabled: true },
-						},
-					]}
+					layers={GLOBE_LAYERS}
 					{...globeFocusedPosition}
 					backgroundColor={GLOBE_BACKGROUND_COLOR}
 					bingMapsKey={BING_API_KEY}
@@ -420,60 +375,69 @@ const App = props => {
 				}}
 			>
 				<div className='fullscreen-item'>
-					{pinDropMode === APP_MODE.DEFAULT_SCREEN ? (
-						<DefaultOverlay
-							numVisitors={
-								(pinPositions.length -
-									allAnimalInfo.length -
-									1) /
-								2
-							}
-							numCountries={numCountries}
-							numStates={numStates}
-							numRescues={numRescues}
-							onStartPinDrop={onStartPinDrop}
-						/>
-					) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
-						<PinDropInstructions onClick={onClickInstructions} />
-					) : pinDropMode === APP_MODE.PIN_CLICKED &&
-					  selectedPin.type === 'animal' ? (
-						<AnimalInfo
-							{...selectedPin}
-							onClickDismiss={() => {
-								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-								setMouseMode(MOUSE_MODE.NONE);
-							}}
-						/>
-					) : pinDropMode === APP_MODE.PIN_CLICKED &&
-					  selectedPin.type === 'pin' ? (
-						<VisitorInfo
-							{...selectedPin}
-							onClickDismiss={() => {
-								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-								setMouseMode(MOUSE_MODE.NONE);
-							}}
-						/>
-					) : pinDropMode === APP_MODE.SHOW_SURVEY ? (
-						<Survey
-							onReturnClick={() => {
-								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-							}}
-						/>
-					) : (
-						<PinDropOverlay
-							onClickCancel={() => {
-								deleteDroppedPin();
-								setPinDropMode(APP_MODE.DEFAULT_SCREEN);
-							}}
-							isConfirmPopupShowing={
-								pinDropMode !== APP_MODE.PIN_DROP_BEGIN
-							}
-							onClickCancelPinDrop={onClickCancelPinDrop}
-							onClickDismissPinDrop={onClickDismissPinDrop}
-							onInvalidPinDrop={onInvalidPinDrop}
-							showSurvey={showSurvey}
-						/>
-					)}
+					<DefaultOverlay
+						numVisitors={pinPositions.length}
+						numCountries={numCountries}
+						numStates={numStates}
+						numRescues={numRescues}
+						onStartPinDrop={onStartPinDrop}
+						isShowing={pinDropMode === APP_MODE.DEFAULT_SCREEN}
+					/>
+					<PinDropInstructions
+						onClick={onClickInstructions}
+						isShowing={
+							pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS
+						}
+					/>
+					<AnimalInfo
+						{...selectedPin}
+						onClickDismiss={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							setMouseMode(MOUSE_MODE.NONE);
+						}}
+						isShowing={
+							pinDropMode === APP_MODE.PIN_CLICKED &&
+							selectedPin.type === 'animal'
+						}
+					/>
+					<VisitorInfo
+						{...selectedPin}
+						onClickDismiss={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+							setMouseMode(MOUSE_MODE.NONE);
+						}}
+						isShowing={
+							pinDropMode === APP_MODE.PIN_CLICKED &&
+							selectedPin.type === 'pin'
+						}
+					/>
+					<Survey
+						onReturnClick={() => {
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+						}}
+						isShowing={pinDropMode === APP_MODE.SHOW_SURVEY}
+					/>
+					<PinDropOverlay
+						onClickCancel={() => {
+							deleteDroppedPin();
+							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
+						}}
+						isConfirmPopupShowing={
+							// pinDropMode !== APP_MODE.PIN_DROP_BEGIN
+							pinDropMode === APP_MODE.PIN_DROP_CONFIRM
+						}
+						onClickCancelPinDrop={onClickCancelPinDrop}
+						onClickDismissPinDrop={onClickDismissPinDrop}
+						onInvalidPinDrop={onInvalidPinDrop}
+						showSurvey={() => setPinDropMode(APP_MODE.START_SURVEY)}
+						isShowing={
+							pinDropMode === APP_MODE.PIN_DROP_BEGIN ||
+							pinDropMode === APP_MODE.PIN_DROP_DONE ||
+							pinDropMode === APP_MODE.PIN_DROP_LOADING ||
+							pinDropMode === APP_MODE.PIN_DROP_CONFIRM ||
+							pinDropMode === APP_MODE.PIN_DROP_CONFIRMED
+						}
+					/>
 				</div>
 			</MapContext.Provider>
 		</div>

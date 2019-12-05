@@ -19,6 +19,41 @@ export const MOUSE_MODE = {
 
 export const GLOBE_BACKGROUND_COLOR = '#2d2d2d';
 
+export const GLOBE_LAYERS = [
+	{
+		layer: 'eox-sentinal2-labels',
+		options: {
+			category: 'base',
+			enabled: true,
+			displayName: 'Satellite',
+		},
+	},
+	{
+		layer: 'eox-openstreetmap',
+		options: {
+			category: 'overlay',
+			enabled: false,
+			opacity: 0.8,
+			displayName: 'Maps',
+		},
+	},
+	{
+		layer: 'renderables',
+		options: {
+			category: 'data',
+			enabled: true,
+			displayName: 'renderables',
+		},
+	},
+	{
+		layer: 'stars',
+		options: { category: 'setting', enabled: true },
+	},
+	{
+		layer: 'atmosphere-day-night',
+		options: { category: 'setting', enabled: true },
+	},
+];
 // synced with our fork of react globe
 // use this to differentiate between pin drop mode and pin select mode
 export const CLICK_MODE = {

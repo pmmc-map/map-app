@@ -1,3 +1,8 @@
+.default-overlay {
+	pointer-events: none;
+	background: linear-gradient(#000, rgba(0, 0, 0, 0));
+}
+
 .donate-background {
 	position: fixed;
 	width: 100%;
@@ -101,4 +106,38 @@
 	top: 1rem;
 	left: 1rem;
 	z-index: 999;
+}
+
+.default-overlay-top-animate-enter {
+	opacity: 0;
+}
+.default-overlay-top-animate-enter-active {
+	opacity: 1;
+	transform: initial;
+	transition: opacity 300ms, transform 300ms;
+}
+.default-overlay-top-animate-exit {
+	opacity: 1;
+}
+.default-overlay-top-animate-exit-active {
+	opacity: 0;
+	transform: translateY(-150%);
+	transition: opacity 300ms, transform 300ms;
+}
+
+.default-overlay-bottom-animate-enter {
+	opacity: 0;
+}
+.default-overlay-bottom-animate-enter-active {
+	opacity: 1;
+	transform: initial;
+	transition: opacity 300ms, transform 300ms;
+}
+.default-overlay-bottom-animate-exit {
+	opacity: 1;
+}
+.default-overlay-bottom-animate-exit-active {
+	opacity: 0;
+	transform: translateY(150%);
+	transition: opacity 300ms, transform 300ms;
 }

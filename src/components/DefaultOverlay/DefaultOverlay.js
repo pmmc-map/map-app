@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 
+import { useTransitionDelay } from '../../hooks';
 import DonatePopup from './DonatePopup';
 import Survey from '../Survey/Survey';
 import MapToggle from '../MapToggle';
@@ -17,53 +19,76 @@ const DefaultOverlay = ({
 	numStates,
 	numRescues,
 	onStartPinDrop,
+	isShowing,
 }) => {
 	const [displayDonatePopup, setDisplayDonatePopup] = useState(false);
+	const isVisible = useTransitionDelay(isShowing, 300, false, true);
 	const d = new Date();
 	return (
-		<div className='default-overlay'>
-			<div className='bigstats'>
-				<h1 className='header-visitors'>{numVisitors} visitors</h1>
-				<h3 className='visitor-substats'>
-					{numCountries} countr{pluralize(numCountries, true)}
-				</h3>
-				<h3 className='visitor-substats'>
-					{numStates} state{pluralize(numStates)}
-				</h3>
-				<h3 className='visitor-substats'>
-					{numRescues} animal{pluralize(numRescues)} rescued
-				</h3>
-				<h1 className='header-visitors'>since {d.getFullYear()}</h1>
-			</div>
-
-			<div className='bottom-cta'>
-				<h1 className='header-visitors'>
-					Show us where you&#39;re from!
-				</h1>
-			</div>
-
-			<MapToggle />
-
-			<button
-				className='button button-donate'
-				onClick={() => {
-					setDisplayDonatePopup(true);
-				}}
+		<>
+			<CSSTransition
+				in={isVisible}
+				timeout={300}
+				classNames='default-overlay-top-animate'
+				unmountOnExit
 			>
-				Donate
-			</button>
-			<button
-				className='button button-next button-bottom-right'
-				onClick={onStartPinDrop}
+				<div className='default-overlay'>
+					<div className='bigstats'>
+						<h1 className='header-visitors'>
+							{numVisitors} visitors
+						</h1>
+						<h3 className='visitor-substats'>
+							{numCountries} countr{pluralize(numCountries, true)}
+						</h3>
+						<h3 className='visitor-substats'>
+							{numStates} state{pluralize(numStates)}
+						</h3>
+						<h3 className='visitor-substats'>
+							{numRescues} animal{pluralize(numRescues)} rescued
+						</h3>
+						<h1 className='header-visitors'>
+							since {d.getFullYear()}
+						</h1>
+					</div>
+				</div>
+			</CSSTransition>
+			<CSSTransition
+				in={isVisible}
+				timeout={300}
+				classNames='default-overlay-bottom-animate'
+				unmountOnExit
 			>
-				Start
-			</button>
-			{displayDonatePopup ? (
-				<DonatePopup
-					onReturnClick={() => setDisplayDonatePopup(false)}
-				/>
-			) : null}
-		</div>
+				<>
+					<div className='bottom-cta'>
+						<h1 className='header-visitors'>
+							Show us where you&#39;re from!
+						</h1>
+					</div>
+
+					<MapToggle />
+
+					<button
+						className='button button-donate'
+						onClick={() => {
+							setDisplayDonatePopup(true);
+						}}
+					>
+						Donate
+					</button>
+					<button
+						className='button button-next button-bottom-right'
+						onClick={onStartPinDrop}
+					>
+						Start
+					</button>
+					{displayDonatePopup ? (
+						<DonatePopup
+							onReturnClick={() => setDisplayDonatePopup(false)}
+						/>
+					) : null}
+				</>
+			</CSSTransition>
+		</>
 	);
 };
 
@@ -73,6 +98,7 @@ DefaultOverlay.propTypes = {
 	numStates: PropTypes.number.isRequired,
 	numRescues: PropTypes.number.isRequired,
 	onStartPinDrop: PropTypes.func.isRequired,
+	isShowing: PropTypes.bool.isRequired,
 };
 
 export default DefaultOverlay;

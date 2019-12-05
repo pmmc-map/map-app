@@ -18,7 +18,7 @@ Question list format
 ]
  */
 
-const Survey = ({ onReturnClick, initialCard }) => {
+const Survey = ({ onReturnClick, initialCard, isShowing }) => {
 	const [init, _] = useState(true);
 	const [questions, setQuestions] = useState(null);
 	const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -64,6 +64,8 @@ const Survey = ({ onReturnClick, initialCard }) => {
 		e.stopPropagation();
 	};
 
+	if (!isShowing) return null;
+
 	return (
 		<div>
 			<SurveyBackground onReturnClick={onReturnClick}>
@@ -97,6 +99,7 @@ Survey.defaultProps = {
 Survey.propTypes = {
 	onReturnClick: PropTypes.func.isRequired,
 	initialCard: PropTypes.string,
+	isShowing: PropTypes.bool.isRequired,
 };
 
 export default Survey;

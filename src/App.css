@@ -37,11 +37,6 @@ h3 {
 	pointer-events: none;
 }
 
-.default-overlay {
-	pointer-events: none;
-	background: linear-gradient(#000, rgba(0, 0, 0, 0));
-}
-
 .bigstats {
 	text-align: right;
 	color: white;

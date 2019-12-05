@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 import SelectedPinInfo from './SelectedPinInfo';
 import { useCityImg } from '../../hooks';
 
-const VisitorInfo = ({ city, country, state, onClickDismiss }) => {
+const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
 	const cityImg = useCityImg(city);
 
 	return (
-		<SelectedPinInfo headerImg={cityImg} onClickDismiss={onClickDismiss}>
+		<SelectedPinInfo
+			headerImg={cityImg}
+			onClickDismiss={onClickDismiss}
+			isShowing={isShowing}
+		>
 			<>
 				<h1 className='header-1'>
 					{city ? `${city}, ` : ''}
@@ -22,14 +26,16 @@ const VisitorInfo = ({ city, country, state, onClickDismiss }) => {
 
 VisitorInfo.propTypes = {
 	city: PropTypes.string,
-	country: PropTypes.string.isRequired,
+	country: PropTypes.string,
 	state: PropTypes.string,
 	onClickDismiss: PropTypes.func.isRequired,
+	isShowing: PropTypes.bool.isRequired,
 };
 
 VisitorInfo.defaultProps = {
 	city: '',
 	state: '',
+	country: '',
 };
 
 export default VisitorInfo;

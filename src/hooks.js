@@ -28,15 +28,21 @@ export const useCityImg = city => {
 export const useTransitionDelay = (
 	isVisible,
 	timeout = 300,
-	initVisible = true
+	initVisible = true,
+	isReverse = false
 ) => {
 	const [isAnimationEntering, setIsAnimationEntering] = useState(initVisible);
 
 	useEffect(() => {
-		if (!isVisible)
-			setTimeout(() => setIsAnimationEntering(false), timeout);
-		else setIsAnimationEntering(true);
-	}, [isVisible, timeout]);
+		if (!isVisible) {
+			if (isReverse) setIsAnimationEntering(false);
+			else setTimeout(() => setIsAnimationEntering(false), timeout);
+		} else {
+			if (isReverse)
+				setTimeout(() => setIsAnimationEntering(true), timeout);
+			else setIsAnimationEntering(true);
+		}
+	}, [isVisible, timeout, isReverse]);
 
 	return isAnimationEntering;
 };

@@ -12,26 +12,24 @@ const AnimalInfo = ({
 	animal_notes,
 	animal_images,
 	onClickDismiss,
-}) => {
-	const [animalImg, setAnimalImg] = useState(null);
-
-	return (
-		<SelectedPinInfo
-			headerImg={
-				`data:image;base64,${animal_images}` ||
-				'../../../assets/loading.gif'
-			}
-			onClickDismiss={onClickDismiss}
-		>
-			<>
-				<h1 className='header-1'>{animal_name}</h1>
-				<h2 className='header-2 dark'>{animal_type}</h2>
-				<h2 className='header-2'>{`${location_name}, ${placement_year}`}</h2>
-				<p>{animal_notes}</p>
-			</>
-		</SelectedPinInfo>
-	);
-};
+	isShowing,
+}) => (
+	<SelectedPinInfo
+		headerImg={
+			`data:image;base64,${animal_images}` ||
+			'../../../assets/loading.gif'
+		}
+		onClickDismiss={onClickDismiss}
+		isShowing={isShowing}
+	>
+		<>
+			<h1 className='header-1'>{animal_name}</h1>
+			<h2 className='header-2 dark'>{animal_type}</h2>
+			<h2 className='header-2'>{`${location_name}, ${placement_year}`}</h2>
+			<p>{animal_notes}</p>
+		</>
+	</SelectedPinInfo>
+);
 
 AnimalInfo.propTypes = {
 	animal_name: PropTypes.string.isRequired,
@@ -41,6 +39,16 @@ AnimalInfo.propTypes = {
 	placement_year: PropTypes.number.isRequired,
 	animal_notes: PropTypes.string.isRequired,
 	onClickDismiss: PropTypes.func.isRequired,
+	isShowing: PropTypes.bool.isRequired,
+};
+
+AnimalInfo.defaultProps = {
+	animal_name: '',
+	animal_type: '',
+	animal_images: '',
+	location_name: '',
+	placement_year: 0,
+	animal_notes: '',
 };
 
 export default AnimalInfo;

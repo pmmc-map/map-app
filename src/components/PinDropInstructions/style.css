@@ -1,12 +1,3 @@
-@keyframes instr-fade-in {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
 .pin-drop-instr-background {
 	background: rgba(0, 0, 0, 0.8);
 	width: 100%;
@@ -19,9 +10,6 @@
 	justify-content: center;
 	z-index: 9999;
 	pointer-events: initial;
-
-	animation-name: instr-fade-in;
-	animation-duration: 0.3s;
 }
 
 .pin-drop-cta {
@@ -35,4 +23,19 @@ li.instr {
 	font-size: 1.7rem;
 	font-weight: 300;
 	text-align: left;
+}
+
+.pin-drop-instr-animate-enter {
+	opacity: 0;
+}
+.pin-drop-instr-animate-enter-active {
+	opacity: 1;
+	transition: opacity 300ms;
+}
+.pin-drop-instr-animate-exit {
+	opacity: 1;
+}
+.pin-drop-instr-animate-exit-active {
+	opacity: 0;
+	transition: opacity 300ms;
 }
