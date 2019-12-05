@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import DonatePopup from './DonatePopup';
 import Survey from '../Survey/Survey';
-
+import MapToggle from '../MapToggle';
 import { pluralize } from '../../utils';
 
 /*
@@ -16,8 +17,6 @@ const DefaultOverlay = ({
 	numStates,
 	numRescues,
 	onStartPinDrop,
-	toggleMapLayers,
-	nextMapLayerName,
 }) => {
 	const [displayDonatePopup, setDisplayDonatePopup] = useState(false);
 	const d = new Date();
@@ -37,18 +36,13 @@ const DefaultOverlay = ({
 				<h1 className='header-visitors'>since {d.getFullYear()}</h1>
 			</div>
 
-			<button
-				className='button button-next button-top-left'
-				onClick={toggleMapLayers}
-			>
-				Use {nextMapLayerName} view
-			</button>
-
 			<div className='bottom-cta'>
 				<h1 className='header-visitors'>
 					Show us where you&#39;re from!
 				</h1>
 			</div>
+
+			<MapToggle />
 
 			<button
 				className='button button-donate'
@@ -79,8 +73,6 @@ DefaultOverlay.propTypes = {
 	numStates: PropTypes.number.isRequired,
 	numRescues: PropTypes.number.isRequired,
 	onStartPinDrop: PropTypes.func.isRequired,
-	toggleMapLayers: PropTypes.func.isRequired,
-	nextMapLayerName: PropTypes.string.isRequired,
 };
 
 export default DefaultOverlay;

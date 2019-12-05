@@ -166,18 +166,8 @@ const App = props => {
 			/*eyeDistanceScaling*/ true,
 			attributes
 		);
-		// placemark.label =
-		// 'Lat ' +
-		// position.latitude.toPrecision(4).toString() +
-		// '\nLon ' +
-		// position.longitude.toPrecision(5).toString();
 		placemark.altitudeMode = WorldWind.CLAMP_TO_GROUND;
 		placemark.eyeDistanceScalingThreshold = 2500000;
-
-		// pin hover
-		const highlightAttributes = new WorldWind.PlacemarkAttributes(null);
-		highlightAttributes.imageScale = 1.2;
-		placemark.highlightAttributes = highlightAttributes;
 
 		placemark.info = info;
 
@@ -305,14 +295,14 @@ const App = props => {
 	};
 
 	const deleteDroppedPin = () => {
-		const layer = globeRef.current.getLayer('Renderables');
+		const layer = globeRef.current.getLayer('renderables');
 		layer.removeRenderable(lastDroppedPlacemark.placemark);
 		layer.refresh();
 		globeRef.current.wwd.redraw();
 	};
 
 	const onClickCancelPinDrop = () => {
-		const layer = globeRef.current.getLayer('Renderables');
+		const layer = globeRef.current.getLayer('renderables');
 		layer.removeRenderable(lastDroppedPlacemark.placemark);
 		layer.refresh();
 		setPinPositions(pins => {
@@ -354,6 +344,16 @@ const App = props => {
 
 	const showSurvey = () => {
 		setPinDropMode(APP_MODE.SHOW_SURVEY);
+	};
+
+	const toggleMapLayers = () => {
+		const satLayer = globeRef.current.getLayer('Satellite');
+		satLayer.enabled = !satLayer.enabled;
+		const mapLayer = globeRef.current.getLayer('Maps');
+		mapLayer.enabled = !mapLayer.enabled;
+		globeRef.current.wwd.redraw();
+
+		setIsLayerMaps(isLayerMaps => !isLayerMaps);
 	};
 
 	return (
@@ -415,6 +415,8 @@ const App = props => {
 					confirmDroppedPin: onClickConfirmPinDrop,
 					cancelDroppedPin: onClickCancelPinDrop,
 					returnToHomeScreen: onClickDismissPinDrop,
+					toggleMapLayers: toggleMapLayers,
+					isLayerMaps: isLayerMaps,
 				}}
 			>
 				<div className='fullscreen-item'>
@@ -430,22 +432,6 @@ const App = props => {
 							numStates={numStates}
 							numRescues={numRescues}
 							onStartPinDrop={onStartPinDrop}
-							toggleMapLayers={() => {
-								const satLayer = globeRef.current.getLayer(
-									'Satellite'
-								);
-								satLayer.enabled = !satLayer.enabled;
-								const mapLayer = globeRef.current.getLayer(
-									'Maps'
-								);
-								mapLayer.enabled = !mapLayer.enabled;
-								globeRef.current.wwd.redraw();
-
-								setIsLayerMaps(isLayerMaps => !isLayerMaps);
-							}}
-							nextMapLayerName={
-								isLayerMaps ? 'Maps' : 'Satellite'
-							}
 						/>
 					) : pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS ? (
 						<PinDropInstructions onClick={onClickInstructions} />

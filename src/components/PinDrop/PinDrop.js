@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
+import { MapContext } from '../../MapContext';
+import MapToggle from '../MapToggle';
 import HelpModal from './PinDropHelp';
 import InfoPopup from './InfoPopup';
 
@@ -11,6 +13,7 @@ const PinDropOverlay = ({
 	onInvalidPinDrop,
 	showSurvey,
 }) => {
+	const { returnToHomeScreen } = useContext(MapContext);
 	const [isHelpShowing, setIsHelpShowing] = useState(false);
 	return (
 		<div className='pin-drop-overlay'>
@@ -30,9 +33,10 @@ const PinDropOverlay = ({
 			<div className='bottom-cta'>
 				<h1 className='header-visitors'>Where are you from?</h1>
 			</div>
+			<MapToggle />
 			<button
 				className='button button-cancel button-pin-drop-cancel'
-				onClick={onClickCancel}
+				onClick={returnToHomeScreen}
 			>
 				Cancel
 			</button>

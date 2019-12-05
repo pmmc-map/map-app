@@ -111,6 +111,15 @@ h3 {
 	}
 }
 
+.button-transparent {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.button-transparent:hover,
+.button-transparent:active {
+	background: rgba(255, 255, 255, 0.25);
+}
+
 .button-donate {
 	position: absolute;
 	bottom: 1rem;
