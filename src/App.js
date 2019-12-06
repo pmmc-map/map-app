@@ -415,7 +415,7 @@ const App = props => {
 						onReturnClick={() => {
 							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
 						}}
-						isShowing={pinDropMode === APP_MODE.SHOW_SURVEY}
+						isShowing={pinDropMode === APP_MODE.START_SURVEY}
 					/>
 					<PinDropOverlay
 						onClickCancel={() => {

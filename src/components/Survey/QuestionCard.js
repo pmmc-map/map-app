@@ -84,21 +84,31 @@ const QuestionCard = ({
 								)}
 							</form>
 						</div>
-						<button
-							className={
-								'button ' +
-								(currentQuestion === questionList.length - 1
-									? 'button-confirm'
-									: 'button-next')
-							}
-							onClick={() =>
-								onNext(questionList[currentQuestion].qid)
-							}
-						>
-							{currentQuestion === questionList.length - 1
-								? 'Submit'
-								: 'Next'}
-						</button>
+						<div className={'survey-buttons'}>
+							<button
+								className={'button button-cancel'}
+								onClick={onReturnClick}
+							>
+								Cancel
+							</button>
+
+							<button
+								className={
+									'button ' +
+									(currentQuestion === questionList.length - 1
+										? 'button-confirm'
+										: 'button-next')
+								}
+								onClick={() =>
+									onNext(questionList[currentQuestion].qid)
+								}
+							>
+								{currentQuestion === questionList.length - 1
+									? 'Submit'
+									: 'Next'}
+							</button>
+						</div>
+
 						<br />
 						<div className='progress-bar-container'>
 							<progress
