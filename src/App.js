@@ -382,6 +382,7 @@ const App = props => {
 						numRescues={numRescues}
 						onStartPinDrop={onStartPinDrop}
 						isShowing={pinDropMode === APP_MODE.DEFAULT_SCREEN}
+						showSurvey={() => setPinDropMode(APP_MODE.START_SURVEY)}
 					/>
 					<PinDropInstructions
 						onClick={onClickInstructions}

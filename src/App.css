@@ -97,15 +97,6 @@ h3 {
 	background-color: #134c80;
 }
 
-@keyframes donate-animation {
-	from {
-		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-	}
-	to {
-		box-shadow: 0 0 5px 2px rgba(255, 255, 255, 1);
-	}
-}
-
 .button-transparent {
 	background: rgba(255, 255, 255, 0.5);
 }
@@ -113,23 +104,6 @@ h3 {
 .button-transparent:hover,
 .button-transparent:active {
 	background: rgba(255, 255, 255, 0.25);
-}
-
-.button-donate {
-	position: absolute;
-	bottom: 1rem;
-	left: 1rem;
-	background-color: #1da61d;
-	animation-name: donate-animation;
-	animation-duration: 0.25s;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
-	animation-direction: alternate;
-}
-
-.button-donate:hover {
-	background-color: #0c8c0c;
 }
 
 /* type */

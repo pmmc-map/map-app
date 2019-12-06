@@ -20,6 +20,7 @@ const DefaultOverlay = ({
 	numRescues,
 	onStartPinDrop,
 	isShowing,
+	showSurvey,
 }) => {
 	const [displayDonatePopup, setDisplayDonatePopup] = useState(false);
 	const isVisible = useTransitionDelay(isShowing, 300, false, true);
@@ -66,15 +67,23 @@ const DefaultOverlay = ({
 					</div>
 
 					<MapToggle />
+					<div className='button-container'>
+						<button
+							className='button button-next'
+							onClick={showSurvey}
+						>
+							Survey
+						</button>
 
-					<button
-						className='button button-donate'
-						onClick={() => {
-							setDisplayDonatePopup(true);
-						}}
-					>
-						Donate
-					</button>
+						<button
+							className='button button-donate'
+							onClick={() => {
+								setDisplayDonatePopup(true);
+							}}
+						>
+							Donate
+						</button>
+					</div>
 					<button
 						className='button button-next button-bottom-right'
 						onClick={onStartPinDrop}
@@ -99,6 +108,7 @@ DefaultOverlay.propTypes = {
 	numRescues: PropTypes.number.isRequired,
 	onStartPinDrop: PropTypes.func.isRequired,
 	isShowing: PropTypes.bool.isRequired,
+	showSurvey: PropTypes.func.isRequired,
 };
 
 export default DefaultOverlay;
