@@ -26,15 +26,24 @@ const Survey = ({ onReturnClick, initialCard, isShowing }) => {
 	const [currentCard, setCurrentCard] = useState(initialCard);
 
 	useEffect(() => {
-		// component just loaded
-		getQuestions()
-			.then(questions => {
-				setQuestions(questions);
-			})
-			.catch(() => {
-				setQuestions([]);
-			});
-	}, [init]);
+		if (isShowing) {
+			// component just loaded
+			getQuestions()
+				.then(questions => {
+					setQuestions(questions);
+				})
+				.catch(() => {
+					setQuestions([]);
+				});
+			setCurrentQuestion(0);
+		}
+	}, [init, isShowing]);
+
+	const endSurvey = () => {
+		setCurrentCard('intro');
+		setCurrentQuestion(0);
+		onReturnClick();
+	};
 
 	// go to next question
 	let onNext = async qid => {
@@ -56,12 +65,11 @@ const Survey = ({ onReturnClick, initialCard, isShowing }) => {
 	};
 
 	// selection is an option object
-	let onSelect = e => {
-		let selection = JSON.parse(e.target.value);
+	let onSelect = option => {
 		let temp = responses;
-		temp[selection.qid] = selection;
+		temp[option.qid] = option;
 		setResponses(temp);
-		e.stopPropagation();
+		// e.stopPropagation();
 	};
 
 	if (!isShowing) return null;
@@ -79,13 +87,13 @@ const Survey = ({ onReturnClick, initialCard, isShowing }) => {
 					<QuestionCard
 						currentQuestion={currentQuestion}
 						questionList={questions}
-						onReturnClick={onReturnClick}
+						onReturnClick={endSurvey}
 						onNext={onNext}
 						onSelect={onSelect}
-						onCancel={onReturnClick}
+						onCancel={endSurvey}
 					/>
 				) : (
-					<DonationCard onReturnClick={onReturnClick} />
+					<DonationCard onReturnClick={endSurvey} />
 				)}
 			</SurveyBackground>
 		</div>

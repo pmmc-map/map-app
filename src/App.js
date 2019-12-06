@@ -417,6 +417,7 @@ const App = props => {
 							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
 						}}
 						isShowing={pinDropMode === APP_MODE.START_SURVEY}
+						initialCard='intro'
 					/>
 					<PinDropOverlay
 						onClickCancel={() => {

@@ -28,6 +28,26 @@ const QuestionCard = ({
 	currentQuestion,
 	questionList,
 }) => {
+	const [options, setOptions] = useState([]);
+	const [isOptionSelected, setIsOptionSelected] = useState(false);
+
+	useEffect(() => {
+		const uncheckedOptions =
+			questionList && questionList[currentQuestion]
+				? questionList[currentQuestion].options
+				: [];
+		setOptions(
+			uncheckedOptions.map(opt => {
+				opt.isChecked = false;
+				return opt;
+			})
+		);
+		setIsOptionSelected(false);
+	}, [questionList, currentQuestion]);
+
+	console.log('x');
+	console.log(options);
+
 	useEffect(() => {
 		let temp = document.getElementsByTagName('input');
 		for (let i = 0; i < temp.length; i++) {
@@ -38,6 +58,17 @@ const QuestionCard = ({
 			}
 		}
 	}, [currentQuestion]);
+
+	const markOptionSelected = option => {
+		setOptions(options =>
+			options.map(opt => {
+				if (opt.oid === option.oid) opt.isChecked = true;
+				else opt.isChecked = false;
+				return opt;
+			})
+		);
+		setIsOptionSelected(true);
+	};
 
 	const ready = questionList === null || questionList.length === 0;
 	return (
@@ -64,24 +95,32 @@ const QuestionCard = ({
 					<div>
 						<div className='option-container'>
 							<form className='question-options'>
-								{questionList[currentQuestion].options.map(
-									option => (
-										<div>
-											<input
-												type='radio'
-												id={option.oid}
-												name={
-													'surveyQuestion' +
-													currentQuestion
-												}
-												value={JSON.stringify(option)}
-												onChange={onSelect}
-											/>
-											{option.text}
-											<br />
-										</div>
-									)
-								)}
+								{options.map(option => (
+									<div
+										onClick={() => {
+											markOptionSelected(option);
+											onSelect(option);
+										}}
+										key={JSON.stringify(option)}
+									>
+										<input
+											type='radio'
+											id={option.oid}
+											name={
+												'surveyQuestion' +
+												currentQuestion
+											}
+											value={JSON.stringify(option)}
+											onChange={e => {
+												// e.target.checked = !e.`t;
+												e.stopPropagation();
+											}}
+											checked={option.isChecked}
+										/>
+										{option.text}
+										<br />
+									</div>
+								))}
 							</form>
 						</div>
 						<div className={'survey-buttons'}>
@@ -99,8 +138,14 @@ const QuestionCard = ({
 										? 'button-confirm'
 										: 'button-next')
 								}
+								disabled={!isOptionSelected}
 								onClick={() =>
-									onNext(questionList[currentQuestion].qid)
+									isOptionSelected
+										? onNext(
+												questionList[currentQuestion]
+													.qid
+										  )
+										: null
 								}
 							>
 								{currentQuestion === questionList.length - 1

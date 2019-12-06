@@ -81,6 +81,10 @@ h3 {
 	background-color: #8e8e8e;
 }
 
+.button:disabled {
+	background-color: grey;
+}
+
 .button-pin-drop-cancel {
 	position: absolute;
 	bottom: 1rem;
