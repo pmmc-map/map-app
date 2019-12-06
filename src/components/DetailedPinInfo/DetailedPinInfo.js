@@ -51,12 +51,12 @@ const DetailedPinInfo = ({
 	const { returnToHomeScreen } = useContext(MapContext);
 	const [curPage, setCurPage] = useState(0);
 	const [graphData, setGraphData] = useState({
-		success:false,
-		total_visitors:0,
-		unique_states:0,
-		unqiue_countries:0,
-		this_state_count:0,
-		this_country_count:0
+		success: false,
+		total_visitors: 0,
+		unique_states: 0,
+		unqiue_countries: 0,
+		this_state_count: 0,
+		this_country_count: 0,
 	});
 
 	useEffect(() => {

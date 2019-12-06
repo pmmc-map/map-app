@@ -20,7 +20,8 @@ export const DonationCard = ({ onReturnClick }) => {
 
 				<p>
 					Your donation will provide life saving medication and fish
-					for our patients.
+					for our patients. $1 is equivalent to 1 pound of fish for
+					our animals!
 				</p>
 
 				<button onClick={onReturnClick} className='button'>

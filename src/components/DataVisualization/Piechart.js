@@ -103,21 +103,22 @@ function generateSpec(own, ownCount, other, otherCount) {
 	};
 }
 
-
 const PieChart = ({ data, city, state, country }) => {
 	let own = country;
 	let other = 'countries';
 	let ownCount = data.this_country_count;
 	let otherCount = data.total_visitors - data.this_country_count;
 
-	if(country === 'USA'){
+	if (country === 'USA') {
 		own = state;
 		other = 'states';
 		ownCount = data.this_state_count;
 		otherCount = data.this_country_count - data.this_state_count;
 	}
 
-	const [spec, setSpec] = useState(generateSpec(own, ownCount, other, otherCount));
+	const [spec, setSpec] = useState(
+		generateSpec(own, ownCount, other, otherCount)
+	);
 
 	useEffect(() => {
 		setSpec(generateSpec(own, ownCount, other, otherCount));
