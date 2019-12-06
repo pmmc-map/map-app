@@ -55,7 +55,7 @@ const PinDropOverlay = ({
 					</CSSTransition>
 					<button
 						className='button button-cancel button-pin-drop-cancel'
-						onClick={returnToHomeScreen}
+						onClick={onClickCancel}
 					>
 						Cancel
 					</button>
