@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
+import { useCityImg } from '../hooks';
 import { MapContext } from '../MapContext';
 import { useTransitionDelay } from '../hooks';
 import './style.css';
@@ -9,13 +10,12 @@ import LoadingScreen, { LoadingText } from '../components/LoadingScreen';
 import DetailedPinInfo from '../DetailedPinInfo';
 import * as API from '../api';
 
-const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
+const PinDropConfirmation = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 	const isVisible = useTransitionDelay(isShowing, 300, false);
 
 	const { pinPosition, confirmDroppedPin, cancelDroppedPin } = useContext(
 		MapContext
 	);
-	const [cityImgSrc, setCityImgSrc] = useState(null);
 	const [isConfirmClicked, setIsConfirmClicked] = useState(false);
 	const [isPinLocationDataLoading, setIsPinLocationDataLoading] = useState(
 		true
@@ -28,10 +28,10 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 	});
 	const [locationStats, setLocationStats] = useState({});
 	const [isLocationStatsLoading, setIsLocationStatsLoading] = useState(true);
+	const cityImgSrc = useCityImg(locationData.city);
 
 	useEffect(() => {
 		setIsPinLocationDataLoading(true);
-		setCityImgSrc(null);
 		const fetchPinInfo = async () => {
 			const pinDropResponse = await API.getPinInfo(pinPosition);
 			const { success, ...locationData } = await pinDropResponse;
@@ -43,20 +43,6 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 				return;
 			}
 
-			const fetchLocationImg = async () => {
-				const city = await pinDropResponse.city;
-				try {
-					const locationImgResp = await API.getCityImg(city);
-					const cityImg = await locationImgResp;
-					const blob = await cityImg.image;
-					setCityImgSrc(`data:image;base64,${blob}`);
-				} catch (error) {
-					console.log(error);
-					setCityImgSrc('/assets/defaultcity.jpg');
-				}
-			};
-
-			fetchLocationImg();
 			setIsPinLocationDataLoading(false);
 		};
 		fetchPinInfo();
@@ -113,12 +99,10 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 			>
 				<div className='pin-info-popup'>
 					<div className='pin-info-image'>
-						<img
-							src={cityImgSrc || '../../../assets/loading.gif'}
-						/>
+						<img src={cityImgSrc} />
 					</div>
 					<div className='pin-info-content'>
-						{cityImgSrc ? (
+						{locationData && locationData.country ? (
 							<>
 								<h1 className='header-1 city-state-header'>{`${
 									locationData.city
@@ -167,10 +151,10 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 	);
 };
 
-InfoPopup.propTypes = {
+PinDropConfirmation.propTypes = {
 	onInvalidPinDrop: PropTypes.func.isRequired,
 	showSurvey: PropTypes.func.isRequired,
 	isShowing: PropTypes.bool.isRequired,
 };
 
-export default InfoPopup;
+export default PinDropConfirmation;

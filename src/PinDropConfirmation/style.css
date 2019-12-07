@@ -1,0 +1,73 @@
+.confirmation-popup-animate-enter {
+	opacity: 0;
+	transform: scale(0, 0);
+}
+.confirmation-popup-animate-enter-active {
+	opacity: 1;
+	transform: scale(1, 1);
+	transition: opacity 300ms, transform 300ms;
+}
+.confirmation-popup-animate-exit {
+	opacity: 1;
+}
+.confirmation-popup-animate-exit-active {
+	opacity: 0;
+	transform: scale(0, 0);
+	transition: opacity 300ms, transform 300ms;
+}
+
+.pin-info-content {
+	padding: 1rem;
+}
+
+.pin-info-text {
+	text-align: center;
+}
+
+.centered-button-container {
+	display: flex;
+	width: 100%;
+	justify-content: space-evenly;
+	margin: 1rem 0;
+}
+
+.button-confirm {
+	background: #1da61d;
+}
+
+.city-state-header {
+	word-wrap: break-word;
+	margin-bottom: 0;
+}
+
+.country-header {
+	margin-top: 0;
+}
+
+.pin-info-popup {
+	position: absolute;
+	right: 8%;
+	padding: 0;
+	width: 35%;
+	height: auto;
+	background: white;
+	border-radius: 1rem;
+	top: 2rem;
+
+	z-index: 99999;
+	pointer-events: initial;
+
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.pin-info-image {
+	max-height: 20rem;
+	border-radius: 1rem 1rem 0 0;
+	overflow: hidden;
+}
+
+.pin-info-image > img {
+	border-radius: 1rem 1rem 0 0;
+	width: 100%;
+	height: auto;
+}

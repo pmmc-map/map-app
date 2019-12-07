@@ -1,3 +1,3 @@
-import AnimalInfo from './AnimalInfo';
-import VisitorInfo from './VisitorInfo';
-export { AnimalInfo, VisitorInfo };
+import AnimalPinInfo from './AnimalPinInfo';
+import VisitorPinInfo from './VisitorPinInfo';
+export { AnimalPinInfo, VisitorPinInfo };

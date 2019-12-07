@@ -6,7 +6,7 @@ import { useTransitionDelay } from '../hooks';
 import { MapContext } from '../MapContext';
 import MapToggle from '../components/MapToggle';
 import HelpModal from './PinDropHelp';
-import InfoPopup from './InfoPopup';
+import PinDropConfirmation from '../PinDropConfirmation';
 
 const PinDropOverlay = ({
 	onClickCancel,
@@ -27,7 +27,7 @@ const PinDropOverlay = ({
 				unmountOnExit
 			>
 				<div className='pin-drop-overlay'>
-					<InfoPopup
+					<PinDropConfirmation
 						isShowing={isConfirmPopupShowing}
 						showSurvey={showSurvey}
 						onInvalidPinDrop={onInvalidPinDrop}
