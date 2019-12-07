@@ -15,7 +15,7 @@ export const DonationCard = ({ onReturnClick }) => {
 					Pacific Marine Mammal Center
 				</p>
 				<div>
-					<img src={'../../../assets/donateQRcode.png'} />
+					<img src={'/assets/donateQRcode.png'} />
 				</div>
 
 				<p>

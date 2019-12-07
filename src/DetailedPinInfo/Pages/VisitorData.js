@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PieChart from '../../DataVisualization/Piechart';
 
-import { pluralize, pluralizeIsAre } from '../../../utils';
+import { pluralize, pluralizeIsAre } from '../../utils';
 
 const VisitorData = ({
 	country_count,

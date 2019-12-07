@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SurveyBackground from './SurveyBackground';
 import QuestionCard from './QuestionCard';
-import { getQuestions, submitResponse, getQuestionOptions } from '../../api';
+import { getQuestions, submitResponse, getQuestionOptions } from '../api';
 import PropTypes from 'prop-types';
 import './style.css';
 import { DonationCard } from '../DefaultOverlay/DonatePopup';

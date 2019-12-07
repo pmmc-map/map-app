@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
-import { MapContext } from '../../MapContext';
-import { getLocationCounts } from '../../api';
-import { pluralize, pluralizeIsAre } from '../../utils.js';
+import { MapContext } from '../MapContext';
+import { getLocationCounts } from '../api';
+import { pluralize, pluralizeIsAre } from '../utils.js';
 import './style.css';
 import './Pages/animations.css';
 
@@ -69,7 +69,7 @@ const DetailedPinInfo = ({
 		<div className='modal-big-background'>
 			<div className='modal-big'>
 				<div className='modal-big-header pin-info-image blur'>
-					<img src={cityImg || '../../../assets/defaultcity.jpg'} />
+					<img src={cityImg || '/assets/defaultcity.jpg'} />
 				</div>
 				<div className='modal-big-body'>
 					<div className='title'>

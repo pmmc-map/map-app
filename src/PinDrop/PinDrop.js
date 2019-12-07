@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
-import { useTransitionDelay } from '../../hooks';
-import { MapContext } from '../../MapContext';
-import MapToggle from '../MapToggle';
+import { useTransitionDelay } from '../hooks';
+import { MapContext } from '../MapContext';
+import MapToggle from '../components/MapToggle';
 import HelpModal from './PinDropHelp';
 import InfoPopup from './InfoPopup';
 

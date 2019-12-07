@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import './style.css';
 import SelectedPinInfo from './SelectedPinInfo';
-import { useCityImg, useLocationStats } from '../../hooks';
-import { pluralizeIsAre, pluralize } from '../../utils';
+import { useCityImg, useLocationStats } from '../hooks';
+import { pluralizeIsAre, pluralize } from '../utils';
 
 const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
 	const cityImg = useCityImg(city);
@@ -24,14 +24,18 @@ const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
 				<h2 className='header-2'>{country}</h2>
 				<p className='visitor-count-text'>
 					<span className='blue-number'>
-						{`${countryCount} visitor${pluralize(countryCount)} `}
+						{`${countryCount || '...'} visitor${pluralize(
+							countryCount
+						)} `}
 					</span>
 					{pluralizeIsAre(countryCount)} from this country
 				</p>
 				{state && (
 					<p className='visitor-count-text'>
 						<span className='blue-number'>
-							{`${stateCount} visitor${pluralize(stateCount)} `}
+							{`${stateCount || '...'} visitor${pluralize(
+								stateCount
+							)} `}
 						</span>
 						{pluralizeIsAre(stateCount)} from this state
 					</p>

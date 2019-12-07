@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
-import { MapContext } from '../../MapContext';
-import { useTransitionDelay } from '../../hooks';
+import { MapContext } from '../MapContext';
+import { useTransitionDelay } from '../hooks';
 import './style.css';
-import LoadingScreen, { LoadingText } from '../LoadingScreen';
+import LoadingScreen, { LoadingText } from '../components/LoadingScreen';
 import DetailedPinInfo from '../DetailedPinInfo';
-import * as API from '../../api';
+import * as API from '../api';
 
 const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 	const isVisible = useTransitionDelay(isShowing, 300, false);
@@ -52,7 +52,7 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 					setCityImgSrc(`data:image;base64,${blob}`);
 				} catch (error) {
 					console.log(error);
-					setCityImgSrc('../../../assets/defaultcity.jpg');
+					setCityImgSrc('/assets/defaultcity.jpg');
 				}
 			};
 
@@ -91,8 +91,6 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 		cancelDroppedPin();
 		return null;
 	}
-
-	// if (isPinLocationDataLoading) return <LoadingScreen />;
 
 	if (isConfirmClicked && !isLocationStatsLoading)
 		return (

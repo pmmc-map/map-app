@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
-import { useTransitionDelay } from '../../hooks';
+import { useTransitionDelay } from '../hooks';
 import './style.css';
 
 /**

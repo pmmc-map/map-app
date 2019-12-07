@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
-import { useTransitionDelay } from '../../hooks';
+import { useTransitionDelay } from '../hooks';
 import DonatePopup from './DonatePopup';
 import Survey from '../Survey/Survey';
-import MapToggle from '../MapToggle';
-import { pluralize } from '../../utils';
+import MapToggle from '../components/MapToggle';
+import { pluralize } from '../utils';
 
 /*
  * this is the default overlay that shows when we're not dropping a pin

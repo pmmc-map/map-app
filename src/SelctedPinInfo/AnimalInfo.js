@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SelectedPinInfo from './SelectedPinInfo';
-import { ANIMAL_PICTURES } from '../../constants';
+import { ANIMAL_PICTURES } from '../constants';
 
 const AnimalInfo = ({
 	animal_name,
@@ -16,8 +16,7 @@ const AnimalInfo = ({
 }) => (
 	<SelectedPinInfo
 		headerImg={
-			`data:image;base64,${animal_images}` ||
-			'../../../assets/loading.gif'
+			`data:image;base64,${animal_images}` || '/assets/loading.gif'
 		}
 		onClickDismiss={onClickDismiss}
 		isShowing={isShowing}

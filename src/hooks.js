@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { getCityImg, getLocationCounts } from './api';
 
 export const useCityImg = city => {
-	const [img, setImg] = useState('../assets/loading.gif');
+	const [img, setImg] = useState('/assets/loading.gif');
 
 	useEffect(() => {
+		setImg('/assets/loading.gif');
 		const makeImageRequest = async () => {
 			try {
 				const locationImgResp = await getCityImg(city);
@@ -14,7 +15,7 @@ export const useCityImg = city => {
 				setImg(`data:image; base64, ${blob}`);
 			} catch (error) {
 				console.log(error);
-				setImg('../assets/defaultcity.jpg');
+				setImg('/assets/defaultcity.jpg');
 			}
 		};
 		if (city) {

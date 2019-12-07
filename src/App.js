@@ -14,11 +14,11 @@ import * as API from './api';
 import { BING_API_KEY } from './keys';
 import { MapContext } from './MapContext';
 
-import DefaultOverlay from './components/DefaultOverlay';
-import PinDropInstructions from './components/PinDropInstructions';
-import PinDropOverlay from './components/PinDrop';
-import { AnimalInfo, VisitorInfo } from './components/SelctedPinInfo';
-import Survey from './components/Survey/Survey';
+import DefaultOverlay from './DefaultOverlay';
+import PinDropInstructions from './PinDropInstructions';
+import PinDropOverlay from './PinDrop';
+import { AnimalInfo, VisitorInfo } from './SelctedPinInfo';
+import Survey from './Survey/Survey';
 
 const App = props => {
 	const globeRef = useRef(null);
@@ -142,7 +142,7 @@ const App = props => {
 		initPreviousPins();
 	}, []);
 
-	const drawPin = (position, info = null, pinImg = '../assets/pin.png') => {
+	const drawPin = (position, info = null, pinImg = '/assets/pin.png') => {
 		let attributes = new WorldWind.PlacemarkAttributes(null);
 		attributes.imageScale = 0.8;
 		attributes.imageOffset = new WorldWind.Offset(
@@ -198,6 +198,7 @@ const App = props => {
 		const selected = selectedPins[0];
 
 		if (!selected.userObject || !selected.userObject.info) return;
+		if (selected.userObject.info.type === 'PMMC') return;
 
 		setSelectedPin(selected.userObject.info);
 		setPinDropMode(APP_MODE.PIN_CLICKED);
@@ -210,7 +211,11 @@ const App = props => {
 				position.type = 'pin';
 				drawPin(position.coordinates, position);
 			});
-			drawPin(PMMC_POSITION, { title: 'PMMC' }, '../assets/star.png');
+
+			drawPin(PMMC_POSITION, { title: 'PMMC' }, '/assets/star.png', {
+				type: 'PMMC',
+			});
+
 			allAnimalInfo.map(animal => {
 				const { longitude, latitude } = animal.coordinates;
 				const position = {
@@ -218,9 +223,9 @@ const App = props => {
 					latitude: latitude,
 				};
 
-				let icon = '../assets/sealion.png';
+				let icon = '/assets/sealion.png';
 				if (animal.animal_type.indexOf('Seal') >= 0) {
-					icon = '../assets/seal.png';
+					icon = '/assets/seal.png';
 				}
 				animal.type = 'animal';
 
@@ -274,7 +279,7 @@ const App = props => {
 				const placemark = drawPin(
 					position,
 					null,
-					'../assets/pin-pending.png'
+					'/assets/pin-pending.png'
 				);
 				setLastDroppedPlacemark({
 					placemark: placemark,
