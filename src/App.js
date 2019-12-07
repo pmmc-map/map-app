@@ -68,7 +68,6 @@ const App = props => {
 				success,
 				total_visitors,
 				unique_states,
-				// unique_countries,
 				unqiue_countries,
 			} = await countsResponse;
 			if (!success) throw 'error';

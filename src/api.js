@@ -68,10 +68,13 @@ export const getAllLocationData = async () => {
 };
 
 export const getLocationCounts = async (country = '', state = '') => {
-	const query =
-		country === '' || state === ''
-			? ''
-			: '?country=' + country + '&state=' + state;
+	let query = '';
+	if (country && state) {
+		const searchParams = new URLSearchParams();
+		searchParams.append('country', country);
+		searchParams.append('state', state);
+		query = '?' + searchParams.toString();
+	}
 
 	const response = await fetch(
 		BASE_API_URL + 'api/locations/counts' + query,
