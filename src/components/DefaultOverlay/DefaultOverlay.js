@@ -25,7 +25,7 @@ const DefaultOverlay = ({
 	const [displayDonatePopup, setDisplayDonatePopup] = useState(false);
 	const isVisible = useTransitionDelay(isShowing, 300, false);
 	const d = new Date();
-	console.log(isVisible);
+
 	return (
 		<>
 			<CSSTransition

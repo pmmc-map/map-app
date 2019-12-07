@@ -59,6 +59,26 @@ const App = props => {
 		longitude: 0,
 	});
 
+	// fetch all the initial data from the database
+	const initLocationCounts = async () => {
+		try {
+			const countsResponse = await API.getLocationCounts();
+			const {
+				success,
+				total_visitors,
+				unique_states,
+				// unique_countries,
+				unqiue_countries,
+			} = await countsResponse;
+			if (!success) throw 'error';
+			setNumCountries(unqiue_countries);
+			setNumStates(unique_states);
+		} catch (err) {
+			setNumCountries(0);
+			setNumStates(0);
+		}
+	};
+
 	setTimeout(() => {
 		const initAnimalInfo = async () => {
 			const animalsResponse = await API.getAllAnimalData();
@@ -107,25 +127,6 @@ const App = props => {
 		};
 		initRescueCounts();
 
-		// fetch all the initial data from the database
-		const initLocationCounts = async () => {
-			try {
-				const countsResponse = await API.getLocationCounts();
-				const {
-					success,
-					total_visitors,
-					unique_states,
-					// unique_countries,
-					unqiue_countries,
-				} = await countsResponse;
-				if (!success) throw 'error';
-				setNumCountries(unqiue_countries);
-				setNumStates(unique_states);
-			} catch (err) {
-				setNumCountries(0);
-				setNumStates(0);
-			}
-		};
 		initLocationCounts();
 
 		const initPreviousPins = async () => {
@@ -233,6 +234,9 @@ const App = props => {
 	}, [globeRef, oldPinsLoaded, pinPositions, allAnimalInfo, animalsLoaded]);
 
 	useEffect(() => {
+		if (pinDropMode === APP_MODE.DEFAULT_SCREEN) {
+			initLocationCounts();
+		}
 		if (pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS) {
 			// disable all clicks when in pin drop mode
 			return;
@@ -248,6 +252,7 @@ const App = props => {
 
 		if (mouseMode === MOUSE_MODE.UP) {
 			if (isMouseMoving) return;
+
 			if (
 				pinDropMode === APP_MODE.DEFAULT_SCREEN ||
 				pinDropMode === APP_MODE.PIN_CLICKED
@@ -256,12 +261,12 @@ const App = props => {
 				globeRef.current.clickMode = CLICK_MODE.PICK;
 				return;
 			}
+
 			if (pinDropMode === APP_MODE.PIN_DROP_CONFIRMED) {
 				globeRef.current.armClickDrop(null);
 				return;
 			}
-			// if (pinDropMode === APP_MODE.DEFAULT_SCREEN)
-			// setPinDropMode(APP_MODE.PIN_DROP_INSTRUCTIONS);
+
 			if (pinDropMode === APP_MODE.PIN_DROP_BEGIN)
 				globeRef.current.clickMode = CLICK_MODE.DROP;
 			globeRef.current.armClickDrop(position => {
