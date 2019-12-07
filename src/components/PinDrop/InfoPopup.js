@@ -44,16 +44,16 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 			}
 
 			const fetchLocationImg = async () => {
-				// const city = await pinDropResponse.city;
-				// try {
-				// const locationImgResp = await API.getCityImg(city);
-				// const cityImg = await locationImgResp;
-				// const blob = await cityImg.image;
-				// setCityImgSrc(`data:image;base64,${blob}`);
-				// } catch (error) {
-				// console.log(error);
-				setCityImgSrc('../../../assets/defaultcity.jpg');
-				// }
+				const city = await pinDropResponse.city;
+				try {
+					const locationImgResp = await API.getCityImg(city);
+					const cityImg = await locationImgResp;
+					const blob = await cityImg.image;
+					setCityImgSrc(`data:image;base64,${blob}`);
+				} catch (error) {
+					console.log(error);
+					setCityImgSrc('../../../assets/defaultcity.jpg');
+				}
 			};
 
 			fetchLocationImg();
@@ -141,7 +141,7 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 						)}
 
 						<div className='pin-info-text'>
-							Would you like to drop your pin here?
+							Would you like to drop your pin at this location?
 						</div>
 						<div className='centered-button-container'>
 							<>
@@ -158,7 +158,7 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 									}}
 									className='button button-confirm'
 								>
-									Confirm
+									Drop pin
 								</button>
 							</>
 						</div>
