@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SelectedPinInfo from './SelectedPinInfo';
 import { ANIMAL_PICTURES } from '../constants';
 
-const AnimalInfo = ({
+const AnimalPinInfo = ({
 	animal_name,
 	animal_type,
 	location_name,
@@ -30,7 +30,7 @@ const AnimalInfo = ({
 	</SelectedPinInfo>
 );
 
-AnimalInfo.propTypes = {
+AnimalPinInfo.propTypes = {
 	animal_name: PropTypes.string.isRequired,
 	animal_type: PropTypes.string.isRequired,
 	animal_images: PropTypes.string.isRequired,
@@ -41,7 +41,7 @@ AnimalInfo.propTypes = {
 	isShowing: PropTypes.bool.isRequired,
 };
 
-AnimalInfo.defaultProps = {
+AnimalPinInfo.defaultProps = {
 	animal_name: '',
 	animal_type: '',
 	animal_images: '',
@@ -50,4 +50,4 @@ AnimalInfo.defaultProps = {
 	animal_notes: '',
 };
 
-export default AnimalInfo;
+export default AnimalPinInfo;

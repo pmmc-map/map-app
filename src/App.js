@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Globe from 'worldwind-react-globe';
+
 import './App.css';
 import {
 	APP_MODE,
@@ -16,8 +17,8 @@ import { MapContext } from './MapContext';
 
 import DefaultOverlay from './DefaultOverlay';
 import PinDropInstructions from './PinDropInstructions';
-import PinDropOverlay from './PinDrop';
-import { AnimalInfo, VisitorInfo } from './SelctedPinInfo';
+import PinDropOverlay from './PinDropOverlay';
+import { AnimalPinInfo, VisitorPinInfo } from './SelectedPinInfo';
 import Survey from './Survey/Survey';
 
 const App = props => {
@@ -400,7 +401,7 @@ const App = props => {
 							pinDropMode === APP_MODE.PIN_DROP_INSTRUCTIONS
 						}
 					/>
-					<AnimalInfo
+					<AnimalPinInfo
 						{...selectedPin}
 						onClickDismiss={() => {
 							setPinDropMode(APP_MODE.DEFAULT_SCREEN);
@@ -411,7 +412,7 @@ const App = props => {
 							selectedPin.type === 'animal'
 						}
 					/>
-					<VisitorInfo
+					<VisitorPinInfo
 						{...selectedPin}
 						onClickDismiss={() => {
 							setPinDropMode(APP_MODE.DEFAULT_SCREEN);

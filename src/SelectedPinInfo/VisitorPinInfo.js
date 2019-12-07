@@ -6,7 +6,13 @@ import SelectedPinInfo from './SelectedPinInfo';
 import { useCityImg, useLocationStats } from '../hooks';
 import { pluralizeIsAre, pluralize } from '../utils';
 
-const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
+const VisitorPinInfo = ({
+	city,
+	country,
+	state,
+	onClickDismiss,
+	isShowing,
+}) => {
 	const cityImg = useCityImg(city);
 	const [countryCount, stateCount] = useLocationStats(country, state);
 
@@ -45,7 +51,7 @@ const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
 	);
 };
 
-VisitorInfo.propTypes = {
+VisitorPinInfo.propTypes = {
 	city: PropTypes.string,
 	country: PropTypes.string,
 	state: PropTypes.string,
@@ -53,10 +59,10 @@ VisitorInfo.propTypes = {
 	isShowing: PropTypes.bool.isRequired,
 };
 
-VisitorInfo.defaultProps = {
+VisitorPinInfo.defaultProps = {
 	city: '',
 	state: '',
 	country: '',
 };
 
-export default VisitorInfo;
+export default VisitorPinInfo;
