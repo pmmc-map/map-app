@@ -45,9 +45,6 @@ const QuestionCard = ({
 		setIsOptionSelected(false);
 	}, [questionList, currentQuestion]);
 
-	console.log('x');
-	console.log(options);
-
 	useEffect(() => {
 		let temp = document.getElementsByTagName('input');
 		for (let i = 0; i < temp.length; i++) {
@@ -83,87 +80,90 @@ const QuestionCard = ({
 			</div>
 
 			<div className='card-body'>
-				<h1>
-					{questionList === null
-						? 'Loading ...'
-						: questionList.length === 0
-						? 'Error Loading Questions'
-						: questionList[currentQuestion].text}
-				</h1>
+				<div>
+					<h1>
+						{questionList === null
+							? 'Loading ...'
+							: questionList.length === 0
+							? 'Error Loading Questions'
+							: questionList[currentQuestion].text}
+					</h1>
 
-				{ready ? null : (
-					<div>
-						<div className='option-container'>
-							<form className='question-options'>
-								{options.map(option => (
-									<div
-										onClick={() => {
-											markOptionSelected(option);
-											onSelect(option);
-										}}
-										key={JSON.stringify(option)}
-									>
-										<input
-											type='radio'
-											id={option.oid}
-											name={
-												'surveyQuestion' +
-												currentQuestion
-											}
-											value={JSON.stringify(option)}
-											onChange={e => {
-												// e.target.checked = !e.`t;
-												e.stopPropagation();
+					{ready ? null : (
+						<>
+							<div className='option-container'>
+								<form className='question-options'>
+									{options.map(option => (
+										<div
+											onClick={() => {
+												markOptionSelected(option);
+												onSelect(option);
 											}}
-											checked={option.isChecked}
-										/>
-										{option.text}
-										<br />
-									</div>
-								))}
-							</form>
-						</div>
-						<div className={'survey-buttons'}>
-							<button
-								className={'button button-cancel'}
-								onClick={onReturnClick}
-							>
-								Cancel
-							</button>
+											key={JSON.stringify(option)}
+										>
+											<input
+												type='radio'
+												id={option.oid}
+												name={
+													'surveyQuestion' +
+													currentQuestion
+												}
+												value={JSON.stringify(option)}
+												onChange={e => {
+													// e.target.checked = !e.`t;
+													e.stopPropagation();
+												}}
+												checked={option.isChecked}
+											/>
+											<label>{option.text}</label>
+										</div>
+									))}
+								</form>
+							</div>
+							<div className={'survey-buttons'}>
+								<button
+									className={'button button-cancel'}
+									onClick={onReturnClick}
+								>
+									Cancel
+								</button>
 
-							<button
-								className={
-									'button ' +
-									(currentQuestion === questionList.length - 1
-										? 'button-confirm'
-										: 'button-next')
-								}
-								disabled={!isOptionSelected}
-								onClick={() =>
-									isOptionSelected
-										? onNext(
-												questionList[currentQuestion]
-													.qid
-										  )
-										: null
-								}
-							>
-								{currentQuestion === questionList.length - 1
-									? 'Submit'
-									: 'Next'}
-							</button>
-						</div>
+								<button
+									className={
+										'button ' +
+										(currentQuestion ===
+										questionList.length - 1
+											? 'button-confirm'
+											: 'button-next')
+									}
+									disabled={!isOptionSelected}
+									onClick={() =>
+										isOptionSelected
+											? onNext(
+													questionList[
+														currentQuestion
+													].qid
+											  )
+											: null
+									}
+								>
+									{currentQuestion === questionList.length - 1
+										? 'Submit'
+										: 'Next'}
+								</button>
+							</div>
 
-						<br />
-						<div className='progress-bar-container'>
-							<progress
-								className='progressBar'
-								max={questionList.length}
-								value={currentQuestion}
-							/>
-						</div>
-					</div>
-				)}
+							<br />
+							<div className='progress-bar-container'>
+								<progress
+									className='progressBar'
+									max={questionList.length}
+									value={currentQuestion}
+								/>
+							</div>
+						</>
+					)}
+				</div>
 			</div>
 		</div>
 	);

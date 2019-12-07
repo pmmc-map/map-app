@@ -30,20 +30,21 @@ const InfoPopup = ({ onInvalidPinDrop, showSurvey, isShowing }) => {
 	const [isLocationStatsLoading, setIsLocationStatsLoading] = useState(true);
 
 	useEffect(() => {
+		setIsPinLocationDataLoading(true);
 		setCityImgSrc(null);
 		const fetchPinInfo = async () => {
 			const pinDropResponse = await API.getPinInfo(pinPosition);
-			const pinLocationData = await pinDropResponse;
+			const { success, ...locationData } = await pinDropResponse;
 
-			if (pinLocationData.success) {
-				setLocationData(pinLocationData);
+			if (success) {
+				setLocationData(locationData);
 			} else {
 				setIsResponseSuccessful(false);
 				return;
 			}
 
 			const fetchLocationImg = async () => {
-				// const city = await pinLocationData.city;
+				// const city = await pinDropResponse.city;
 				// try {
 				// const locationImgResp = await API.getCityImg(city);
 				// const cityImg = await locationImgResp;

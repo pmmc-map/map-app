@@ -57,8 +57,7 @@
 	position: absolute;
 	right: 8%;
 	padding: 0;
-	min-width: 25%;
-	max-width: 35%;
+	width: 35%;
 	height: auto;
 	background: white;
 	border-radius: 1rem;

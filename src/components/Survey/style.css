@@ -17,17 +17,17 @@
 	border-radius: 1rem;
 	animation-duration: 0.5s;
 	animation-name: question-enter;
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	width: 90%;
-    height: 90%;
+	height: 90%;
 }
 
 .title-container {
 	background-color: dodgerblue;
 	width: 100%;
 	color: white;
-    flex: 1;
+	flex: 1;
 	text-align: center;
 	border-top-left-radius: 1rem;
 	border-top-right-radius: 1rem;
@@ -39,47 +39,52 @@
 }
 
 .card-body {
-    flex: 9;
+	flex: 9;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-    padding: 2rem;
+	padding: 2rem;
 }
 
-.card-body > div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    height: 100%;
+.card-body h1 {
+	text-align: center;
 }
 
-
-.option-container{
-    transform:scale(2);/*might need to change later because it wont be responsive*/
-    width: 25%;
-    padding: 2rem;
+.card-body > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
 }
 
-.question-options > div:nth-child(odd){
-    background-color: #eee;
+.option-container {
+	font-size: 2rem;
+	width: 75%;
+	padding: 2rem;
+	flex-basis: 50%;
 }
 
-.question-options > div{
-    align-items: center;
-    border-radius: 5px;
+.question-options > div:nth-child(odd) {
+	background-color: #eee;
 }
 
-.survey-buttons{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+.question-options > div {
+	align-items: center;
+	border-radius: 5px;
+	padding: 1rem 0.25rem;
 }
 
-.progress-bar-container{
-    width: 100%;
+.survey-buttons {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.progress-bar-container {
+	width: 100%;
 }
 
 @keyframes question-enter {
@@ -89,4 +94,27 @@
 	to {
 		transform: scale(1, 1);
 	}
+}
+
+.survey-intro {
+	padding-left: 20%;
+	padding-right: 20%;
+	justify-content: space-around;
+	text-align: center;
+}
+
+.survey-intro img {
+	height: 50%;
+	border-radius: 1rem;
+}
+
+.survey-intro h1,
+.survey-intro p {
+	margin: 0;
+}
+
+input[type='radio'] {
+	width: 2rem;
+	height: 2rem;
+	margin-right: 1rem;
 }
