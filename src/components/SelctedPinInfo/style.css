@@ -1,0 +1,19 @@
+span.blue-number {
+	color: #1c99f7;
+	font-weight: bolder;
+	font-family: Montserrat;
+}
+
+p.visitor-count-text {
+	text-align: center;
+	font-size: 1.25rem;
+}
+
+p.visitor-count-text:first-of-type {
+	margin-bottom: 0;
+}
+
+p.visitor-count-text:last-of-type {
+	margin-top: 0;
+	margin-bottom: 2rem;
+}

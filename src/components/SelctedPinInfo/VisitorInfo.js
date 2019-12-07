@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import './style.css';
 import SelectedPinInfo from './SelectedPinInfo';
-import { useCityImg } from '../../hooks';
+import { useCityImg, useLocationStats } from '../../hooks';
+import { pluralizeIsAre, pluralize } from '../../utils';
 
 const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
 	const cityImg = useCityImg(city);
+	const [countryCount, stateCount] = useLocationStats(country, state);
 
 	return (
 		<SelectedPinInfo
@@ -19,6 +22,20 @@ const VisitorInfo = ({ city, country, state, onClickDismiss, isShowing }) => {
 					{state}
 				</h1>
 				<h2 className='header-2'>{country}</h2>
+				<p className='visitor-count-text'>
+					<span className='blue-number'>
+						{`${countryCount} visitor${pluralize(countryCount)} `}
+					</span>
+					{pluralizeIsAre(countryCount)} from this country
+				</p>
+				{state && (
+					<p className='visitor-count-text'>
+						<span className='blue-number'>
+							{`${stateCount} visitor${pluralize(stateCount)} `}
+						</span>
+						{pluralizeIsAre(stateCount)} from this state
+					</p>
+				)}
 			</>
 		</SelectedPinInfo>
 	);

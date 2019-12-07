@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { getCityImg } from './api';
+import { getCityImg, getLocationCounts } from './api';
 
 export const useCityImg = city => {
 	const [img, setImg] = useState('../assets/loading.gif');
@@ -23,6 +23,34 @@ export const useCityImg = city => {
 	}, [city]);
 
 	return img;
+};
+
+export const useLocationStats = (country, state = '') => {
+	const [countryCount, setCountryCount] = useState(0);
+	const [stateCount, setStateCount] = useState(0);
+
+	useEffect(() => {
+		const makeLocationCountsRequest = async () => {
+			try {
+				const countsResponse = await getLocationCounts(country, state);
+				const {
+					success,
+					this_country_count,
+					this_state_count,
+				} = await countsResponse;
+
+				if (!success) throw 'Cant fetch country and state counts';
+				setCountryCount(this_country_count);
+				setStateCount(this_state_count);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+
+		makeLocationCountsRequest();
+	}, [country, state]);
+
+	return [countryCount, stateCount];
 };
 
 export const useTransitionDelay = (
