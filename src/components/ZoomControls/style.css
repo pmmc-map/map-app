@@ -1,0 +1,36 @@
+.zoom-controls {
+	padding: 0;
+	background: white;
+	position: absolute;
+	left: 1rem;
+	top: 6rem;
+	border-radius: 0.75rem;
+	pointer-events: initial;
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1.5rem;
+	cursor: pointer;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.zoom-controls > div:first-of-type {
+	border-bottom: 1px solid grey;
+	border-top-right-radius: 0.75rem;
+	border-top-left-radius: 0.75rem;
+}
+
+.zoom-controls > div:last-of-type {
+	border-bottom-right-radius: 0.75rem;
+	border-bottom-left-radius: 0.75rem;
+}
+
+.zoom-controls > div {
+	padding: 1rem;
+}
+
+.zoom-controls > div:focus,
+.zoom-controls > div:hover,
+.zoom-controls > div:active {
+	transition: 0.25s ease all;
+	background-color: #aaa;
+}

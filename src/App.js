@@ -355,6 +355,18 @@ const App = props => {
 		setIsLayerMaps(isLayerMaps => !isLayerMaps);
 	};
 
+	const zoom = whichZoom => {
+		const incrementalZoom = () => {
+			globeRef.current.wwd.navigator.range *=
+				whichZoom === 'in' ? 1 - 0.01 : 1 + 0.01;
+			globeRef.current.wwd.redraw();
+		};
+
+		for (let x = 0; x < 25; x += 1) {
+			setTimeout(incrementalZoom, 25);
+		}
+	};
+
 	return (
 		<div className='page'>
 			<div
@@ -382,6 +394,7 @@ const App = props => {
 					returnToHomeScreen: onClickDismissPinDrop,
 					toggleMapLayers: toggleMapLayers,
 					isLayerMaps: isLayerMaps,
+					zoom: zoom,
 				}}
 			>
 				<div className='fullscreen-item'>

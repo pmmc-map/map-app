@@ -6,6 +6,7 @@ import { useTransitionDelay } from '../hooks';
 import DonatePopup from './DonatePopup';
 import Survey from '../Survey/Survey';
 import MapToggle from '../components/MapToggle';
+import ZoomControls from '../components/ZoomControls';
 import { pluralize } from '../utils';
 
 /*
@@ -68,6 +69,7 @@ const DefaultOverlay = ({
 					</div>
 
 					<MapToggle />
+					<ZoomControls />
 					<div className='button-container'>
 						<button
 							className='button button-next'

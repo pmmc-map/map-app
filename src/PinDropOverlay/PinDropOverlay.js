@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useTransitionDelay } from '../hooks';
 import { MapContext } from '../MapContext';
 import MapToggle from '../components/MapToggle';
+import ZoomControls from '../components/ZoomControls';
 import HelpModal from './PinDropHelp';
 import PinDropConfirmation from '../PinDropConfirmation';
 
@@ -32,7 +33,11 @@ const PinDropOverlay = ({
 						showSurvey={showSurvey}
 						onInvalidPinDrop={onInvalidPinDrop}
 					/>
-					{isShowing && <MapToggle />}
+					{isShowing && (
+						<>
+							<ZoomControls /> <MapToggle />
+						</>
+					)}
 				</div>
 			</CSSTransition>
 			<CSSTransition
