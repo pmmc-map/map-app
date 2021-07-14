@@ -1,6 +1,4 @@
-//const BASE_API_URL = 'http://54.183.19.24/';
-// const BASE_API_URL = 'http://localhost:5000/';
-const BASE_API_URL = 'https://www.pmmc-map.xyz/';
+const BASE_API_URL = 'https://pmmc-flask-backend.herokuapp.com/';
 
 export const getPinInfo = async position => {
 	const response = await fetch(BASE_API_URL + 'api/geocoder', {
